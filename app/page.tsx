@@ -127,31 +127,35 @@ export default function HomePage() {
             </div>
           </a>
 
-          {/* Center: Contextual Segmented Navigation Links */}
+          {/* Center: Contextual Segmented Navigation Links (Unified 4-Pill Ecosystem Standard) */}
           <nav className="hidden md:flex items-center gap-1 bg-stone-200/60 dark:bg-white/[0.06] p-1 rounded-xl border border-black/[0.04] dark:border-white/[0.05] text-xs font-medium">
             <a
-              href="#overview"
-              className="px-3 py-1 rounded-lg text-[#1d1d1f] dark:text-white bg-white dark:bg-white/10 shadow-xs"
+              href="https://thaid.online"
+              className="px-3 py-1 rounded-lg text-[#1d1d1f] dark:text-white bg-white dark:bg-white/10 shadow-xs font-semibold flex items-center gap-1.5"
             >
-              ภาพรวม
+              <span className="material-symbols-outlined text-[14px]">hub</span>
+              <span>ThaiD Hub</span>
             </a>
             <a
               href="https://novel.thaid.online"
-              className="px-3 py-1 rounded-lg text-[#86868b] hover:text-[#1d1d1f] dark:text-stone-400 dark:hover:text-white transition-colors"
+              className="px-3 py-1 rounded-lg text-[#86868b] hover:text-[#1d1d1f] dark:text-stone-400 dark:hover:text-white transition-colors flex items-center gap-1.5"
             >
-              นิยาย AI
+              <span className="material-symbols-outlined text-[14px]">edit_note</span>
+              <span>นิยาย AI</span>
             </a>
             <a
               href="https://social.thaid.online"
-              className="px-3 py-1 rounded-lg text-[#86868b] hover:text-[#1d1d1f] dark:text-stone-400 dark:hover:text-white transition-colors"
+              className="px-3 py-1 rounded-lg text-[#86868b] hover:text-[#1d1d1f] dark:text-stone-400 dark:hover:text-white transition-colors flex items-center gap-1.5"
             >
-              โพสต์ Facebook
+              <span className="material-symbols-outlined text-[14px]">campaign</span>
+              <span>โพสต์ Facebook</span>
             </a>
             <a
-              href="#cloud-infra"
-              className="px-3 py-1 rounded-lg text-[#86868b] hover:text-[#1d1d1f] dark:text-stone-400 dark:hover:text-white transition-colors"
+              href="https://sticker.thaid.online"
+              className="px-3 py-1 rounded-lg text-[#86868b] hover:text-[#1d1d1f] dark:text-stone-400 dark:hover:text-white transition-colors flex items-center gap-1.5"
             >
-              โครงสร้างระบบ
+              <span className="material-symbols-outlined text-[14px]">sentiment_satisfied</span>
+              <span>สติกเกอร์ไลน์</span>
             </a>
           </nav>
 
@@ -190,36 +194,49 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Mobile Dropdown Sheet */}
+        {/* Mobile Dropdown Sheet (Unified Ecosystem Standard) */}
         {mobileMenuOpen && (
           <div className="md:hidden border-b border-black/[0.08] dark:border-white/[0.08] bg-white/95 dark:bg-[#161619]/95 backdrop-blur-2xl px-4 py-4 space-y-2 text-sm shadow-xl">
             <a
-              href="#overview"
+              href="https://thaid.online"
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg font-medium hover:bg-stone-100 dark:hover:bg-white/5"
+              className="flex items-center justify-between px-3 py-2 rounded-lg font-semibold bg-stone-100 dark:bg-white/10 text-[#1d1d1f] dark:text-white"
             >
-              ภาพรวมบริการ (Overview)
+              <span className="flex items-center gap-2">
+                <span className="material-symbols-outlined text-[17px] text-[#e85a2d]">hub</span>
+                <span>ThaiD Hub (หน้าแรก)</span>
+              </span>
+              <span className="text-[10px] bg-[#e85a2d]/10 text-[#e85a2d] px-2 py-0.5 rounded font-bold">CURRENT</span>
             </a>
             <a
               href="https://novel.thaid.online"
               className="flex items-center justify-between px-3 py-2 rounded-lg font-medium hover:bg-stone-100 dark:hover:bg-white/5 text-[#e85a2d]"
             >
-              <span>ReadAWrite Novel Studio</span>
+              <span className="flex items-center gap-2">
+                <span className="material-symbols-outlined text-[17px]">edit_note</span>
+                <span>นิยาย AI (Novel Studio)</span>
+              </span>
               <span className="material-symbols-outlined text-xs">arrow_outward</span>
             </a>
             <a
               href="https://social.thaid.online"
               className="flex items-center justify-between px-3 py-2 rounded-lg font-medium hover:bg-stone-100 dark:hover:bg-white/5 text-[#0071e3]"
             >
-              <span>Social Auto-Poster Pro</span>
+              <span className="flex items-center gap-2">
+                <span className="material-symbols-outlined text-[17px]">campaign</span>
+                <span>โพสต์ Facebook (Social Poster)</span>
+              </span>
               <span className="material-symbols-outlined text-xs">arrow_outward</span>
             </a>
             <a
-              href="#cloud-infra"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg font-medium hover:bg-stone-100 dark:hover:bg-white/5"
+              href="https://sticker.thaid.online"
+              className="flex items-center justify-between px-3 py-2 rounded-lg font-medium hover:bg-stone-100 dark:hover:bg-white/5 text-emerald-600 dark:text-emerald-400"
             >
-              สถานะเซิร์ฟเวอร์ Cloud
+              <span className="flex items-center gap-2">
+                <span className="material-symbols-outlined text-[17px]">sentiment_satisfied</span>
+                <span>สติกเกอร์ไลน์ (LINE Sticker)</span>
+              </span>
+              <span className="material-symbols-outlined text-xs">arrow_outward</span>
             </a>
             <div className="pt-2 border-t border-black/[0.06] dark:border-white/[0.06]">
               <a
