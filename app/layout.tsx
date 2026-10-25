@@ -1,31 +1,41 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "ThaiD.online — ศูนย์รวมโซลูชัน AI อัจฉริยะสำหรับคนไทย",
+  title: "ThaiD.online — Luxury AI Ecosystem สำหรับคนไทย",
   description:
-    "แพลตฟอร์ม SaaS รวมเครื่องมือ AI ครบวงจรสำหรับคนไทย: ระบบสร้างนิยายอัจฉริยะ (Novel Studio), ระบบผลิตและโพสต์คอนเทนต์ Facebook อัตโนมัติ, และระบบออกแบบสติกเกอร์ไลน์ด้วย AI บัญชีเดียวใช้ได้ทุกบริการ",
+    "ศูนย์รวมเครื่องมือ AI อัจฉริยะมาตรฐานระดับโลก ออกแบบมาเพื่อคนไทยโดยเฉพาะ: ReadAWrite Pro Studio แต่งนิยายอัตโนมัติ, ระบบสร้างคอนเทนต์ & วิดีโอโพสต์ Facebook, และระบบเจนสติกเกอร์ไลน์",
   keywords: [
     "ThaiD",
     "ThaiD.online",
-    "AI แต่งนิยาย",
+    "ReadAWrite AI",
     "แต่งนิยาย AI",
-    "โพสต์ Facebook อัตโนมัติ",
-    "สร้างคอนเทนต์ AI",
-    "ทำสติกเกอร์ไลน์ AI",
+    "Auto Post Facebook",
+    "AI โพสต์เฟสบุ๊ค",
     "LINE Sticker AI",
+    "สร้างสติกเกอร์ไลน์",
     "SaaS ไทย",
   ],
   authors: [{ name: "ThaiD Platform Team" }],
   openGraph: {
-    title: "ThaiD.online — ยกระดับการสร้างสรรค์ด้วยขุมพลัง AI",
+    title: "ThaiD.online — Luxury AI Ecosystem สำหรับคนไทย",
     description:
-      "รวมสุดยอดเครื่องมือ AI สำหรับคนไทย ตั้งแต่เขียนนิยาย สร้างคอนเทนต์โซเชียล ไปจนถึงออกแบบสติกเกอร์ไลน์ในแพลตฟอร์มเดียว",
+      "ศูนย์รวมเครื่องมือ AI อัจฉริยะมาตรฐานระดับโลก แต่งนิยาย สร้างคอนเทนต์โซเชียล สติกเกอร์ไลน์ ในแพลตฟอร์มเดียว",
     url: "https://thaid.online",
     siteName: "ThaiD.online",
     locale: "th_TH",
     type: "website",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f5f5f7" },
+    { media: "(prefers-color-scheme: dark)", color: "#0c0c0e" },
+  ],
 };
 
 export default function RootLayout({
@@ -43,11 +53,15 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-screen bg-[#07090e] text-slate-100 antialiased selection:bg-indigo-500 selection:text-white">
+      <body className="antialiased selection:bg-orange-500/20 selection:text-[#e85a2d] custom-scrollbar">
         {children}
       </body>
     </html>
