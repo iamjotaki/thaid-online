@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-apple-subtle: #f5f5f7;
   --color-apple-coral: #e85a2d;
@@ -31,11 +33,21 @@
   --border-subtle: rgba(255, 255, 255, 0.08);
 }
 
-body {
-  font-family: var(--font-sans);
+html, body {
   background-color: var(--bg-main);
   color: var(--text-main);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Explicit CSS-level dark mode fallbacks to guarantee instant, 100% reliable theme change */
+html:not(.dark) body {
+  background-color: #f5f5f7 !important;
+  color: #1d1d1f !important;
+}
+
+html.dark body {
+  background-color: #0c0c0e !important;
+  color: #f5f5f7 !important;
 }
 
 .material-symbols-outlined {

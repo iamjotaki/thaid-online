@@ -9,16 +9,8 @@ export default function HomePage() {
 
   useEffect(() => {
     // Check initial dark mode from document or storage
-    const saved = localStorage.getItem("thaid-theme");
-    if (saved === "light") {
-      setIsDark(false);
-      document.documentElement.classList.remove("dark");
-      document.documentElement.classList.add("light");
-    } else {
-      setIsDark(true);
-      document.documentElement.classList.add("dark");
-      document.documentElement.classList.remove("light");
-    }
+    const isCurrentlyDark = document.documentElement.classList.contains("dark");
+    setIsDark(isCurrentlyDark);
   }, []);
 
   const toggleDarkMode = () => {
