@@ -102,15 +102,14 @@ html, body {
   background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.08);
   box-shadow: 0 4px 15px -2px rgba(0, 0, 0, 0.05), 0 20px 45px -5px rgba(0, 0, 0, 0.07);
-  will-change: transform, translate, scale, opacity, filter;
+  will-change: transform, translate, scale, opacity;
   transition: box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
   overflow: hidden;
   
-  /* The Exact Fastwork Zoom Outward & Scatter Equation */
+  /* The Exact Fastwork Zoom Outward & Scatter Equation: Crisp, NO BLUR! */
   translate: calc(var(--exit-scatter) * var(--scatter-x, 0px)) calc(var(--exit-scatter) * var(--scatter-y, 0px));
   scale: calc(1 + var(--exit-scatter) * 0.44);
   opacity: calc(1 - var(--exit-scatter) * 1.15);
-  filter: blur(calc(var(--exit-scatter) * 10px));
   transform: rotate(var(--orbit-rot, 0deg));
 }
 
