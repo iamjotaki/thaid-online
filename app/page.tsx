@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 export default function HomePage() {
   const [isDark, setIsDark] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<"all" | "novel" | "social" | "sticker">("all");
+  const [activeTab, setActiveTab] = useState<"all" | "novel" | "social" | "sticker" | "clip" | "chat">("all");
 
   useEffect(() => {
     // Check initial dark mode from document or storage
@@ -97,6 +97,52 @@ export default function HomePage() {
       stats: { primary: "40 แอ็กชัน", primaryLabel: "ชุดสติกเกอร์ครบเซ็ต", secondary: "PNG/APNG", secondaryLabel: "มาตรฐาน LINE" },
       actionText: "เปิดใช้งาน Sticker Studio",
     },
+    {
+      id: "clip",
+      name: "ThaiD Clip AI Studio",
+      subname: "Automated 9:16 Shorts & Reels Studio",
+      tag: "clip.thaid.online",
+      url: "https://clip.thaid.online",
+      category: "clip",
+      status: "ออนไลน์ (Live)",
+      statusColor: "emerald",
+      badge: "High Viral",
+      description:
+        "ระบบสร้างคลิปสั้นแนวตั้ง 9:16 สำหรับ TikTok, Instagram Reels และ YouTube Shorts อัตโนมัติ ร่างสคริปต์ไวรัลด้วย Gemini พากย์เสียงไทย ผสมผสานภาพ AI/Google Flow Veo และซับคาราโอเกะ",
+      icon: "movie",
+      accentColor: "#ec4899",
+      features: [
+        "สคริปต์ไวรัลสไตล์รีวิวป้ายยา/สารคดี/ข่าวสั้น ด้วย Gemini 3.5",
+        "พากย์เสียงภาษาไทยสมจริงพร้อมคำนวณไทม์มิ่งเป๊ะ",
+        "ภาพแนวตั้ง 9:16 (1080x1920) พร้อม Ken Burns motion zoom",
+        "ซับไตเติลคาราโอเกะฟอนต์ไทยไม่ลอย มิกซ์เพลงพื้นหลัง BGM",
+      ],
+      stats: { primary: "1080×1920", primaryLabel: "Full HD 9:16", secondary: "< 25 วิ", secondaryLabel: "ต่อการเรนเดอร์คลิป" },
+      actionText: "เปิดใช้งาน Clip Studio",
+    },
+    {
+      id: "chat",
+      name: "ThaiD Smart Chat AI",
+      subname: "AI Customer Service & LINE OA Assistant",
+      tag: "chat.thaid.online",
+      url: "https://chat.thaid.online",
+      category: "chat",
+      status: "ออนไลน์ (Live)",
+      statusColor: "emerald",
+      badge: "E-Commerce Suite",
+      description:
+        "แอดมิน AI ตอบแชทลูกค้าบน LINE Official Account ตลอด 24 ชั่วโมง มีคลังความรู้สินค้า โปรโมชั่น และข้อมูลจัดส่ง ช่วยปิดการขายอย่างสุภาพ ตอบกลับรวดเร็วภายใน 1 วินาที",
+      icon: "forum",
+      accentColor: "#06c755",
+      features: [
+        "เชื่อมต่อ Webhook กับ LINE Official Account ใน 2 นาที",
+        "Knowledge Base จัดการข้อมูลสินค้า ราคา เลขบัญชี และ FAQ",
+        "ตอบตรงประเด็น สุภาพ ปิดการขาย ช่วยลดต้นทุนจ้างแอดมิน",
+        "จำลองห้องแชทเสมือนจริงในเบราว์เซอร์ก่อนเปิดใช้งานจริง",
+      ],
+      stats: { primary: "24/7", primaryLabel: "ตอบแชทอัตโนมัติ", secondary: "0 บาท", secondaryLabel: "ต้นทุน API (Vault Keys)" },
+      actionText: "เปิดใช้งาน Smart Chat",
+    },
   ];
 
   const filteredServices =
@@ -156,6 +202,20 @@ export default function HomePage() {
             >
               <span className="material-symbols-outlined text-[14px]">sentiment_satisfied</span>
               <span>สติกเกอร์ไลน์</span>
+            </a>
+            <a
+              href="https://clip.thaid.online"
+              className="px-3 py-1 rounded-lg text-[#86868b] hover:text-[#1d1d1f] dark:text-stone-400 dark:hover:text-white transition-colors flex items-center gap-1.5"
+            >
+              <span className="material-symbols-outlined text-[14px]">movie</span>
+              <span>คลิปสั้น AI</span>
+            </a>
+            <a
+              href="https://chat.thaid.online"
+              className="px-3 py-1 rounded-lg text-[#86868b] hover:text-[#1d1d1f] dark:text-stone-400 dark:hover:text-white transition-colors flex items-center gap-1.5"
+            >
+              <span className="material-symbols-outlined text-[14px]">forum</span>
+              <span>แชทบอท LINE</span>
             </a>
           </nav>
 
@@ -401,6 +461,28 @@ export default function HomePage() {
               }`}
             >
               สติกเกอร์ไลน์
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab("clip")}
+              className={`px-3 py-1.5 rounded-lg transition-all ${
+                activeTab === "clip"
+                  ? "bg-white dark:bg-white/10 text-[#1d1d1f] dark:text-white shadow-xs font-semibold"
+                  : "text-[#86868b] dark:text-stone-400 hover:text-[#1d1d1f] dark:hover:text-white"
+              }`}
+            >
+              คลิปสั้น AI
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab("chat")}
+              className={`px-3 py-1.5 rounded-lg transition-all ${
+                activeTab === "chat"
+                  ? "bg-white dark:bg-white/10 text-[#1d1d1f] dark:text-white shadow-xs font-semibold"
+                  : "text-[#86868b] dark:text-stone-400 hover:text-[#1d1d1f] dark:hover:text-white"
+              }`}
+            >
+              แชทบอท LINE
             </button>
           </div>
         </div>
