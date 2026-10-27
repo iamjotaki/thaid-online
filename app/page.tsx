@@ -591,37 +591,43 @@ export default function HomePage() {
           <div className="hero-copy-scatter relative z-20 flex flex-col items-center text-center px-4 max-w-4xl mx-auto pointer-events-auto">
             
             {/* Exact Fastwork Headline with Animated Handwritten Thai "คุณ" */}
-            <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-[#171717] leading-[1.08] mb-6">
-              Show the world
-              <br />
-              what{" "}
-              <span className="inline-flex items-center align-middle mx-1 -mt-2" aria-label="คุณ">
-                <svg
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 98 87"
-                  className="accent-stroke-svg w-[1.3em] h-[1.15em] text-[#171717]"
+            <h1 className="hero-headline-fastwork text-4xl sm:text-6xl md:text-[64px] font-medium tracking-[-0.025em] text-[#2b313b] leading-[1.15] mb-6">
+              <span className="block">โชว์ให้โลกได้เห็น</span>
+              <span className="inline-flex items-center justify-center flex-wrap gap-x-1.5">
+                <span>ว่า</span>
+                <em
+                  className="script-accent-khun not-italic mx-0.5"
+                  aria-label="คุณ"
                 >
-                  <path
-                    className="accent-stroke-path"
-                    pathLength="1"
-                    stroke="currentColor"
-                    strokeWidth="6.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M9.67655 34.8743C20.8135 35.6005 24.9848 29.0327 23.8426 25.9298C22.7003 22.8268 15.9267 24.0209 13.0846 28.7026C10.0386 33.7201 6.69237 46.6041 6.69237 53.5362C0.0292325 37.7574 3.18519 9.49143 14.8925 8.56639C26.6006 7.64129 36.1498 17.8753 35.1028 55.9691M30.824 66.4463C27.236 70.8697 21.0441 71.7349 20.1164 67.7076C19.1887 63.6804 21.1303 60.3933 23.8424 60.3933C30.3628 60.3933 30.8416 64.3686 29.048 83.2505M48.0867 48.2104C56.9931 47.4182 59.0749 53.7522 58.8561 55.9691C58.5171 59.4021 52.6963 64.6177 50.2559 57.7834C49.2144 54.8663 51.205 38.6374 52.6963 34.8743C46.5954 35.9306 45.782 27.8761 46.9343 22.7265C48.0867 17.5769 57.3736 11.7011 62.3221 21.01C67.2706 30.3189 66.3216 49.9929 67.1351 50.9832C70.2533 41.8064 81.7093 33.1578 86.9967 33.1578C92.2842 33.1578 94.25 41.4737 94.25 44.8434C94.25 50.9833 90.1742 54.8004 87.3357 47.4182C84.0046 38.755 85.5054 12.2953 86.9967 3.25049"
-                  />
-                </svg>
-              </span>{" "}
-              can do
+                  <span className="paint-khun">
+                    <svg
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 98 87"
+                      className="accent-stroke-svg text-[#2b313b]"
+                    >
+                      <path
+                        className="accent-stroke-path"
+                        pathLength="1"
+                        stroke="currentColor"
+                        strokeWidth="6.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M9.67655 34.8743C20.8135 35.6005 24.9848 29.0327 23.8426 25.9298C22.7003 22.8268 15.9267 24.0209 13.0846 28.7026C10.0386 33.7201 6.69237 46.6041 6.69237 53.5362C0.0292325 37.7574 3.18519 9.49143 14.8925 8.56639C26.6006 7.64129 36.1498 17.8753 35.1028 55.9691M30.824 66.4463C27.236 70.8697 21.0441 71.7349 20.1164 67.7076C19.1887 63.6804 21.1303 60.3933 23.8424 60.3933C30.3628 60.3933 30.8416 64.3686 29.048 83.2505M48.0867 48.2104C56.9931 47.4182 59.0749 53.7522 58.8561 55.9691C58.5171 59.4021 52.6963 64.6177 50.2559 57.7834C49.2144 54.8663 51.205 38.6374 52.6963 34.8743C46.5954 35.9306 45.782 27.8761 46.9343 22.7265C48.0867 17.5769 57.3736 11.7011 62.3221 21.01C67.2706 30.3189 66.3216 49.9929 67.1351 50.9832C70.2533 41.8064 81.7093 33.1578 86.9967 33.1578C92.2842 33.1578 94.25 41.4737 94.25 44.8434C94.25 50.9833 90.1742 54.8004 87.3357 47.4182C84.0046 38.755 85.5054 12.2953 86.9967 3.25049"
+                      />
+                    </svg>
+                  </span>
+                </em>
+                <span>เจ๋งแค่ไหน</span>
+              </span>
             </h1>
 
             {/* Subtitle */}
-            <p className="text-base sm:text-lg md:text-xl text-[#737373] max-w-2xl font-normal leading-relaxed mb-8">
-              In the age of AI, your portfolio proves why clients need you.
+            <p className="text-base sm:text-lg md:text-xl text-[#5e6675] max-w-2xl font-normal leading-relaxed mb-8">
+              ในยุค AI การสร้างพอร์ตฯ คือหลักฐานชั้นดีว่าทำไมลูกค้าต้องเลือกคุณ
               <br />
-              <span className="text-sm sm:text-base text-[#171717]/80 font-medium">
-                ในยุคแห่งปัญญาประดิษฐ์ พอร์ตผลงานของคุณคือข้อพิสูจน์ที่ดีที่สุด
+              <span className="text-sm sm:text-base text-[#2b313b] font-medium mt-1 inline-block">
+                รวม 7 เครื่องมือ AI Studio จาก ThaiD — เปลี่ยนผลงานเป็นรายได้จริง
               </span>
             </p>
 
