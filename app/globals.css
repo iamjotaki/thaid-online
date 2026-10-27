@@ -132,8 +132,28 @@ html, body {
 .scroll-cue-scatter {
   opacity: calc(var(--exit-opacity) * 0.9);
   transform: translate(-50%, calc(var(--exit-scatter) * 20px));
-  filter: blur(calc(var(--exit-scatter) * 12px));
-  will-change: opacity, transform, filter;
+  will-change: opacity, transform;
+}
+
+/* Elevated Next Page Card Sheet (Slide & Pop Up from Below) */
+.services-sheet-stage {
+  position: relative;
+  z-index: 30;
+  background: #ffffff;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  box-shadow: 0 -30px 70px -15px rgba(0, 0, 0, 0.08), 0 -1px 3px rgba(0, 0, 0, 0.04);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  margin-top: -65vh;
+  transition: transform 0.25s ease-out;
+}
+
+@media (min-width: 640px) {
+  .services-sheet-stage {
+    border-top-left-radius: 56px;
+    border-top-right-radius: 56px;
+    margin-top: -75vh;
+  }
 }
 
 /* ======================================================== */

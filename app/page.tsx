@@ -49,6 +49,15 @@ export default function HomePage() {
   const trackRef = useRef<HTMLElement | null>(null);
   const heroRef = useRef<HTMLDivElement | null>(null);
 
+  const handleScrollDown = () => {
+    const target = document.getElementById("services-directory");
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.scrollTo({ top: window.innerHeight * 1.4, behavior: "smooth" });
+    }
+  };
+
   // Countdown timer effect
   useEffect(() => {
     const timer = setInterval(() => {
@@ -671,26 +680,45 @@ export default function HomePage() {
           </div>
 
           {/* ======================================================== */}
-          {/* BOTTOM SCROLL CUE                                        */}
+          {/* BOTTOM SCROLL CUE (CLICKABLE INTERACTIVE BUTTON)         */}
           {/* ======================================================== */}
-          <div className="scroll-cue-scatter absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 cursor-pointer pointer-events-auto">
-            <span className="text-[11px] font-semibold text-[#737373] tracking-wide uppercase">
-              Scroll down
-            </span>
-            <div className="anim-scroll-bounce text-[#737373]">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 5v14M19 12l-7 7-7-7" />
-              </svg>
-            </div>
+          <div className="scroll-cue-scatter absolute bottom-6 left-1/2 -translate-x-1/2 z-30 pointer-events-auto">
+            <button
+              type="button"
+              onClick={handleScrollDown}
+              aria-label="Scroll down to services"
+              className="group flex flex-col items-center gap-1.5 px-4 py-2 rounded-full hover:bg-black/5 active:scale-95 transition-all cursor-pointer"
+            >
+              <span className="text-[11px] font-bold text-[#737373] group-hover:text-[#171717] tracking-wider uppercase transition-colors">
+                Scroll down
+              </span>
+              <div className="anim-scroll-bounce text-[#737373] group-hover:text-[#171717] group-hover:translate-y-1 transition-all">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 5v14M19 12l-7 7-7-7" />
+                </svg>
+              </div>
+            </button>
           </div>
 
         </div>
       </section>
 
       {/* ======================================================== */}
-      {/* 3. CATEGORY SELECTOR & STUDIO DIRECTORY                  */}
+      {/* 3. ELEVATED CARD SHEET (SLIDES & POPS UP FROM BELOW)     */}
       {/* ======================================================== */}
-      <main id="services-directory" className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 pt-16 pb-28">
+      <section id="services-directory" className="services-sheet-stage">
+        
+        {/* Tactile Sheet Handle (Spring Card Indicator) */}
+        <div className="pt-6 pb-2 flex justify-center">
+          <button
+            type="button"
+            onClick={handleScrollDown}
+            className="w-14 h-1.5 rounded-full bg-stone-300 hover:bg-stone-400 transition-colors cursor-pointer"
+            aria-label="Drag or view next section"
+          />
+        </div>
+
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 pt-4 pb-28">
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12">
@@ -820,6 +848,7 @@ export default function HomePage() {
         </div>
 
       </main>
+    </section>
 
       {/* ======================================================== */}
       {/* 4. FASTWORK CLEAN EDITORIAL FOOTER                       */}
