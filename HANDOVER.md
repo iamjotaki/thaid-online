@@ -20,7 +20,7 @@
 ## 🖥️ 2. โครงสร้างเซิร์ฟเวอร์ & บัญชีเข้าถึง (Infrastructure & Credentials)
 
 ### 2.1 เซิร์ฟเวอร์จริง (Oracle Cloud Always Free VM)
-Oracle Cloud มีการเปิดใช้งานอยู่ทั้งหมด **2 เครื่อง (Nodes)** ใช้งานโควตา Ampere ARM 4 OCPU / 24 GB RAM ครบเต็มประสิทธิภาพ:
+Oracle Cloud มีการเปิดใช้งานอยู่ทั้งหมด **3 เครื่อง (Instances)** ครบถ้วนตามสิทธิ์ Always Free Tier:
 
 1. **เครื่องที่ 1 (Primary Production Host - Yayni Platform):**
    - **Instance Name:** `yayni-arm-18gb`
@@ -35,6 +35,13 @@ Oracle Cloud มีการเปิดใช้งานอยู่ทั้�
    - **OS / Spec:** Ubuntu 24.04 LTS (Ampere ARM A1, 2 OCPU, 12 GB RAM, 48 GB NVMe)
    - **หน้าที่:** รัน Coolify v4, Docker Containers, Traefik v3.7 Proxy ควบคุม [https://thaid.online](https://thaid.online), [https://novel.thaid.online](https://novel.thaid.online), [https://social.thaid.online](https://social.thaid.online), [https://vault.thaid.online](https://vault.thaid.online)
    - **SSH Command:** `ssh -i C:\NV\oracle_key.pem ubuntu@129.221.170.225`
+
+3. **เครื่องที่ 3 (AMD Micro Server):**
+   - **Instance Name:** `instance-20261004-1558`
+   - **Public IP:** `161.118.243.162`
+   - **OS / Spec:** Ubuntu 24.04 LTS (AMD E2.1.Micro, 1 OCPU, 1 GB RAM, 45 GB Disk)
+   - **หน้าที่:** เครื่องดั้งเดิม ออนไลน์ต่อเนื่องมาเกือบ 11 วัน รัน PM2 (`novel-studio`, `watchparty`, `yayni-novel`) และ Nginx
+   - **SSH Command:** `ssh -i C:\NV\oracle_key.pem ubuntu@161.118.243.162`
 
 ### 2.2 ระบบจัดการคอนเทนเนอร์ (Coolify Control Panel)
 - **Web Dashboard:** [http://thaid.online:8000](http://thaid.online:8000) (หรือ `http://129.221.170.225:8000`)
