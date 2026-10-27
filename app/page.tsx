@@ -9,7 +9,7 @@ interface ServiceItem {
   subname: string;
   tag: string;
   url: string;
-  category: "novel" | "social" | "sticker" | "clip" | "chat" | "mockup" | "vault";
+  category: "novel" | "social" | "sticker" | "clip" | "chat" | "mockup";
   status: string;
   badge: string;
   description: string;
@@ -111,18 +111,7 @@ export default function HomePage() {
         </svg>
       )
     },
-    {
-      name: "Personal Vault",
-      sub: "คลังเก็บรหัสผ่าน & API Keys ส่วนตัว",
-      url: "https://vault.thaid.online",
-      tag: "vault.thaid.online",
-      badge: "AES-256",
-      icon: (
-        <svg className="w-4 h-4 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-        </svg>
-      )
-    },
+    
     {
       name: "LINE Sticker Creator",
       sub: "สร้างชุดสติกเกอร์ไลน์ 40 แอ็กชัน",
@@ -568,28 +557,6 @@ export default function HomePage() {
       stats: { primary: "24/7", primaryLabel: "ตอบแชทอัตโนมัติ", secondary: "0.8 วินาที", secondaryLabel: "ความเร็วตอบกลับ" },
       actionText: "เปิดใช้งาน Smart Chat",
     },
-    {
-      id: "vault",
-      name: "ThaiD Vault",
-      subname: "Personal Cloud Vault & Security",
-      tag: "vault.thaid.online",
-      url: "https://vault.thaid.online",
-      category: "vault",
-      status: "พร้อมใช้งาน",
-      badge: "Security",
-      description: "คลังเก็บข้อมูลส่วนตัว กุญแจ API Keys และระบบความปลอดภัย เข้ารหัสข้อมูลระดับทหาร AES-256",
-      icon: "lock",
-      image: "/cards/vault_gen_1.jpg",
-      creator: "Pakinchit",
-      location: "Security Engineer · Bangkok",
-      features: [
-        "เข้ารหัสความปลอดภัยระดับทหาร AES-256",
-        "จัดเก็บ Gemini API Keys และหมุนเวียนคีย์อัตโนมัติ",
-        "สำรองข้อมูลและจัดการสภาพแวดล้อมระบบนิเวศ",
-      ],
-      stats: { primary: "AES-256", primaryLabel: "การเข้ารหัสข้อมูล", secondary: "80 Keys", secondaryLabel: "คลังคีย์ความปลอดภัย" },
-      actionText: "เปิดใช้งาน ThaiD Vault",
-    },
   ];
 
   const filteredServices = activeTab === "all" ? services : services.filter((s) => s.category === activeTab);
@@ -635,7 +602,7 @@ export default function HomePage() {
               <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-72 sm:w-80 bg-white/95 backdrop-blur-2xl border border-black/[0.08] rounded-2xl shadow-2xl p-2 z-50 animate-in fade-in zoom-in-95 duration-150">
                 <div className="px-3 py-1.5 text-[10px] font-bold text-stone-400 uppercase tracking-wider border-b border-black/[0.05] mb-1 flex items-center justify-between">
                   <span>ThaiD SaaS Ecosystem</span>
-                  <span className="text-emerald-600 font-semibold">7 เครื่องมือ</span>
+                  <span className="text-emerald-600 font-semibold">6 เครื่องมือ</span>
                 </div>
                 <div className="grid grid-cols-1 gap-1 max-h-[380px] overflow-y-auto">
                   {saasServices.map((svc) => (
@@ -725,13 +692,7 @@ export default function HomePage() {
                         <span>ไปที่ Social Dashboard</span>
                         <span className="text-[10px] text-stone-400">→</span>
                       </a>
-                      <a
-                        href="https://vault.thaid.online"
-                        className="flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-stone-50 text-stone-700 text-xs transition-colors"
-                      >
-                        <span>ไปที่ Security Vault</span>
-                        <span className="text-[10px] text-stone-400">→</span>
-                      </a>
+                      
                     </div>
                     <button
                       type="button"
@@ -884,7 +845,7 @@ export default function HomePage() {
               ในยุค AI การสร้างพอร์ตฯ คือหลักฐานชั้นดีว่าทำไมลูกค้าต้องเลือกคุณ
               <br />
               <span className="text-sm sm:text-base text-[#2b313b] font-medium mt-1 inline-block">
-                รวม 7 เครื่องมือ AI Studio จาก ThaiD — เปลี่ยนผลงานเป็นรายได้จริง
+                รวม 6 เครื่องมือ AI Studio จาก ThaiD — เปลี่ยนผลงานเป็นรายได้จริง
               </span>
             </p>
 
@@ -1005,8 +966,7 @@ export default function HomePage() {
             { id: "clip", label: "Clip Video" },
             { id: "sticker", label: "LINE Sticker" },
             { id: "chat", label: "Smart Chat" },
-            { id: "vault", label: "Vault Security" },
-          ].map((tab) => (
+                      ].map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
@@ -1137,7 +1097,7 @@ export default function HomePage() {
             <a href="https://mockup.thaid.online" className="hover:text-[#171717] transition-colors">Mockup AI</a>
             <a href="https://novel.thaid.online" className="hover:text-[#171717] transition-colors">Novel AI</a>
             <a href="https://social.thaid.online" className="hover:text-[#171717] transition-colors">Social AI</a>
-            <a href="https://vault.thaid.online" className="hover:text-[#171717] transition-colors">Security Vault</a>
+            
           </div>
 
           <div className="text-xs text-[#737373]">
