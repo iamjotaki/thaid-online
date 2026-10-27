@@ -21,7 +21,7 @@ export default function HomePage() {
       description:
         "สตูดิโอแต่งนิยาย AI ระดับโปร รองรับระบบ Multi-Agent แต่งนิยายภาษาไทยสละสลวย จัดการคลังตัวละคร พล็อตเรื่อง และอัปโหลดตอนขึ้น ReadAWrite อัตโนมัติ",
       icon: "edit_note",
-      accentColor: "#0074e2",
+      accentColor: "#0569ff",
       features: [
         "แต่งนิยายไทยภาษาลื่นไหล สละสลวยด้วย Gemini Flash",
         "Character Bible จัดการตัวละครและปูมหลังแม่นยำ",
@@ -154,24 +154,24 @@ export default function HomePage() {
       : services.filter((s) => s.category === activeTab);
 
   return (
-    <div className="min-h-screen bg-[#141414] text-[#ffffff] flex flex-col font-sans selection:bg-[#0074e2]/30 selection:text-white">
+    <div className="min-h-screen bg-[#131922] text-[#ffffff] flex flex-col font-sans selection:bg-[#0569ff]/30 selection:text-white">
       
       {/* ======================================================== */}
       {/* 1. FASTWORK-STYLE DARK STUDIO NAVIGATION BAR (h-[54px])  */}
       {/* ======================================================== */}
-      <header className="sticky top-0 z-50 h-[54px] border-b border-white/[0.08] bg-[#141414]/85 backdrop-blur-2xl">
+      <header className="sticky top-0 z-50 h-[54px] border-b border-[#2b313b] bg-[#131922]/85 backdrop-blur-2xl">
         <div className="max-w-[1400px] mx-auto h-full px-4 sm:px-6 flex items-center justify-between gap-4">
           
           {/* Left: Brand Identity */}
           <div className="flex items-center gap-3">
             <a href="https://thaid.online" className="flex items-center gap-2.5 group">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#0074e2] to-[#e85a2d] flex items-center justify-center text-white shadow-md shadow-[#0074e2]/25 group-hover:scale-105 transition-transform">
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#0569ff] to-[#e85a2d] flex items-center justify-center text-white shadow-md shadow-[#0569ff]/25 group-hover:scale-105 transition-transform">
                 <span className="material-symbols-outlined text-[19px]">hub</span>
               </div>
               <div className="flex flex-col">
                 <span className="font-extrabold text-sm tracking-tight leading-none text-white flex items-center gap-1.5">
-                  ThaiD<span className="text-[#0074e2]">.online</span>
-                  <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded-full bg-white/[0.08] text-stone-300 font-semibold border border-white/10">Studio</span>
+                  ThaiD<span className="text-[#0569ff]">.online</span>
+                  <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded-full bg-white/[0.08] text-stone-300 font-semibold border border-[#2b313b]">Studio</span>
                 </span>
                 <span className="text-[10px] text-stone-400 font-medium leading-tight">AI Multi-SaaS Platform</span>
               </div>
@@ -235,7 +235,7 @@ export default function HomePage() {
           <div className="flex items-center gap-2 flex-shrink-0">
             <a
               href="https://vault.thaid.online"
-              className="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg border border-white/10 hover:border-white/25 text-stone-300 hover:text-white transition-all bg-white/[0.04]"
+              className="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg border border-[#2b313b] hover:border-white/25 text-stone-300 hover:text-white transition-all bg-white/[0.04]"
               title="คลังความปลอดภัยและ API Keys"
             >
               <span className="material-symbols-outlined text-[15px] text-amber-400">lock</span>
@@ -244,7 +244,7 @@ export default function HomePage() {
 
             <a
               href="https://novel.thaid.online"
-              className="inline-flex items-center gap-1.5 text-xs font-bold px-4 py-1.5 rounded-lg bg-[#0074e2] hover:bg-[#4276fc] text-white shadow-md shadow-[#0074e2]/25 transition-all hover:scale-[1.02] active:scale-[0.98]"
+              className="inline-flex items-center gap-1.5 text-xs font-bold px-4 py-1.5 rounded-lg bg-[#0569ff] hover:bg-[#4276fc] text-white shadow-md shadow-[#0569ff]/25 transition-all hover:scale-[1.02] active:scale-[0.98]"
             >
               <span className="material-symbols-outlined text-[15px]">rocket_launch</span>
               <span>เข้าใช้งานระบบ</span>
@@ -266,24 +266,24 @@ export default function HomePage() {
 
         {/* Mobile Dropdown Sheet */}
         {mobileMenuOpen && (
-          <div className="lg:hidden border-b border-white/[0.08] bg-[#141414]/98 backdrop-blur-2xl px-4 py-4 space-y-2 text-sm shadow-2xl">
+          <div className="lg:hidden border-b border-[#2b313b] bg-[#131922]/98 backdrop-blur-2xl px-4 py-4 space-y-2 text-sm shadow-2xl">
             <a
               href="https://thaid.online"
               onClick={() => setMobileMenuOpen(false)}
               className="flex items-center justify-between px-3 py-2 rounded-lg font-semibold bg-white/10 text-white"
             >
               <span className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-[17px] text-[#0074e2]">hub</span>
+                <span className="material-symbols-outlined text-[17px] text-[#0569ff]">hub</span>
                 <span>ThaiD Hub (หน้าแรก)</span>
               </span>
-              <span className="text-[10px] bg-[#0074e2]/20 text-[#0074e2] px-2 py-0.5 rounded font-bold border border-[#0074e2]/30">ACTIVE</span>
+              <span className="text-[10px] bg-[#0569ff]/20 text-[#0569ff] px-2 py-0.5 rounded font-bold border border-[#0569ff]/30">ACTIVE</span>
             </a>
             <a
               href="https://novel.thaid.online"
               className="flex items-center justify-between px-3 py-2 rounded-lg font-medium text-stone-300 hover:bg-white/5"
             >
               <span className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-[17px] text-[#0074e2]">edit_note</span>
+                <span className="material-symbols-outlined text-[17px] text-[#0569ff]">edit_note</span>
                 <span>นิยาย AI (Novel Studio)</span>
               </span>
               <span className="material-symbols-outlined text-xs">arrow_outward</span>
@@ -338,10 +338,10 @@ export default function HomePage() {
               </span>
               <span className="material-symbols-outlined text-xs">arrow_outward</span>
             </a>
-            <div className="pt-2 border-t border-white/[0.08]">
+            <div className="pt-2 border-t border-[#2b313b]">
               <a
                 href="https://novel.thaid.online"
-                className="w-full py-2.5 rounded-xl bg-[#0074e2] text-white font-bold text-center flex items-center justify-center gap-2"
+                className="w-full py-2.5 rounded-xl bg-[#0569ff] text-white font-bold text-center flex items-center justify-center gap-2"
               >
                 <span className="material-symbols-outlined text-[17px]">rocket_launch</span>
                 <span>เปิดใช้งาน Novel Studio</span>
@@ -354,10 +354,10 @@ export default function HomePage() {
       {/* ======================================================== */}
       {/* 2. HERO SECTION (FASTWORK STUDIO DARK HERO)              */}
       {/* ======================================================== */}
-      <section id="overview" className="relative pt-12 sm:pt-16 pb-12 overflow-hidden border-b border-white/[0.08]">
+      <section id="overview" className="relative pt-12 sm:pt-16 pb-12 overflow-hidden border-b border-[#2b313b]">
         
         {/* Ambient Subtle Gradients */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-tr from-[#0074e2]/15 via-[#e85a2d]/10 to-transparent blur-3xl pointer-events-none rounded-full" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-tr from-[#0569ff]/15 via-[#e85a2d]/10 to-transparent blur-3xl pointer-events-none rounded-full" />
 
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 relative z-10 text-center">
           
@@ -366,13 +366,13 @@ export default function HomePage() {
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             <span className="text-stone-300">ThaiD Cloud Multi-SaaS Platform</span>
             <span className="text-stone-600">|</span>
-            <span className="text-[#0074e2] font-bold">Fastwork-Style Studio UI</span>
+            <span className="text-[#0569ff] font-bold">Fastwork-Style Studio UI</span>
           </div>
 
           {/* Main Headline */}
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white max-w-4xl mx-auto leading-[1.15]">
             ศูนย์รวมโซลูชัน AI อัจฉริยะ <br className="hidden sm:inline" />
-            <span className="bg-gradient-to-r from-[#0074e2] via-[#4276fc] to-[#e85a2d] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#0569ff] via-[#4276fc] to-[#e85a2d] bg-clip-text text-transparent">
               สำหรับครีเอเตอร์และธุรกิจไทย
             </span>
           </h1>
@@ -385,7 +385,7 @@ export default function HomePage() {
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 max-w-md mx-auto">
             <a
               href="https://novel.thaid.online"
-              className="w-full sm:w-auto px-6 py-3 rounded-xl bg-[#0074e2] hover:bg-[#4276fc] text-white font-bold text-sm shadow-lg shadow-[#0074e2]/25 transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-6 py-3 rounded-xl bg-[#0569ff] hover:bg-[#4276fc] text-white font-bold text-sm shadow-lg shadow-[#0569ff]/25 transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
             >
               <span className="material-symbols-outlined text-[18px]">edit_note</span>
               <span>เข้าสู่ Novel Studio</span>
@@ -408,7 +408,7 @@ export default function HomePage() {
 
           {/* Live Ecosystem Bar */}
           <div className="mt-8 max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-3 text-left">
-            <div className="p-3.5 rounded-2xl bg-[#1b1b1e] border border-white/[0.08] shadow-xs">
+            <div className="p-3.5 rounded-2xl bg-[#1f252e] border border-[#2b313b] shadow-xs">
               <div className="flex items-center gap-2 text-xs font-semibold text-stone-400">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                 <span>โฮสต์เซิร์ฟเวอร์</span>
@@ -417,7 +417,7 @@ export default function HomePage() {
               <p className="text-[11px] text-stone-500">2 OCPU · 12 GB RAM</p>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-[#1b1b1e] border border-white/[0.08] shadow-xs">
+            <div className="p-3.5 rounded-2xl bg-[#1f252e] border border-[#2b313b] shadow-xs">
               <div className="flex items-center gap-2 text-xs font-semibold text-stone-400">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                 <span>Reverse Proxy</span>
@@ -426,7 +426,7 @@ export default function HomePage() {
               <p className="text-[11px] text-stone-500">Auto SSL Let&apos;s Encrypt</p>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-[#1b1b1e] border border-white/[0.08] shadow-xs">
+            <div className="p-3.5 rounded-2xl bg-[#1f252e] border border-[#2b313b] shadow-xs">
               <div className="flex items-center gap-2 text-xs font-semibold text-stone-400">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                 <span>โดเมนหลัก</span>
@@ -435,7 +435,7 @@ export default function HomePage() {
               <p className="text-[11px] text-stone-500">Wildcard DNS (*.thaid)</p>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-[#1b1b1e] border border-white/[0.08] shadow-xs">
+            <div className="p-3.5 rounded-2xl bg-[#1f252e] border border-[#2b313b] shadow-xs">
               <div className="flex items-center gap-2 text-xs font-semibold text-stone-400">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                 <span>ระบบคอนเทนเนอร์</span>
@@ -456,7 +456,7 @@ export default function HomePage() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
           <div>
-            <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0074e2] uppercase tracking-wider mb-1">
+            <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0569ff] uppercase tracking-wider mb-1">
               <span className="material-symbols-outlined text-[15px]">apps</span>
               <span>AI PRODUCT PORTFOLIO</span>
             </div>
@@ -466,7 +466,7 @@ export default function HomePage() {
           </div>
 
           {/* Segmented Filter Control */}
-          <div className="flex flex-wrap items-center gap-1 bg-white/[0.04] p-1 rounded-xl border border-white/[0.08] text-xs">
+          <div className="flex flex-wrap items-center gap-1 bg-white/[0.04] p-1 rounded-xl border border-[#2b313b] text-xs">
             <button
               type="button"
               onClick={() => setActiveTab("all")}
@@ -552,7 +552,7 @@ export default function HomePage() {
           {filteredServices.map((service) => (
             <div
               key={service.id}
-              className="rounded-3xl bg-[#1b1b1e] border border-white/[0.08] p-6 sm:p-7 flex flex-col justify-between fastwork-card-hover fastwork-card-shadow"
+              className="rounded-3xl bg-[#1f252e] border border-[#2b313b] p-6 sm:p-7 flex flex-col justify-between fastwork-card-hover fastwork-card-shadow"
             >
               <div>
                 {/* Top Row: Icon + Badge + Status */}
@@ -602,7 +602,7 @@ export default function HomePage() {
                 </p>
 
                 {/* Feature Bullets */}
-                <div className="mt-6 space-y-2.5 pt-5 border-t border-white/[0.08]">
+                <div className="mt-6 space-y-2.5 pt-5 border-t border-[#2b313b]">
                   {service.features.map((feat, idx) => (
                     <div key={idx} className="flex items-start gap-2.5 text-xs text-stone-300">
                       <span
@@ -618,7 +618,7 @@ export default function HomePage() {
               </div>
 
               {/* Bottom Card Footer: KPIs + Action CTA */}
-              <div className="mt-8 pt-5 border-t border-white/[0.08]">
+              <div className="mt-8 pt-5 border-t border-[#2b313b]">
                 <div className="grid grid-cols-2 gap-3 mb-5">
                   <div className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.05]">
                     <p className="text-base font-bold text-white">
@@ -660,10 +660,10 @@ export default function HomePage() {
       {/* ======================================================== */}
       {/* 4. CLOUD INFRASTRUCTURE & SECURITY SPECIFICATION        */}
       {/* ======================================================== */}
-      <section id="cloud-infra" className="py-14 sm:py-20 border-t border-white/[0.08] bg-[#111114]">
+      <section id="cloud-infra" className="py-14 sm:py-20 border-t border-[#2b313b] bg-[#111114]">
         <div className="max-w-[1400px] w-full mx-auto px-4 sm:px-6">
           <div className="max-w-2xl mb-10">
-            <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0074e2] uppercase tracking-wider mb-1">
+            <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0569ff] uppercase tracking-wider mb-1">
               <span className="material-symbols-outlined text-[15px]">dns</span>
               <span>ENTERPRISE ARCHITECTURE</span>
             </div>
@@ -676,8 +676,8 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-6 rounded-3xl bg-[#1b1b1e] border border-white/[0.08]">
-              <div className="w-10 h-10 rounded-xl bg-[#0074e2]/15 text-[#0074e2] flex items-center justify-center mb-4">
+            <div className="p-6 rounded-3xl bg-[#1f252e] border border-[#2b313b]">
+              <div className="w-10 h-10 rounded-xl bg-[#0569ff]/15 text-[#0569ff] flex items-center justify-center mb-4">
                 <span className="material-symbols-outlined text-[20px]">security</span>
               </div>
               <h4 className="font-bold text-base text-white">Automatic Let&apos;s Encrypt SSL</h4>
@@ -686,8 +686,8 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="p-6 rounded-3xl bg-[#1b1b1e] border border-white/[0.08]">
-              <div className="w-10 h-10 rounded-xl bg-[#0074e2]/15 text-[#0074e2] flex items-center justify-center mb-4">
+            <div className="p-6 rounded-3xl bg-[#1f252e] border border-[#2b313b]">
+              <div className="w-10 h-10 rounded-xl bg-[#0569ff]/15 text-[#0569ff] flex items-center justify-center mb-4">
                 <span className="material-symbols-outlined text-[20px]">memory</span>
               </div>
               <h4 className="font-bold text-base text-white">Oracle Cloud Ampere ARM A1</h4>
@@ -696,7 +696,7 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="p-6 rounded-3xl bg-[#1b1b1e] border border-white/[0.08]">
+            <div className="p-6 rounded-3xl bg-[#1f252e] border border-[#2b313b]">
               <div className="w-10 h-10 rounded-xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center mb-4">
                 <span className="material-symbols-outlined text-[20px]">sync</span>
               </div>
@@ -712,11 +712,11 @@ export default function HomePage() {
       {/* ======================================================== */}
       {/* 5. FOOTER (FASTWORK MINIMALIST STUDIO FOOTER)            */}
       {/* ======================================================== */}
-      <footer className="mt-auto border-t border-white/[0.08] bg-[#111114] py-10 text-xs text-stone-400">
+      <footer className="mt-auto border-t border-[#2b313b] bg-[#111114] py-10 text-xs text-stone-400">
         <div className="max-w-[1400px] w-full mx-auto px-4 sm:px-6">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pb-6 border-b border-white/[0.08]">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pb-6 border-b border-[#2b313b]">
             <div className="flex items-center gap-2">
-              <div className="w-5 h-5 rounded-md bg-[#0074e2] flex items-center justify-center text-white">
+              <div className="w-5 h-5 rounded-md bg-[#0569ff] flex items-center justify-center text-white">
                 <span className="material-symbols-outlined text-[13px]">hub</span>
               </div>
               <span className="font-bold text-sm text-white">ThaiD.online</span>

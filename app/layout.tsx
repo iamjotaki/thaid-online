@@ -32,7 +32,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#141414",
+  themeColor: "#131922",
 };
 
 export default function RootLayout({
@@ -41,7 +41,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="th" className="scroll-smooth dark bg-[#141414] text-[#f5f5f7]">
+    <html lang="th" className="scroll-smooth dark bg-[#131922] text-[#fafafa]">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link

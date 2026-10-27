@@ -45,3 +45,7 @@ coolify_ops.py
 deploy_batch.py
 verify_all_endpoints.py
 
+apply_exact_fastwork_tokens.py
+
+push_and_deploy_all.py
+
