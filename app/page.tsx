@@ -590,17 +590,6 @@ export default function HomePage() {
           {/* ======================================================== */}
           <div className="hero-copy-scatter relative z-20 flex flex-col items-center text-center px-4 max-w-4xl mx-auto pointer-events-auto">
             
-            {/* Top Brand Pill */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-black/[0.08] bg-white/90 shadow-xs mb-6 backdrop-blur-md">
-              <span className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse" />
-              <span className="text-xs font-bold text-[#171717] tracking-tight">
-                ThaiD Studio
-              </span>
-              <span className="text-[11px] text-[#737373] border-l border-black/[0.08] pl-2 font-medium">
-                SaaS Ecosystem 2026
-              </span>
-            </div>
-
             {/* Exact Fastwork Headline with Animated Handwritten Thai "คุณ" */}
             <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-[#171717] leading-[1.08] mb-6">
               Show the world
@@ -735,9 +724,6 @@ export default function HomePage() {
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-stone-100 text-[#171717] text-xs font-bold mb-4">
-            ✦ AI Studio Directory
-          </div>
           <h2 className="text-3xl sm:text-4xl font-bold text-[#171717] tracking-tight mb-4">
             เลือกสตูดิโอ AI ที่คุณต้องการสร้างสรรค์
           </h2>
