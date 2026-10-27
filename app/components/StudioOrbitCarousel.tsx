@@ -1,0 +1,516 @@
+"use client";
+
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import Image from "next/image";
+
+export interface StudioItem {
+  id: string;
+  name: string;
+  subname: string;
+  tag: string;
+  url: string;
+  category: string;
+  status: string;
+  badge: string;
+  description: string;
+  icon: string;
+  image: string;
+  accent: string;
+  features: string[];
+  stats: {
+    primary: string;
+    primaryLabel: string;
+    secondary: string;
+    secondaryLabel: string;
+  };
+  actionText: string;
+}
+
+const STUDIOS: StudioItem[] = [
+  {
+    id: "mockup",
+    name: "ThaiD Mockup AI Studio",
+    subname: "AI Product Photography & Studio",
+    tag: "mockup.thaid.online",
+    url: "https://mockup.thaid.online",
+    category: "mockup",
+    status: "พร้อมใช้งาน",
+    badge: "E-Commerce",
+    description: "สตูดิโอถ่ายภาพสินค้าและม็อกอัพระดับลักชัวรีด้วย AI ไดคัตพื้นหลังอัตโนมัติ จัดวางฉากพรีเมียม สังเคราะห์แสงเงาสมจริง",
+    icon: "photo_camera",
+    image: "/cards/mockup_real_1.jpg",
+    accent: "#e85a2d",
+    features: [
+      "ตัดพื้นหลังอัตโนมัติด้วย AI Matting ภายใน 1 วินาที",
+      "8 ฉากหลังพรีเซ็ตลักชัวรีจาก Google Flow",
+      "สังเคราะห์แสงเงา Contact & Cast Shadow สมจริง",
+    ],
+    stats: { primary: "1080×1080", primaryLabel: "Full HD Studio", secondary: "< 1 วิ", secondaryLabel: "เรนเดอร์ภาพ" },
+    actionText: "เปิดใช้งาน Mockup Studio",
+  },
+  {
+    id: "novel",
+    name: "ReadAWrite Pro Studio",
+    subname: "AI Novel & Chapter Generator",
+    tag: "novel.thaid.online",
+    url: "https://novel.thaid.online",
+    category: "novel",
+    status: "พร้อมใช้งาน",
+    badge: "Most Popular",
+    description: "ระบบผู้ช่วยนักเขียนอัจฉริยะ วางโครงเรื่อง แต่งนิยาย 10 ตอนจบ พร้อมเชื่อมต่ออัปโหลดขึ้น ReadAWrite.com อัตโนมัติ",
+    icon: "edit_note",
+    image: "/cards/novel_real_1.jpg",
+    accent: "#0569ff",
+    features: [
+      "Gemini Multi-Agent Plot & Chapter Engine",
+      "ProofAI ตรวจคำผิดและขัดเกลาสำนวนภาษาไทย",
+      "อัปโหลดบทและภาพปกขึ้น ReadAWrite อัตโนมัติ",
+    ],
+    stats: { primary: "10 ตอนจบ", primaryLabel: "โครงเรื่องอัตโนมัติ", secondary: "50,000", secondaryLabel: "โควตาคำทดลองฟรี" },
+    actionText: "เปิดใช้งาน Novel Studio",
+  },
+  {
+    id: "social",
+    name: "Social Auto-Poster Pro",
+    subname: "Facebook Content & Video Reels",
+    tag: "social.thaid.online",
+    url: "https://social.thaid.online",
+    category: "social",
+    status: "พร้อมใช้งาน",
+    badge: "High Viral",
+    description: "ระบบ AI ค้นหาข่าวไวรัล เรียบเรียงใหม่ เจนภาพประกอบและตัดต่อวิดีโอสั้นพร้อมเสียงพากย์ ยิงโพสต์ขึ้น Facebook Page 24 ชม.",
+    icon: "campaign",
+    image: "/cards/social_real_1.jpg",
+    accent: "#1877f2",
+    features: [
+      "Auto-Curation ค้นหาและคัดกรองข่าวดังอัตโนมัติ",
+      "ตัดต่อวิดีโอ Shorts/Reels ขนาด 9:16 ด้วย FFmpeg",
+      "แปลงข้อความเป็นเสียงพากย์ภาษาไทยเป็นธรรมชาติ",
+    ],
+    stats: { primary: "24 ชม.", primaryLabel: "ทำงานอัตโนมัติ", secondary: "Reels & Post", secondaryLabel: "รองรับ 2 รูปแบบ" },
+    actionText: "เปิดใช้งาน Social Poster",
+  },
+  {
+    id: "clip",
+    name: "AI Clip Studio Pro",
+    subname: "Viral Video & Subtitle Generator",
+    tag: "clip.thaid.online",
+    url: "https://clip.thaid.online",
+    category: "clip",
+    status: "พร้อมใช้งาน",
+    badge: "Trending",
+    description: "สตูดิโอสร้างคลิปวิดีโอสั้นอัตโนมัติด้วย AI พากย์เสียงภาษาไทย สร้างซับไตเติลคาราโอเกะแบบคำต่อคำ และภาพประกอบแบบไดนามิก",
+    icon: "movie_creation",
+    image: "/cards/clip_real_1.jpg",
+    accent: "#8b5cf6",
+    features: [
+      "ซับไตเติลคาราโอเกะซิงก์เสียงพูดเป๊ะทุกคำ",
+      "คลังดนตรีและซาวด์เอฟเฟกต์ประกอบคลิปกว่า 1,000 ชิ้น",
+      "เรนเดอร์วิดีโอความคมชัดสูง 1080p พร้อมแชร์ทันที",
+    ],
+    stats: { primary: "1080×1920", primaryLabel: "ความละเอียด 9:16", secondary: "100%", secondaryLabel: "ซับไตเติลภาษาไทย" },
+    actionText: "เปิดใช้งาน Clip Studio",
+  },
+  {
+    id: "sticker",
+    name: "LINE Sticker AI Creator",
+    subname: "40-Action Character Pack Studio",
+    tag: "sticker.thaid.online",
+    url: "https://sticker.thaid.online",
+    category: "sticker",
+    status: "พร้อมใช้งาน",
+    badge: "Creators Choice",
+    description: "สตูดิโอสร้างชุดสติกเกอร์ไลน์ 40 แอ็กชันพร้อมส่งขาย ลายเส้นคาแรคเตอร์คงที่ ไดคัตพื้นหลังใส คำพูดฮิตภาษาไทย",
+    icon: "sentiment_satisfied",
+    image: "/cards/sticker_real_1.jpg",
+    accent: "#10b981",
+    features: [
+      "เจนสติกเกอร์ครบชุด 8/16/24/40 ตัวในสไตล์เดียวกัน",
+      "ตัดพื้นหลังโปร่งใส PNG และสร้าง Main/Tab Image อัตโนมัติ",
+      "จัดแพ็ก ZIP ตามมาตรฐาน LINE Creators Market",
+    ],
+    stats: { primary: "40 แอ็กชัน", primaryLabel: "ชุดมาตรฐาน LINE", secondary: "370×320", secondaryLabel: "PNG ไดคัตใส" },
+    actionText: "เปิดใช้งาน Sticker Studio",
+  },
+  {
+    id: "chat",
+    name: "ThaiD Smart Chat AI",
+    subname: "LINE Official Account Bot",
+    tag: "chat.thaid.online",
+    url: "https://chat.thaid.online",
+    category: "chat",
+    status: "พร้อมใช้งาน",
+    badge: "Fast Reply 0.8s",
+    description: "ระบบแอดมิน AI ตอบแชทลูกค้าบน LINE OA ตลอด 24 ชม. เรียนรู้ข้อมูลสินค้า ปิดการขายอัตโนมัติ เชื่อมต่อ webhook ราบรื่น",
+    icon: "chat",
+    image: "/cards/chat_real_1.jpg",
+    accent: "#0d9488",
+    features: [
+      "ระบบตอบกลับความเร็วสูงเฉลี่ย 0.8 วินาที ด้วย Enterprise API",
+      "จดจำบริบทบทสนทนาและปิดการขายได้อย่างเป็นธรรมชาติ",
+      "หน้าแดชบอร์ดจัดการคลังความรู้ คอนฟิก LINE OA ในคลิกเดียว",
+    ],
+    stats: { primary: "0.8 วินาที", primaryLabel: "ความเร็วตอบกลับ", secondary: "24/7", secondaryLabel: "แสตนด์บายตอบแชท" },
+    actionText: "เปิดใช้งาน Smart Chat",
+  },
+];
+
+export default function StudioOrbitCarousel() {
+  const [rotation, setRotation] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [radius, setRadius] = useState(380);
+
+  const total = STUDIOS.length;
+  const angleStep = 360 / total;
+
+  // Drag interaction refs
+  const startXRef = useRef(0);
+  const isDraggingRef = useRef(false);
+  const hasDraggedRef = useRef(false);
+
+  // Responsive radius calculation
+  useEffect(() => {
+    const updateRadius = () => {
+      if (window.innerWidth < 640) {
+        setRadius(240);
+      } else if (window.innerWidth < 1024) {
+        setRadius(320);
+      } else {
+        setRadius(390);
+      }
+    };
+    updateRadius();
+    window.addEventListener("resize", updateRadius);
+    return () => window.removeEventListener("resize", updateRadius);
+  }, []);
+
+  // Smooth auto-rotation
+  useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(() => {
+      setRotation((prev) => prev - 0.18);
+    }, 30);
+    return () => clearInterval(interval);
+  }, [isPaused]);
+
+  // Compute active front index from rotation angle
+  useEffect(() => {
+    const normalized = ((-rotation % 360) + 360) % 360;
+    const index = Math.round(normalized / angleStep) % total;
+    setActiveIndex(index);
+  }, [rotation, angleStep, total]);
+
+  // Direct rotate to specific studio index
+  const rotateTo = useCallback((index: number) => {
+    // Calculate nearest angular path
+    const currentNorm = ((-rotation % 360) + 360) % 360;
+    const targetNorm = (index * angleStep) % 360;
+    let diff = targetNorm - currentNorm;
+    if (diff > 180) diff -= 360;
+    if (diff < -180) diff += 360;
+    setRotation((prev) => prev - diff);
+    setActiveIndex(index);
+  }, [rotation, angleStep]);
+
+  const handlePrev = () => {
+    setRotation((prev) => prev + angleStep);
+  };
+
+  const handleNext = () => {
+    setRotation((prev) => prev - angleStep);
+  };
+
+  // Drag Handlers (Mouse & Touch)
+  const handleDragStart = (clientX: number) => {
+    isDraggingRef.current = true;
+    hasDraggedRef.current = false;
+    startXRef.current = clientX;
+    setIsPaused(true);
+  };
+
+  const handleDragMove = (clientX: number) => {
+    if (!isDraggingRef.current) return;
+    const delta = clientX - startXRef.current;
+    if (Math.abs(delta) > 5) {
+      hasDraggedRef.current = true;
+    }
+    setRotation((prev) => prev + delta * 0.35);
+    startXRef.current = clientX;
+  };
+
+  const handleDragEnd = () => {
+    if (!isDraggingRef.current) return;
+    isDraggingRef.current = false;
+    // Resume auto-rotation after 2 seconds
+    setTimeout(() => {
+      setIsPaused(false);
+    }, 2000);
+  };
+
+  const activeStudio = STUDIOS[activeIndex];
+
+  return (
+    <div className="relative w-full select-none">
+      {/* Category Filter Pills (Syncs with 3D Orbit Carousel) */}
+      <div className="flex items-center justify-center gap-2 flex-wrap mb-10 px-4">
+        <button
+          type="button"
+          onClick={() => {
+            setIsPaused(false);
+          }}
+          className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer flex items-center gap-1.5 ${
+            !isPaused
+              ? "bg-[#171717] text-white shadow-sm ring-2 ring-black/10"
+              : "bg-white text-[#737373] hover:text-[#171717] border border-black/[0.08] hover:border-black/20"
+          }`}
+        >
+          <span className="text-sm">🎡</span>
+          <span>หมุน 360° (ทั้งหมด)</span>
+        </button>
+
+        {STUDIOS.map((s, idx) => (
+          <button
+            key={s.id}
+            type="button"
+            onClick={() => {
+              rotateTo(idx);
+              setIsPaused(true);
+            }}
+            className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer flex items-center gap-1.5 ${
+              activeIndex === idx
+                ? "bg-[#171717] text-white shadow-sm ring-2 ring-black/10"
+                : "bg-white text-[#737373] hover:text-[#171717] border border-black/[0.08] hover:border-black/20"
+            }`}
+          >
+            <span
+              className="w-2 h-2 rounded-full"
+              style={{ backgroundColor: s.accent }}
+            />
+            <span>{s.badge} ({s.name.split(" ")[1] || s.name})</span>
+          </button>
+        ))}
+      </div>
+
+      {/* 3D Orbit Stage Viewport */}
+      <div className="relative w-full py-4 overflow-hidden">
+        {/* Dynamic Ambient Background Glow */}
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] sm:w-[650px] h-[350px] sm:h-[450px] rounded-full blur-[90px] pointer-events-none transition-colors duration-700 opacity-25"
+          style={{
+            background: `radial-gradient(circle, ${activeStudio.accent} 0%, transparent 70%)`,
+          }}
+        />
+
+        {/* 3D Perspective Stage */}
+        <div
+          className="relative w-full h-[520px] sm:h-[560px] flex items-center justify-center orbit-carousel-viewport cursor-grab active:cursor-grabbing"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => {
+            if (!isDraggingRef.current) setIsPaused(false);
+          }}
+          onMouseDown={(e) => handleDragStart(e.clientX)}
+          onMouseMove={(e) => handleDragMove(e.clientX)}
+          onMouseUp={handleDragEnd}
+          onTouchStart={(e) => handleDragStart(e.touches[0].clientX)}
+          onTouchMove={(e) => handleDragMove(e.touches[0].clientX)}
+          onTouchEnd={handleDragEnd}
+        >
+          {/* Glowing Ground Disk Ring */}
+          <div
+            className="absolute w-[360px] sm:w-[500px] h-[360px] sm:h-[500px] rounded-full border border-dashed border-stone-300/80 pointer-events-none flex items-center justify-center opacity-60"
+            style={{
+              transform: "rotateX(75deg) translateY(180px)",
+            }}
+          >
+            <div
+              className="w-[200px] sm:w-[300px] h-[200px] sm:h-[300px] rounded-full border border-stone-200 animate-pulse"
+              style={{ borderColor: `${activeStudio.accent}40` }}
+            />
+          </div>
+
+          {/* 3D Rotating Cylinder Stage */}
+          <div
+            className="orbit-carousel-stage w-full h-full flex items-center justify-center"
+            style={{
+              transform: `rotateY(${rotation}deg)`,
+              transition: isDraggingRef.current ? "none" : "transform 0.08s linear",
+            }}
+          >
+            {STUDIOS.map((service, idx) => {
+              const cardAngle = idx * angleStep;
+              const isCurrent = idx === activeIndex;
+
+              // Angular difference to calculate depth opacity & scaling
+              const normalizedDiff = Math.abs((((cardAngle + rotation) % 360) + 540) % 360 - 180);
+              const isBack = normalizedDiff > 90;
+
+              return (
+                <div
+                  key={service.id}
+                  onClick={(e) => {
+                    if (hasDraggedRef.current) return;
+                    e.stopPropagation();
+                    rotateTo(idx);
+                  }}
+                  className={`orbit-carousel-card absolute w-[260px] sm:w-[310px] h-[450px] sm:h-[490px] rounded-3xl bg-white border overflow-hidden flex flex-col justify-between transition-all duration-300 select-none ${
+                    isCurrent
+                      ? "border-black/[0.18] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.22)] scale-105 z-30 opacity-100"
+                      : isBack
+                      ? "border-black/[0.05] shadow-sm scale-90 opacity-40 hover:opacity-75 z-10 cursor-pointer"
+                      : "border-black/[0.08] shadow-md scale-95 opacity-75 hover:opacity-95 z-20 cursor-pointer"
+                  }`}
+                  style={{
+                    transform: `rotateY(${cardAngle}deg) translateZ(${radius}px)`,
+                    boxShadow: isCurrent
+                      ? `0 25px 60px -15px ${service.accent}35, 0 0 0 1.5px ${service.accent}`
+                      : undefined,
+                  }}
+                >
+                  {/* Card Image Banner */}
+                  <div className="relative w-full h-44 sm:h-48 bg-stone-100 overflow-hidden flex-shrink-0">
+                    <Image
+                      src={service.image}
+                      alt={service.name}
+                      fill
+                      sizes="(max-width: 640px) 260px, 310px"
+                      className="object-cover transition-transform duration-500"
+                      priority={idx < 3}
+                    />
+                    <div className="absolute top-3 left-3 flex items-center gap-1.5">
+                      <span className="px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-bold bg-white/95 backdrop-blur-md text-[#171717] border border-black/[0.08] shadow-xs">
+                        {service.badge}
+                      </span>
+                    </div>
+                    <div className="absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-md text-[10px] font-semibold text-[#171717] border border-black/[0.08] shadow-xs">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#22c55e] animate-pulse" />
+                      <span>{service.status}</span>
+                    </div>
+                  </div>
+
+                  {/* Card Body */}
+                  <div className="p-4 sm:p-5 flex flex-col flex-1 justify-between text-left">
+                    <div>
+                      {/* Subdomain link indicator */}
+                      <div className="flex items-center gap-1.5 mb-1 text-xs font-semibold" style={{ color: service.accent }}>
+                        <span className="material-symbols-outlined text-[16px]">{service.icon}</span>
+                        <span className="font-mono text-[11px] truncate">{service.tag}</span>
+                      </div>
+
+                      {/* Title */}
+                      <h3 className="text-base sm:text-lg font-bold text-[#171717] mb-1.5 line-clamp-1">
+                        {service.name}
+                      </h3>
+
+                      {/* Description */}
+                      <p className="text-[#737373] text-[11px] sm:text-xs leading-relaxed line-clamp-2 mb-3">
+                        {service.description}
+                      </p>
+
+                      {/* Key Features Bullet List */}
+                      <div className="space-y-1 sm:space-y-1.5 mb-3">
+                        {service.features.slice(0, 2).map((feat, fIdx) => (
+                          <div key={fIdx} className="flex items-start gap-1.5 text-[11px] text-[#171717]">
+                            <span className="text-[#0569ff] font-bold">✓</span>
+                            <span className="text-stone-700 line-clamp-1">{feat}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Card Footer Metric & Direct Link Button */}
+                    <div className="pt-2.5 border-t border-black/[0.06]">
+                      <div className="flex items-center justify-between mb-2.5 text-[11px]">
+                        <div>
+                          <span className="font-bold text-[#171717]">{service.stats.primary}</span>
+                          <span className="text-[10px] text-[#737373] block">{service.stats.primaryLabel}</span>
+                        </div>
+                        <div className="text-right">
+                          <span className="font-bold text-[#171717]">{service.stats.secondary}</span>
+                          <span className="text-[10px] text-[#737373] block">{service.stats.secondaryLabel}</span>
+                        </div>
+                      </div>
+
+                      <a
+                        href={service.url}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }}
+                        className="w-full inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-full bg-[#171717] hover:bg-black text-white text-xs font-semibold transition-all duration-200 shadow-sm cursor-pointer group"
+                      >
+                        <span>{service.actionText}</span>
+                        <span className="text-sm transition-transform group-hover:translate-x-0.5">→</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Left & Right Floating Navigation Controls */}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              handlePrev();
+            }}
+            className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/90 hover:bg-white border border-black/[0.08] shadow-lg flex items-center justify-center text-[#171717] hover:scale-105 transition-all z-40 cursor-pointer backdrop-blur-md"
+            aria-label="Previous Studio"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+          </button>
+
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleNext();
+            }}
+            className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/90 hover:bg-white border border-black/[0.08] shadow-lg flex items-center justify-center text-[#171717] hover:scale-105 transition-all z-40 cursor-pointer backdrop-blur-md"
+            aria-label="Next Studio"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Bottom Focus Tool Summary Bar */}
+        <div className="max-w-xl mx-auto mt-6 px-4">
+          <div className="p-3.5 sm:p-4 rounded-2xl bg-white/90 backdrop-blur-xl border border-black/[0.08] shadow-md flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3 min-w-0">
+              <div
+                className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold shadow-xs flex-shrink-0"
+                style={{ backgroundColor: activeStudio.accent }}
+              >
+                <span className="material-symbols-outlined text-[20px]">{activeStudio.icon}</span>
+              </div>
+              <div className="min-w-0">
+                <div className="flex items-center gap-2">
+                  <h4 className="text-sm font-bold text-[#171717] truncate">{activeStudio.name}</h4>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600 font-bold border border-emerald-200 flex-shrink-0">
+                    Live
+                  </span>
+                </div>
+                <p className="text-[11px] text-[#737373] truncate">
+                  {activeStudio.tag} · {activeStudio.stats.primary}
+                </p>
+              </div>
+            </div>
+
+            <a
+              href={activeStudio.url}
+              className="px-4 py-2 rounded-full bg-[#171717] hover:bg-black text-white text-xs font-semibold shadow-xs transition-all flex items-center gap-1.5 flex-shrink-0"
+            >
+              <span>เปิดระบบ</span>
+              <span className="text-sm">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

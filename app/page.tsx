@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import StudioOrbitCarousel from "./components/StudioOrbitCarousel";
 
 interface ServiceItem {
   id: string;
@@ -938,118 +939,8 @@ export default function HomePage() {
           </p>
         </div>
 
-        {/* Minimalist Pill Filter Tabs */}
-        <div className="flex items-center justify-center gap-2 flex-wrap mb-14">
-          {[
-            { id: "all", label: "ทั้งหมด (All Studios)" },
-            { id: "mockup", label: "Mockup AI" },
-            { id: "novel", label: "Novel AI" },
-            { id: "social", label: "Social Poster" },
-            { id: "clip", label: "Clip Video" },
-            { id: "sticker", label: "LINE Sticker" },
-            { id: "chat", label: "Smart Chat" },
-                      ].map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer ${
-                activeTab === tab.id
-                  ? "bg-[#171717] text-white shadow-sm"
-                  : "bg-white text-[#737373] hover:text-[#171717] border border-black/[0.08] hover:border-black/20"
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Grid of Clean White Studio Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredServices.map((service) => (
-            <article
-              key={service.id}
-              className="group rounded-3xl bg-white border border-black/[0.08] shadow-[0_15px_35px_-5px_rgba(0,0,0,0.06)] hover:shadow-[0_25px_50px_-10px_rgba(0,0,0,0.12)] transition-all duration-300 overflow-hidden flex flex-col"
-            >
-              {/* Card Image Banner */}
-              <div className="relative w-full h-56 bg-stone-100 overflow-hidden">
-                <Image
-                  src={service.image}
-                  alt={service.name}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute top-4 left-4 flex items-center gap-2">
-                  <span className="px-3 py-1 rounded-full text-xs font-bold bg-white/90 backdrop-blur-md text-[#171717] border border-black/[0.08] shadow-xs">
-                    {service.badge}
-                  </span>
-                </div>
-                <div className="absolute top-4 right-4 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-md text-[11px] font-semibold text-[#171717] border border-black/[0.08] shadow-xs">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#22c55e]" />
-                  <span>{service.status}</span>
-                </div>
-              </div>
-
-              {/* Card Content Body */}
-              <div className="p-6 flex flex-col flex-1 justify-between">
-                <div>
-                  <div className="flex items-center gap-2 mb-2 text-[#0569ff] text-xs font-semibold">
-                    <span className="material-symbols-outlined text-base">{service.icon}</span>
-                    <span>{service.tag}</span>
-                  </div>
-
-                  <h3 className="text-xl font-bold text-[#171717] mb-2 group-hover:text-[#0569ff] transition-colors">
-                    {service.name}
-                  </h3>
-
-                  <p className="text-[#737373] text-xs sm:text-sm leading-relaxed mb-6">
-                    {service.description}
-                  </p>
-
-                  {/* Feature Highlights */}
-                  <div className="space-y-2 mb-6">
-                    {service.features.map((feat, idx) => (
-                      <div key={idx} className="flex items-start gap-2 text-xs text-[#171717]">
-                        <span className="text-[#0569ff] font-bold mt-0.5">✓</span>
-                        <span className="text-stone-700 leading-tight">{feat}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Card Footer Metrics & Action */}
-                <div>
-                  <div className="grid grid-cols-2 gap-3 py-3 border-y border-black/[0.06] mb-5">
-                    <div>
-                      <span className="block text-sm font-bold text-[#171717]">
-                        {service.stats.primary}
-                      </span>
-                      <span className="text-[10px] text-[#737373]">
-                        {service.stats.primaryLabel}
-                      </span>
-                    </div>
-                    <div>
-                      <span className="block text-sm font-bold text-[#171717]">
-                        {service.stats.secondary}
-                      </span>
-                      <span className="text-[10px] text-[#737373]">
-                        {service.stats.secondaryLabel}
-                      </span>
-                    </div>
-                  </div>
-
-                  <a
-                    href={service.url}
-                    className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-full bg-[#171717] hover:bg-black text-white text-xs sm:text-sm font-semibold transition-all duration-200 shadow-sm"
-                  >
-                    <span>{service.actionText}</span>
-                    <span className="text-base leading-none">→</span>
-                  </a>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
+        {/* 3D Orbit Carousel Showcase (ม้าหมุน 3 มิติ 360 องศา) */}
+        <StudioOrbitCarousel />
 
       </main>
     </section>

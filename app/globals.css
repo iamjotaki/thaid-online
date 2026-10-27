@@ -451,3 +451,26 @@ html, body {
 ::-webkit-scrollbar-thumb:hover {
   background: #a1a1aa;
 }
+
+
+/* ======================================================== */
+/* 3D ORBIT CAROUSEL ENGINE                                 */
+/* ======================================================== */
+.orbit-carousel-viewport {
+  perspective: 1400px;
+  perspective-origin: 50% 50%;
+  transform-style: preserve-3d;
+}
+
+.orbit-carousel-stage {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.orbit-carousel-card {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, box-shadow 0.4s ease;
+}
