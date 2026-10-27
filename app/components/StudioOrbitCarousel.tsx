@@ -166,7 +166,7 @@ export default function StudioOrbitCarousel() {
   const [rotation, setRotation] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [radius, setRadius] = useState(380);
+  const [radius, setRadius] = useState(320);
 
   const total = STUDIOS.length;
   const angleStep = 360 / total;
@@ -176,15 +176,15 @@ export default function StudioOrbitCarousel() {
   const isDraggingRef = useRef(false);
   const hasDraggedRef = useRef(false);
 
-  // Responsive radius calculation
+  // Responsive radius calculation for compact & fit layout
   useEffect(() => {
     const updateRadius = () => {
       if (window.innerWidth < 640) {
-        setRadius(240);
+        setRadius(210);
       } else if (window.innerWidth < 1024) {
-        setRadius(320);
+        setRadius(270);
       } else {
-        setRadius(390);
+        setRadius(320);
       }
     };
     updateRadius();
@@ -196,7 +196,7 @@ export default function StudioOrbitCarousel() {
   useEffect(() => {
     if (isPaused) return;
     const interval = setInterval(() => {
-      setRotation((prev) => prev - 0.18);
+      setRotation((prev) => prev - 0.16);
     }, 30);
     return () => clearInterval(interval);
   }, [isPaused]);
@@ -210,7 +210,6 @@ export default function StudioOrbitCarousel() {
 
   // Direct rotate to specific studio index
   const rotateTo = useCallback((index: number) => {
-    // Calculate nearest angular path
     const currentNorm = ((-rotation % 360) + 360) % 360;
     const targetNorm = (index * angleStep) % 360;
     let diff = targetNorm - currentNorm;
@@ -249,7 +248,6 @@ export default function StudioOrbitCarousel() {
   const handleDragEnd = () => {
     if (!isDraggingRef.current) return;
     isDraggingRef.current = false;
-    // Resume auto-rotation after 2 seconds
     setTimeout(() => {
       setIsPaused(false);
     }, 2000);
@@ -260,15 +258,15 @@ export default function StudioOrbitCarousel() {
   return (
     <div className="relative w-full select-none">
       {/* Category Filter Pills (Syncs with 3D Orbit Carousel) */}
-      <div className="flex items-center justify-center gap-2 flex-wrap mb-10 px-4">
+      <div className="flex items-center justify-center gap-1.5 sm:gap-2 flex-wrap mb-6 sm:mb-8 px-2">
         <button
           type="button"
           onClick={() => {
             setIsPaused(false);
           }}
-          className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer flex items-center gap-1.5 ${
+          className={`px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer flex items-center gap-1.5 ${
             !isPaused
-              ? "bg-[#171717] text-white shadow-sm ring-2 ring-black/10"
+              ? "bg-[#171717] text-white shadow-xs ring-1 ring-black/10"
               : "bg-white text-[#737373] hover:text-[#171717] border border-black/[0.08] hover:border-black/20"
           }`}
         >
@@ -284,14 +282,14 @@ export default function StudioOrbitCarousel() {
               rotateTo(idx);
               setIsPaused(true);
             }}
-            className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer flex items-center gap-1.5 ${
+            className={`px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer flex items-center gap-1.5 ${
               activeIndex === idx
-                ? "bg-[#171717] text-white shadow-sm ring-2 ring-black/10"
+                ? "bg-[#171717] text-white shadow-xs ring-1 ring-black/10"
                 : "bg-white text-[#737373] hover:text-[#171717] border border-black/[0.08] hover:border-black/20"
             }`}
           >
             <span
-              className="w-2 h-2 rounded-full"
+              className="w-1.5 h-1.5 rounded-full"
               style={{ backgroundColor: s.accent }}
             />
             <span>{s.shortLabel}</span>
@@ -299,11 +297,11 @@ export default function StudioOrbitCarousel() {
         ))}
       </div>
 
-      {/* 3D Orbit Stage Viewport */}
-      <div className="relative w-full py-4 overflow-hidden">
+      {/* 3D Orbit Stage Viewport - Overflow Visible to Prevent Top Clipping */}
+      <div className="relative w-full py-2 overflow-visible">
         {/* Dynamic Ambient Background Glow */}
         <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] sm:w-[650px] h-[350px] sm:h-[450px] rounded-full blur-[90px] pointer-events-none transition-colors duration-700 opacity-25"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[380px] sm:w-[550px] h-[300px] sm:h-[400px] rounded-full blur-[80px] pointer-events-none transition-colors duration-700 opacity-20"
           style={{
             background: `radial-gradient(circle, ${activeStudio.accent} 0%, transparent 70%)`,
           }}
@@ -311,7 +309,7 @@ export default function StudioOrbitCarousel() {
 
         {/* 3D Perspective Stage */}
         <div
-          className="relative w-full h-[520px] sm:h-[560px] flex items-center justify-center orbit-carousel-viewport cursor-grab active:cursor-grabbing"
+          className="relative w-full h-[410px] sm:h-[450px] flex items-center justify-center orbit-carousel-viewport cursor-grab active:cursor-grabbing overflow-visible"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => {
             if (!isDraggingRef.current) setIsPaused(false);
@@ -325,20 +323,20 @@ export default function StudioOrbitCarousel() {
         >
           {/* Glowing Ground Disk Ring */}
           <div
-            className="absolute w-[360px] sm:w-[500px] h-[360px] sm:h-[500px] rounded-full border border-dashed border-stone-300/80 pointer-events-none flex items-center justify-center opacity-60"
+            className="absolute w-[280px] sm:w-[380px] h-[280px] sm:h-[380px] rounded-full border border-dashed border-stone-300/70 pointer-events-none flex items-center justify-center opacity-40"
             style={{
-              transform: "rotateX(75deg) translateY(180px)",
+              transform: "rotateX(75deg) translateY(140px)",
             }}
           >
             <div
-              className="w-[200px] sm:w-[300px] h-[200px] sm:h-[300px] rounded-full border border-stone-200 animate-pulse"
-              style={{ borderColor: `${activeStudio.accent}40` }}
+              className="w-[160px] sm:w-[240px] h-[160px] sm:h-[240px] rounded-full border border-stone-200 animate-pulse"
+              style={{ borderColor: `${activeStudio.accent}30` }}
             />
           </div>
 
           {/* 3D Rotating Cylinder Stage */}
           <div
-            className="orbit-carousel-stage w-full h-full flex items-center justify-center"
+            className="orbit-carousel-stage w-full h-full flex items-center justify-center overflow-visible"
             style={{
               transform: `rotateY(${rotation}deg)`,
               transition: isDraggingRef.current ? "none" : "transform 0.08s linear",
@@ -360,64 +358,64 @@ export default function StudioOrbitCarousel() {
                     e.stopPropagation();
                     rotateTo(idx);
                   }}
-                  className={`orbit-carousel-card absolute w-[260px] sm:w-[310px] h-[450px] sm:h-[490px] rounded-3xl bg-white border overflow-hidden flex flex-col justify-between transition-all duration-300 select-none ${
+                  className={`orbit-carousel-card absolute w-[220px] sm:w-[250px] h-[335px] sm:h-[370px] rounded-2xl bg-white border overflow-hidden flex flex-col justify-between transition-all duration-300 select-none ${
                     isCurrent
-                      ? "border-black/[0.18] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.22)] scale-105 z-30 opacity-100"
+                      ? "border-black/[0.18] shadow-[0_20px_45px_-10px_rgba(0,0,0,0.18)] scale-105 z-30 opacity-100"
                       : isBack
-                      ? "border-black/[0.05] shadow-sm scale-90 opacity-40 hover:opacity-75 z-10 cursor-pointer"
-                      : "border-black/[0.08] shadow-md scale-95 opacity-75 hover:opacity-95 z-20 cursor-pointer"
+                      ? "border-black/[0.04] shadow-xs scale-90 opacity-35 hover:opacity-65 z-10 cursor-pointer"
+                      : "border-black/[0.07] shadow-sm scale-95 opacity-70 hover:opacity-90 z-20 cursor-pointer"
                   }`}
                   style={{
                     transform: `rotateY(${cardAngle}deg) translateZ(${radius}px)`,
                     boxShadow: isCurrent
-                      ? `0 25px 60px -15px ${service.accent}35, 0 0 0 1.5px ${service.accent}`
+                      ? `0 20px 45px -10px ${service.accent}35, 0 0 0 1.5px ${service.accent}`
                       : undefined,
                   }}
                 >
                   {/* Card Image Banner */}
-                  <div className="relative w-full h-44 sm:h-48 bg-stone-100 overflow-hidden flex-shrink-0">
+                  <div className="relative w-full h-28 sm:h-32 bg-stone-100 overflow-hidden flex-shrink-0">
                     <Image
                       src={service.image}
                       alt={service.name}
                       fill
-                      sizes="(max-width: 640px) 260px, 310px"
+                      sizes="(max-width: 640px) 220px, 250px"
                       className="object-cover transition-transform duration-500"
                       priority={idx < 3}
                     />
-                    <div className="absolute top-3 left-3 flex items-center gap-1.5">
-                      <span className="px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-bold bg-white/95 backdrop-blur-md text-[#171717] border border-black/[0.08] shadow-xs">
+                    <div className="absolute top-2 left-2 flex items-center gap-1">
+                      <span className="px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-bold bg-white/95 backdrop-blur-md text-[#171717] border border-black/[0.08] shadow-xs">
                         {service.badge}
                       </span>
                     </div>
-                    <div className="absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-md text-[10px] font-semibold text-[#171717] border border-black/[0.08] shadow-xs">
+                    <div className="absolute top-2 right-2 flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/95 backdrop-blur-md text-[9px] sm:text-[10px] font-semibold text-[#171717] border border-black/[0.08] shadow-xs">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#22c55e] animate-pulse" />
                       <span>{service.status}</span>
                     </div>
                   </div>
 
                   {/* Card Body */}
-                  <div className="p-4 sm:p-5 flex flex-col flex-1 justify-between text-left">
+                  <div className="p-3 sm:p-3.5 flex flex-col flex-1 justify-between text-left">
                     <div>
                       {/* Subdomain link indicator */}
-                      <div className="flex items-center gap-1.5 mb-1 text-xs font-semibold" style={{ color: service.accent }}>
-                        <span className="material-symbols-outlined text-[16px]">{service.icon}</span>
-                        <span className="font-mono text-[11px] truncate">{service.tag}</span>
+                      <div className="flex items-center gap-1 mb-1 text-[11px] font-semibold" style={{ color: service.accent }}>
+                        <span className="material-symbols-outlined text-[14px]">{service.icon}</span>
+                        <span className="font-mono text-[10px] sm:text-[11px] truncate">{service.tag}</span>
                       </div>
 
                       {/* Title */}
-                      <h3 className="text-base sm:text-lg font-bold text-[#171717] mb-1.5 line-clamp-1">
+                      <h3 className="text-sm sm:text-base font-bold text-[#171717] mb-1 line-clamp-1">
                         {service.name}
                       </h3>
 
                       {/* Description */}
-                      <p className="text-[#737373] text-[11px] sm:text-xs leading-relaxed line-clamp-2 mb-3">
+                      <p className="text-[#737373] text-[10px] sm:text-[11px] leading-relaxed line-clamp-2 mb-2">
                         {service.description}
                       </p>
 
                       {/* Key Features Bullet List */}
-                      <div className="space-y-1 sm:space-y-1.5 mb-3">
+                      <div className="space-y-1 mb-2">
                         {service.features.slice(0, 2).map((feat, fIdx) => (
-                          <div key={fIdx} className="flex items-start gap-1.5 text-[11px] text-[#171717]">
+                          <div key={fIdx} className="flex items-start gap-1 text-[10px] text-[#171717]">
                             <span className="text-[#0569ff] font-bold">✓</span>
                             <span className="text-stone-700 line-clamp-1">{feat}</span>
                           </div>
@@ -426,15 +424,15 @@ export default function StudioOrbitCarousel() {
                     </div>
 
                     {/* Card Footer Metric & Direct Link Button */}
-                    <div className="pt-2.5 border-t border-black/[0.06]">
-                      <div className="flex items-center justify-between mb-2.5 text-[11px]">
+                    <div className="pt-2 border-t border-black/[0.06]">
+                      <div className="flex items-center justify-between mb-2 text-[10px]">
                         <div>
                           <span className="font-bold text-[#171717]">{service.stats.primary}</span>
-                          <span className="text-[10px] text-[#737373] block">{service.stats.primaryLabel}</span>
+                          <span className="text-[9px] text-[#737373] block">{service.stats.primaryLabel}</span>
                         </div>
                         <div className="text-right">
                           <span className="font-bold text-[#171717]">{service.stats.secondary}</span>
-                          <span className="text-[10px] text-[#737373] block">{service.stats.secondaryLabel}</span>
+                          <span className="text-[9px] text-[#737373] block">{service.stats.secondaryLabel}</span>
                         </div>
                       </div>
 
@@ -443,10 +441,10 @@ export default function StudioOrbitCarousel() {
                         onClick={(e) => {
                           e.stopPropagation();
                         }}
-                        className="w-full inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-full bg-[#171717] hover:bg-black text-white text-xs font-semibold transition-all duration-200 shadow-sm cursor-pointer group"
+                        className="w-full inline-flex items-center justify-center gap-1.5 py-1.5 sm:py-2 px-3 rounded-full bg-[#171717] hover:bg-black text-white text-[11px] sm:text-xs font-semibold transition-all duration-200 shadow-xs cursor-pointer group"
                       >
                         <span>{service.actionText}</span>
-                        <span className="text-sm transition-transform group-hover:translate-x-0.5">→</span>
+                        <span className="text-xs transition-transform group-hover:translate-x-0.5">→</span>
                       </a>
                     </div>
                   </div>
@@ -462,10 +460,10 @@ export default function StudioOrbitCarousel() {
               e.stopPropagation();
               handlePrev();
             }}
-            className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/90 hover:bg-white border border-black/[0.08] shadow-lg flex items-center justify-center text-[#171717] hover:scale-105 transition-all z-40 cursor-pointer backdrop-blur-md"
+            className="absolute left-1 sm:left-4 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white/95 hover:bg-white border border-black/[0.08] shadow-md flex items-center justify-center text-[#171717] hover:scale-105 transition-all z-40 cursor-pointer backdrop-blur-md"
             aria-label="Previous Studio"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <path d="m15 18-6-6 6-6" />
             </svg>
           </button>
@@ -476,33 +474,33 @@ export default function StudioOrbitCarousel() {
               e.stopPropagation();
               handleNext();
             }}
-            className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/90 hover:bg-white border border-black/[0.08] shadow-lg flex items-center justify-center text-[#171717] hover:scale-105 transition-all z-40 cursor-pointer backdrop-blur-md"
+            className="absolute right-1 sm:right-4 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white/95 hover:bg-white border border-black/[0.08] shadow-md flex items-center justify-center text-[#171717] hover:scale-105 transition-all z-40 cursor-pointer backdrop-blur-md"
             aria-label="Next Studio"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <path d="m9 18 6-6-6-6" />
             </svg>
           </button>
         </div>
 
         {/* Bottom Focus Tool Summary Bar */}
-        <div className="max-w-xl mx-auto mt-6 px-4">
-          <div className="p-3.5 sm:p-4 rounded-2xl bg-white/90 backdrop-blur-xl border border-black/[0.08] shadow-md flex items-center justify-between gap-3">
-            <div className="flex items-center gap-3 min-w-0">
+        <div className="max-w-md mx-auto mt-4 px-2">
+          <div className="p-2.5 sm:p-3 rounded-2xl bg-white/95 backdrop-blur-xl border border-black/[0.08] shadow-xs flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2.5 min-w-0">
               <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold shadow-xs flex-shrink-0"
+                className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold shadow-xs flex-shrink-0"
                 style={{ backgroundColor: activeStudio.accent }}
               >
-                <span className="material-symbols-outlined text-[20px]">{activeStudio.icon}</span>
+                <span className="material-symbols-outlined text-[17px]">{activeStudio.icon}</span>
               </div>
               <div className="min-w-0">
-                <div className="flex items-center gap-2">
-                  <h4 className="text-sm font-bold text-[#171717] truncate">{activeStudio.name}</h4>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600 font-bold border border-emerald-200 flex-shrink-0">
+                <div className="flex items-center gap-1.5">
+                  <h4 className="text-xs sm:text-sm font-bold text-[#171717] truncate">{activeStudio.name}</h4>
+                  <span className="text-[9px] font-mono px-1.5 py-0.5 rounded-full bg-emerald-50 text-emerald-600 font-bold border border-emerald-200 flex-shrink-0">
                     Live
                   </span>
                 </div>
-                <p className="text-[11px] text-[#737373] truncate">
+                <p className="text-[10px] text-[#737373] truncate">
                   {activeStudio.tag} · {activeStudio.stats.primary}
                 </p>
               </div>
@@ -510,10 +508,10 @@ export default function StudioOrbitCarousel() {
 
             <a
               href={activeStudio.url}
-              className="px-4 py-2 rounded-full bg-[#171717] hover:bg-black text-white text-xs font-semibold shadow-xs transition-all flex items-center gap-1.5 flex-shrink-0"
+              className="px-3.5 py-1.5 rounded-full bg-[#171717] hover:bg-black text-white text-[11px] sm:text-xs font-semibold shadow-xs transition-all flex items-center gap-1 flex-shrink-0"
             >
               <span>เปิดระบบ</span>
-              <span className="text-sm">→</span>
+              <span className="text-xs">→</span>
             </a>
           </div>
         </div>

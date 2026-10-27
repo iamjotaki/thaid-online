@@ -171,9 +171,56 @@ export default function HomePage() {
     if (target) {
       target.scrollIntoView({ behavior: "smooth" });
     } else {
-      window.scrollTo({ top: window.innerHeight * 1.4, behavior: "smooth" });
+      window.scrollTo({ top: window.innerHeight * 0.9, behavior: "smooth" });
     }
   };
+
+  // Auto-Snap to Page 2 on scroll down (เด้งหน้าที่ 2 ขึ้นมาอัตโนมัติ ไม่เมื่อยนิ้ว):
+  useEffect(() => {
+    let isSnapping = false;
+    let touchStartY = 0;
+
+    const snapToPage2 = () => {
+      if (isSnapping) return;
+      const target = document.getElementById("services-directory");
+      if (target) {
+        isSnapping = true;
+        target.scrollIntoView({ behavior: "smooth" });
+        setTimeout(() => {
+          isSnapping = false;
+        }, 1000);
+      }
+    };
+
+    const handleWheel = (e: WheelEvent) => {
+      if (!isSnapping && window.scrollY < 200 && e.deltaY > 8) {
+        snapToPage2();
+      }
+    };
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (isSnapping) return;
+      const currentY = e.touches[0].clientY;
+      const diff = touchStartY - currentY;
+      if (window.scrollY < 160 && diff > 20) {
+        snapToPage2();
+      }
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: true });
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
+
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+    };
+  }, []);
 
   // Countdown timer effect
   useEffect(() => {
@@ -205,7 +252,7 @@ export default function HomePage() {
             const progress = Math.min(1, Math.max(0, currentScroll / Math.max(1, trackScrollable)));
             
             // Studio motion curves: scatter completes within first 75% of track scroll
-            const scatterFactor = Math.min(1, progress / 0.72);
+            const scatterFactor = Math.min(1, progress / 0.55);
             const opacity = Math.max(0, 1 - scatterFactor);
             const scatter = scatterFactor;
 
