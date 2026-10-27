@@ -193,7 +193,7 @@ export default function HomePage() {
     };
 
     const handleWheel = (e: WheelEvent) => {
-      if (!isSnapping && window.scrollY < 200 && e.deltaY > 8) {
+      if (!isSnapping && window.scrollY < 80 && e.deltaY > 15) {
         snapToPage2();
       }
     };
@@ -206,7 +206,7 @@ export default function HomePage() {
       if (isSnapping) return;
       const currentY = e.touches[0].clientY;
       const diff = touchStartY - currentY;
-      if (window.scrollY < 160 && diff > 20) {
+      if (window.scrollY < 60 && diff > 25) {
         snapToPage2();
       }
     };
@@ -244,17 +244,12 @@ export default function HomePage() {
       if (!ticking) {
         requestAnimationFrame(() => {
           if (trackRef.current && heroRef.current) {
-            const rect = trackRef.current.getBoundingClientRect();
-            const trackScrollable = trackRef.current.offsetHeight - window.innerHeight;
+            const scroll = window.scrollY;
+            const threshold = Math.max(1, window.innerHeight * 0.75);
+            const progress = Math.min(1, Math.max(0, scroll / threshold));
             
-            // Calculate scroll ratio through the 200vh track
-            const currentScroll = -rect.top;
-            const progress = Math.min(1, Math.max(0, currentScroll / Math.max(1, trackScrollable)));
-            
-            // Studio motion curves: scatter completes within first 75% of track scroll
-            const scatterFactor = Math.min(1, progress / 0.55);
-            const opacity = Math.max(0, 1 - scatterFactor);
-            const scatter = scatterFactor;
+            const scatter = progress;
+            const opacity = Math.max(0, 1 - progress);
 
             heroRef.current.style.setProperty("--exit-opacity", opacity.toFixed(4));
             heroRef.current.style.setProperty("--exit-scatter", scatter.toFixed(4));
