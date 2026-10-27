@@ -65,7 +65,8 @@ Oracle Cloud มีการเปิดใช้งานอยู่ทั้�
 
 ### 3.2 External API Keys & Database
 - ตัวแปรทั้งหมดถูกผูกไว้ในระบบ **Coolify Environment Variables** เรียบร้อยแล้ว (ทั้ง Runtime และ Buildtime)
-- หากต้องการดู Key / Token สามารถดูได้จากไฟล์ `C:\Auto Post FB\.env` หรือใน `C:\NV` หรือผ่าน Coolify Dashboard:
+- ข้อมูล API Keys และบัญชีทั้งหมดสามารถเปิดดูและคัดลอกได้ทันทีผ่านระบบ **[ThaiD Vault](https://vault.thaid.online)** (หมวดหมู่ `Google API Keys` มีคลังคีย์ Gemini รวม 80 คีย์ และหมวดหมู่อื่นๆ ครบถ้วน)
+- หรือดูได้จากไฟล์ `C:\Auto Post FB\.env` หรือใน `C:\NV` หรือผ่าน Coolify Dashboard:
   - `GEMINI_API_KEY` (Gemini Flash Model)
   - `FB_PAGE_ID` & `FB_PAGE_ACCESS_TOKEN` (Graph API)
   - `DATABASE_URL` (Neon Cloud PostgreSQL)
