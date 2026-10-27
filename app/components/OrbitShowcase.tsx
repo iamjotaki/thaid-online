@@ -40,18 +40,7 @@ const SHOWCASE_SERVICES: ShowcaseService[] = [
     highlight: "ออโต้โพสต์ทุก 30 นาที",
     badge: "High Engagement",
   },
-  {
-    id: "vault",
-    name: "ThaiD Vault",
-    tag: "vault.thaid.online",
-    url: "https://vault.thaid.online",
-    icon: "lock",
-    accent: "#f59e0b",
-    category: "คลังข้อมูล & API Keys",
-    desc: "ระบบจัดเก็บบัญชี คีย์ความปลอดภัย Gemini 80 คีย์ และรหัสผ่านโฮสติ้ง เข้ารหัสระดับทหาร AES-256",
-    highlight: "AES-256 Fernet Vault",
-    badge: "Military Security",
-  },
+  
   {
     id: "sticker",
     name: "LINE Sticker",
