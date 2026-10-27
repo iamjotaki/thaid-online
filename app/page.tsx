@@ -608,7 +608,9 @@ export default function HomePage() {
             </span>
           </a>
 
-          {/* Zone 2: Center - SaaS Services Selector Dropdown */}
+          {/* Zone 3: Right - Link to Sub Home + Far Right Login / Profile */}
+          <div className="flex items-center gap-2 flex-shrink-0">
+            {/* SaaS Services Selector Dropdown (Moved to Right) */}
           <div className="relative" ref={saasMenuRef}>
             <button
               type="button"
@@ -624,7 +626,7 @@ export default function HomePage() {
 
             {/* Dropdown Menu */}
             {saasMenuOpen && (
-              <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-72 sm:w-80 bg-white/95 backdrop-blur-2xl border border-black/[0.08] rounded-2xl shadow-2xl p-2 z-50 animate-in fade-in zoom-in-95 duration-150">
+              <div className="absolute right-0 top-full mt-2 w-72 sm:w-80 bg-white/95 backdrop-blur-2xl border border-black/[0.08] rounded-2xl shadow-2xl p-2 z-50 animate-in fade-in zoom-in-95 duration-150">
                 <div className="px-3 py-1.5 text-[10px] font-bold text-stone-400 uppercase tracking-wider border-b border-black/[0.05] mb-1 flex items-center justify-between">
                   <span>ThaiD SaaS Ecosystem</span>
                   <span className="text-emerald-600 font-semibold">6 เครื่องมือ</span>
@@ -655,16 +657,6 @@ export default function HomePage() {
               </div>
             )}
           </div>
-
-          {/* Zone 3: Right - Link to Sub Home + Far Right Login / Profile */}
-          <div className="flex items-center gap-2 flex-shrink-0">
-            {/* Link to Sub / Services Home */}
-            <a
-              href="#services-directory"
-              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-black/[0.08] bg-white/80 hover:bg-white text-xs font-semibold text-[#2b313b] transition-colors shadow-2xs"
-            >
-              <span>หน้าแรกบริการ</span>
-            </a>
 
             {/* Far Right: Login Button OR Profile Avatar */}
             {user ? (
@@ -959,15 +951,7 @@ export default function HomePage() {
       {/* ======================================================== */}
       <section id="services-directory" className="services-sheet-stage">
         
-        {/* Tactile Sheet Handle (Spring Card Indicator) */}
-        <div className="pt-2 pb-3 flex justify-center">
-          <button
-            type="button"
-            onClick={handleScrollDown}
-            className="w-14 h-1.5 rounded-full bg-stone-300 hover:bg-stone-400 transition-colors cursor-pointer"
-            aria-label="Drag or view next section"
-          />
-        </div>
+        
 
         <main className="max-w-5xl mx-auto px-4 sm:px-6 pt-4 pb-28">
         
