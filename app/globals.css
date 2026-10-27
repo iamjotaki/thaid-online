@@ -26,6 +26,10 @@
   --border-subtle: rgba(0, 0, 0, 0.08);
   --color-fastwork: #0569ff;
   --color-fastwork-dark: #1f242d;
+  
+  /* Fastwork Hero Dynamic Motion Variables */
+  --exit-opacity: 1;
+  --exit-scatter: calc(1 - var(--exit-opacity));
 }
 
 html, body {
@@ -34,6 +38,7 @@ html, body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
 }
 
 .material-symbols-outlined {
@@ -43,37 +48,274 @@ html, body {
   line-height: 1;
 }
 
-/* Fastwork Pure White Studio Floating Cards & Depth */
-.fastwork-white-card {
+/* ======================================================== */
+/* FASTWORK 3D ORBIT HERO & SCATTER MOTION ENGINE           */
+/* ======================================================== */
+
+.hero-track {
+  min-height: 200vh;
+  position: relative;
   background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.07);
-  box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.07), 0 0 0 1px rgba(0, 0, 0, 0.03);
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.fastwork-white-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 25px 50px -10px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.06);
-  z-index: 40 !important;
+.hero-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  min-height: 680px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  z-index: 10;
+  pointer-events: auto;
 }
 
-/* 3D Stage Perspective */
-.orbit-perspective-viewport {
+.orbit-stage-viewport {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
   perspective: 1200px;
-  perspective-origin: center center;
+  perspective-origin: 50% 50%;
+  overflow: visible;
+  z-index: 5;
 }
 
-.orbit-3d-stage {
+.orbit-stage-container {
+  position: relative;
+  width: 1480px;
+  height: 820px;
+  max-width: 100vw;
+  max-height: 100vh;
   transform-style: preserve-3d;
 }
 
-/* Minimalist Clean Scrollbar */
+/* Individual Orbit Card Physics */
+.orbit-card-scatter {
+  position: absolute;
+  pointer-events: auto;
+  transform-origin: center center;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 15px -2px rgba(0, 0, 0, 0.05), 0 20px 45px -5px rgba(0, 0, 0, 0.07);
+  will-change: transform, translate, scale, opacity, filter;
+  transition: box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+  overflow: hidden;
+  
+  /* The Exact Fastwork Zoom Outward & Scatter Equation */
+  translate: calc(var(--exit-scatter) * var(--scatter-x, 0px)) calc(var(--exit-scatter) * var(--scatter-y, 0px));
+  scale: calc(1 + var(--exit-scatter) * 0.44);
+  opacity: calc(1 - var(--exit-scatter) * 1.15);
+  filter: blur(calc(var(--exit-scatter) * 10px));
+  transform: rotate(var(--orbit-rot, 0deg));
+}
+
+.orbit-card-scatter:hover {
+  transform: rotate(var(--orbit-rot, 0deg)) translateY(-8px) scale(1.03) !important;
+  box-shadow: 0 30px 65px -10px rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.12);
+  z-index: 50 !important;
+}
+
+/* Hero Center Copy Scatter */
+.hero-copy-scatter {
+  opacity: var(--exit-opacity);
+  transform: translateY(calc(var(--exit-scatter) * -36px));
+  filter: blur(calc(var(--exit-scatter) * 14px));
+  will-change: opacity, transform, filter;
+}
+
+/* Bottom Scroll Cue Scatter */
+.scroll-cue-scatter {
+  opacity: calc(var(--exit-opacity) * 0.9);
+  transform: translate(-50%, calc(var(--exit-scatter) * 20px));
+  filter: blur(calc(var(--exit-scatter) * 12px));
+  will-change: opacity, transform, filter;
+}
+
+/* ======================================================== */
+/* AMBIENT BOBBING & FLOATING KEYFRAMES                     */
+/* ======================================================== */
+
+@keyframes floatBobA {
+  0%, 100% {
+    transform: translateY(0px) rotate(var(--orbit-rot, 0deg));
+  }
+  50% {
+    transform: translateY(-8px) rotate(var(--orbit-rot, 0deg));
+  }
+}
+
+@keyframes floatBobB {
+  0%, 100% {
+    transform: translateY(0px) rotate(var(--orbit-rot, 0deg));
+  }
+  50% {
+    transform: translateY(7px) rotate(var(--orbit-rot, 0deg));
+  }
+}
+
+@keyframes floatBobC {
+  0%, 100% {
+    transform: translateY(0px) rotate(var(--orbit-rot, 0deg));
+  }
+  50% {
+    transform: translateY(-6px) rotate(calc(var(--orbit-rot, 0deg) + 0.4deg));
+  }
+}
+
+.anim-float-a {
+  animation: floatBobA 5.5s ease-in-out infinite;
+}
+
+.anim-float-b {
+  animation: floatBobB 6.2s ease-in-out infinite;
+}
+
+.anim-float-c {
+  animation: floatBobC 4.8s ease-in-out infinite;
+}
+
+/* ======================================================== */
+/* HERO CTA GLOWING COMET ORBIT BUTTON                      */
+/* ======================================================== */
+
+@keyframes heroCtaOrbit {
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+.hero-cta-wrap {
+  position: relative;
+  display: inline-flex;
+  border-radius: 9999px;
+  padding: 1.5px;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+}
+
+.hero-cta-wrap:hover {
+  transform: scale(1.04);
+}
+
+.hero-cta-wrap:active {
+  transform: scale(1.008);
+}
+
+.hero-cta-comet {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 250%;
+  height: 250%;
+  margin-top: -125%;
+  margin-left: -125%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    #0569ff 60deg,
+    #ff3029 160deg,
+    #fe7b02 240deg,
+    #22c55e 300deg,
+    transparent 360deg
+  );
+  animation: heroCtaOrbit 3.5s linear infinite;
+  opacity: 0.85;
+}
+
+.hero-cta-wrap:hover .hero-cta-comet {
+  opacity: 1;
+  animation-duration: 2.2s;
+}
+
+.hero-cta-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  filter: blur(10px);
+  background: inherit;
+  opacity: 0.5;
+}
+
+.hero-cta-inner {
+  position: relative;
+  z-index: 1;
+  background: #19191d;
+  color: #ffffff;
+  border-radius: 9999px;
+  padding: 13px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15);
+}
+
+/* Secondary Button */
+.hero-cta-secondary {
+  box-sizing: border-box;
+  color: #171717;
+  height: 50px;
+  white-space: nowrap;
+  background: #ffffff;
+  border: 1px solid #d4d4d8;
+  border-radius: 9999px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 26px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+.hero-cta-secondary:hover {
+  border-color: #171717;
+  background: #fafafa;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+/* ======================================================== */
+/* SCROLL CUE ANIMATION                                     */
+/* ======================================================== */
+
+@keyframes scrollCueBounce {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 0.45;
+  }
+}
+
+.anim-scroll-bounce {
+  animation: scrollCueBounce 2.2s ease-in-out infinite;
+}
+
+/* ======================================================== */
+/* CLEAN MODERN SCROLLBAR                                   */
+/* ======================================================== */
+
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #fbfbfb;
+  background: #ffffff;
 }
 ::-webkit-scrollbar-thumb {
   background: #d4d4d8;

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 
 interface ServiceItem {
@@ -17,16 +17,39 @@ interface ServiceItem {
   image: string;
   creator: string;
   location: string;
-  tilt: string;
   features: string[];
   stats: { primary: string; primaryLabel: string; secondary: string; secondaryLabel: string };
   actionText: string;
 }
 
+interface OrbitCardConfig {
+  id: string;
+  name: string;
+  role: string;
+  avatar: string;
+  cover: string;
+  url: string;
+  left: string;
+  top: string;
+  width: string;
+  height: string;
+  rot: string;
+  scatterX: string;
+  scatterY: string;
+  animClass: string;
+  badge: string;
+  rating: string;
+  price: string;
+}
+
 export default function HomePage() {
   const [activeTab, setActiveTab] = useState<string>("all");
   const [countdown, setCountdown] = useState({ days: 19, hours: 18, mins: 30, secs: 49 });
+  
+  const trackRef = useRef<HTMLElement | null>(null);
+  const heroRef = useRef<HTMLDivElement | null>(null);
 
+  // Countdown timer effect
   useEffect(() => {
     const timer = setInterval(() => {
       setCountdown((prev) => {
@@ -39,6 +62,243 @@ export default function HomePage() {
     return () => clearInterval(timer);
   }, []);
 
+  // Fastwork Scroll Physics Engine:
+  // Drives --exit-opacity (1 -> 0) and --exit-scatter (0 -> 1) directly via requestAnimationFrame
+  useEffect(() => {
+    let ticking = false;
+
+    const onScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          if (trackRef.current && heroRef.current) {
+            const rect = trackRef.current.getBoundingClientRect();
+            const trackScrollable = trackRef.current.offsetHeight - window.innerHeight;
+            
+            // Calculate scroll ratio through the 200vh track
+            const currentScroll = -rect.top;
+            const progress = Math.min(1, Math.max(0, currentScroll / Math.max(1, trackScrollable)));
+            
+            // Fastwork curves: scatter completes within first 75% of track scroll
+            const scatterFactor = Math.min(1, progress / 0.72);
+            const opacity = Math.max(0, 1 - scatterFactor);
+            const scatter = scatterFactor;
+
+            heroRef.current.style.setProperty("--exit-opacity", opacity.toFixed(4));
+            heroRef.current.style.setProperty("--exit-scatter", scatter.toFixed(4));
+            
+            if (opacity < 0.02) {
+              heroRef.current.style.pointerEvents = "none";
+            } else {
+              heroRef.current.style.pointerEvents = "auto";
+            }
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // 10 Fastwork Exact Orbit Cards Data
+  const orbitCards: OrbitCardConfig[] = [
+    {
+      id: "weng",
+      name: "Weng Kitsana",
+      role: "Photographer · Bangkok",
+      avatar: "/avatars/weng.png",
+      cover: "/cards/cafe_marble.jpg",
+      url: "https://mockup.thaid.online",
+      left: "-1.8%",
+      top: "9.2%",
+      width: "205px",
+      height: "255px",
+      rot: "3.05deg",
+      scatterX: "-55vw",
+      scatterY: "-28vh",
+      animClass: "anim-float-a",
+      badge: "Mockup AI",
+      rating: "5.0 (214)",
+      price: "฿1,200",
+    },
+    {
+      id: "buttercup",
+      name: "Buttercup AI",
+      role: "Fiction Author · Bangkok",
+      avatar: "/avatars/buttercup.png",
+      cover: "/cards/luxury_spa.jpg",
+      url: "https://novel.thaid.online",
+      left: "76.4%",
+      top: "-4.5%",
+      width: "200px",
+      height: "250px",
+      rot: "4deg",
+      scatterX: "55vw",
+      scatterY: "-28vh",
+      animClass: "anim-float-b",
+      badge: "Novel Studio",
+      rating: "4.9 (189)",
+      price: "฿890",
+    },
+    {
+      id: "leobeer",
+      name: "LEOBEER Studio",
+      role: "Viral Editor · Bangkok",
+      avatar: "/avatars/leobeer.png",
+      cover: "/cards/neon_cyberpunk.jpg",
+      url: "https://social.thaid.online",
+      left: "8.5%",
+      top: "-5.0%",
+      width: "200px",
+      height: "250px",
+      rot: "4deg",
+      scatterX: "-45vw",
+      scatterY: "-30vh",
+      animClass: "anim-float-c",
+      badge: "Social Poster",
+      rating: "5.0 (342)",
+      price: "฿1,500",
+    },
+    {
+      id: "slayalldeep",
+      name: "SlayAllDeep",
+      role: "Motion Video · Chiang Mai",
+      avatar: "/avatars/slayalldeep.png",
+      cover: "/cards/golden_beach.jpg",
+      url: "https://clip.thaid.online",
+      left: "13.0%",
+      top: "27.2%",
+      width: "210px",
+      height: "260px",
+      rot: "-2deg",
+      scatterX: "-50vw",
+      scatterY: "12vh",
+      animClass: "anim-float-b",
+      badge: "Clip AI",
+      rating: "5.0 (178)",
+      price: "฿2,000",
+    },
+    {
+      id: "bold",
+      name: "Bold Architecture",
+      role: "3D Visualizer · Bangkok",
+      avatar: "/avatars/bold.png",
+      cover: "/cards/podium_minimal.jpg",
+      url: "https://vault.thaid.online",
+      left: "-0.7%",
+      top: "48.5%",
+      width: "240px",
+      height: "300px",
+      rot: "4deg",
+      scatterX: "-55vw",
+      scatterY: "18vh",
+      animClass: "anim-float-a",
+      badge: "ThaiD Vault",
+      rating: "5.0 (98)",
+      price: "฿2,500",
+    },
+    {
+      id: "chapavich",
+      name: "Chapavich T.",
+      role: "Sound Composer · Bangkok",
+      avatar: "/avatars/chapavich.png",
+      cover: "/cards/nature_wood.jpg",
+      url: "https://vault.thaid.online",
+      left: "5.3%",
+      top: "68.5%",
+      width: "260px",
+      height: "325px",
+      rot: "3.05deg",
+      scatterX: "-55vw",
+      scatterY: "38vh",
+      animClass: "anim-float-c",
+      badge: "Media Vault",
+      rating: "5.0 (412)",
+      price: "฿3,000",
+    },
+    {
+      id: "pakincht",
+      name: "Pakinchit Dev",
+      role: "Security Engineer · Bangkok",
+      avatar: "/avatars/pakincht.png",
+      cover: "/cards/studio_pastel.jpg",
+      url: "https://vault.thaid.online",
+      left: "76.3%",
+      top: "75.8%",
+      width: "220px",
+      height: "275px",
+      rot: "3.8deg",
+      scatterX: "52vw",
+      scatterY: "38vh",
+      animClass: "anim-float-b",
+      badge: "API Vault",
+      rating: "4.9 (127)",
+      price: "฿1,800",
+    },
+    {
+      id: "peter",
+      name: "Peter Visuals",
+      role: "Graphic Artist · Phuket",
+      avatar: "/avatars/peter.png",
+      cover: "/cards/cozy_living.jpg",
+      url: "https://sticker.thaid.online",
+      left: "86.3%",
+      top: "6.4%",
+      width: "200px",
+      height: "250px",
+      rot: "4deg",
+      scatterX: "55vw",
+      scatterY: "-28vh",
+      animClass: "anim-float-a",
+      badge: "Sticker Pro",
+      rating: "5.0 (310)",
+      price: "฿990",
+    },
+    {
+      id: "mod",
+      name: "MOD SUPACHA",
+      role: "E-Commerce Admin · Bangkok",
+      avatar: "/avatars/mod.png",
+      cover: "/cards/cafe_marble.jpg",
+      url: "https://chat.thaid.online",
+      left: "88.5%",
+      top: "62.1%",
+      width: "195px",
+      height: "245px",
+      rot: "-4deg",
+      scatterX: "55vw",
+      scatterY: "36vh",
+      animClass: "anim-float-c",
+      badge: "Smart Chat",
+      rating: "5.0 (260)",
+      price: "฿1,400",
+    },
+    {
+      id: "nam",
+      name: "Nguyen Van Nam",
+      role: "Video Director · Bangkok",
+      avatar: "/avatars/nam.png",
+      cover: "/cards/neon_cyberpunk.jpg",
+      url: "https://clip.thaid.online",
+      left: "82.5%",
+      top: "32.0%",
+      width: "235px",
+      height: "295px",
+      rot: "-5.2deg",
+      scatterX: "55vw",
+      scatterY: "-5vh",
+      animClass: "anim-float-b",
+      badge: "Viral Reels",
+      rating: "5.0 (195)",
+      price: "฿2,200",
+    },
+  ];
+
+  // Services Directory Data
   const services: ServiceItem[] = [
     {
       id: "mockup",
@@ -54,7 +314,6 @@ export default function HomePage() {
       image: "/cards/cafe_marble.jpg",
       creator: "Weng Kitsana",
       location: "Photographer · Bangkok",
-      tilt: "-rotate-6",
       features: [
         "ตัดพื้นหลังอัตโนมัติด้วย AI Matting ภายใน 1 วินาที",
         "8 ฉากหลังพรีเซ็ตลักชัวรีจาก Google Flow",
@@ -77,7 +336,6 @@ export default function HomePage() {
       image: "/cards/luxury_spa.jpg",
       creator: "Chapavich T.",
       location: "Fiction Author · Chiang Mai",
-      tilt: "rotate-2",
       features: [
         "Gemini Multi-Agent Plot & Chapter Engine",
         "ProofAI ตรวจคำผิดและขัดเกลาสำนวนภาษาไทย",
@@ -99,54 +357,51 @@ export default function HomePage() {
       icon: "campaign",
       image: "/cards/neon_cyberpunk.jpg",
       creator: "LEOBEER",
-      location: "Social Producer · Bangkok",
-      tilt: "-rotate-3",
+      location: "Viral Editor · Bangkok",
       features: [
-        "AI ดึงฟีดข่าวกีฬาและไลฟ์สไตล์ไวรัลอัตโนมัติ",
-        "ตัดต่อวิดีโอสั้นพร้อมเสียงพากย์ภาษาไทยและซับไตเติล",
-        "โพสต์ขึ้น Facebook Page และ Group อัตโนมัติ",
+        "Auto-Curation ค้นหาและคัดกรองข่าวดังอัตโนมัติ",
+        "ตัดต่อวิดีโอ Shorts/Reels ขนาด 9:16 ด้วย FFmpeg",
+        "แปลงข้อความเป็นเสียงพากย์ภาษาไทยเป็นธรรมชาติ",
       ],
-      stats: { primary: "24 ชม.", primaryLabel: "ทำงานอัตโนมัติ", secondary: "100%", secondaryLabel: "เชื่อมต่อ FB Graph API" },
+      stats: { primary: "24 ชม.", primaryLabel: "ทำงานอัตโนมัติ", secondary: "Reels & Post", secondaryLabel: "รองรับ 2 รูปแบบ" },
       actionText: "เปิดใช้งาน Social Poster",
     },
     {
       id: "clip",
-      name: "AI Clip & Reels Studio",
-      subname: "Short-form Vertical Video Studio",
+      name: "AI Clip Studio Pro",
+      subname: "Viral Video & Subtitle Generator",
       tag: "clip.thaid.online",
       url: "https://clip.thaid.online",
       category: "clip",
       status: "พร้อมใช้งาน",
-      badge: "TikTok & Reels",
-      description: "สตูดิโอสร้างคลิปวิดีโอสั้นแนวตั้ง 9:16 ด้วย AI สคริปต์รีวิวป้ายยา พากย์เสียงไทย ผสมภาพ AI และซับไตเติลคาราโอเกะ",
-      icon: "movie",
+      badge: "Trending",
+      description: "สตูดิโอสร้างคลิปวิดีโอสั้นอัตโนมัติด้วย AI พากย์เสียงภาษาไทย สร้างซับไตเติลคาราโอเกะแบบคำต่อคำ และภาพประกอบแบบไดนามิก",
+      icon: "movie_creation",
       image: "/cards/golden_beach.jpg",
       creator: "Nguyen Van Nam",
       location: "Video Creator · Phuket",
-      tilt: "rotate-6",
       features: [
-        "เขียนสคริปต์วิดีโอสั้นไวรัล 30-60 วินาทีตามสไตล์",
-        "เจนภาพประกอบแต่ละฉากด้วย AI ความละเอียดสูง",
-        "สังเคราะห์เสียงพากย์ไทยและเรนเดอร์ซับไตเติลคาราโอเกะ",
+        "ซับไตเติลคาราโอเกะซิงก์เสียงพูดเป๊ะทุกคำ",
+        "คลังดนตรีและซาวด์เอฟเฟกต์ประกอบคลิปกว่า 1,000 ชิ้น",
+        "เรนเดอร์วิดีโอความคมชัดสูง 1080p พร้อมแชร์ทันที",
       ],
-      stats: { primary: "9:16", primaryLabel: "แนวตั้ง TikTok/Reels", secondary: "1080p", secondaryLabel: "ความละเอียดสูง" },
+      stats: { primary: "1080×1920", primaryLabel: "ความละเอียด 9:16", secondary: "100%", secondaryLabel: "ซับไตเติลภาษาไทย" },
       actionText: "เปิดใช้งาน Clip Studio",
     },
     {
       id: "sticker",
-      name: "LINE Sticker AI Studio",
-      subname: "LINE Creators Market Studio",
+      name: "LINE Sticker AI Creator",
+      subname: "Instant LINE Sticker Pack Generator",
       tag: "sticker.thaid.online",
       url: "https://sticker.thaid.online",
       category: "sticker",
       status: "พร้อมใช้งาน",
-      badge: "Creators Choice",
-      description: "สร้างชุดสติกเกอร์ไลน์ครบเซ็ต 8, 16, 24, 40 รูปด้วย AI ไดคัตพื้นหลังโปร่งใส ขอบขาวไดคัต มาตรฐาน LINE Creators",
+      badge: "New Release",
+      description: "ระบบสร้างสติกเกอร์ไลน์อัตโนมัติด้วย AI เจนภาพชุด 8/16/24/40 ตัวละครคงที่ พร้อมไดคัตพื้นหลังโปร่งใสและแพ็กเกจส่ง LINE Creators Market",
       icon: "sentiment_satisfied",
       image: "/cards/nature_wood.jpg",
-      creator: "Peter Sato",
-      location: "Character Designer · Osaka",
-      tilt: "-rotate-4",
+      creator: "Peter Visuals",
+      location: "Graphic Artist · Phuket",
       features: [
         "คลังคำพูดยอดนิยมภาษาไทยสำหรับสติกเกอร์ไลน์",
         "สร้างตัวละครคาแรกเตอร์คงที่ในทุกแอ็กชัน",
@@ -169,7 +424,6 @@ export default function HomePage() {
       image: "/cards/cozy_living.jpg",
       creator: "MOD SUPACHA",
       location: "E-Commerce Admin · Bangkok",
-      tilt: "rotate-4",
       features: [
         "เชื่อมต่อ LINE Messaging API Webhook พร้อมใช้งาน",
         "คลังข้อมูลสินค้า คำถามที่พบบ่อย และเงื่อนไขบริการ",
@@ -192,7 +446,6 @@ export default function HomePage() {
       image: "/cards/podium_minimal.jpg",
       creator: "Pakinchit",
       location: "Security Engineer · Bangkok",
-      tilt: "-rotate-3",
       features: [
         "เข้ารหัสความปลอดภัยระดับทหาร AES-256",
         "จัดเก็บ Gemini API Keys และหมุนเวียนคีย์อัตโนมัติ",
@@ -200,29 +453,6 @@ export default function HomePage() {
       ],
       stats: { primary: "AES-256", primaryLabel: "การเข้ารหัสข้อมูล", secondary: "80 Keys", secondaryLabel: "คลังคีย์ความปลอดภัย" },
       actionText: "เปิดใช้งาน ThaiD Vault",
-    },
-    {
-      id: "studio_hub",
-      name: "ThaiD Cloud Ecosystem",
-      subname: "Central SaaS Orchestration",
-      tag: "thaid.online",
-      url: "https://thaid.online",
-      category: "mockup",
-      status: "พร้อมใช้งาน",
-      badge: "Enterprise",
-      description: "ศูนย์กลางควบคุมและเชื่อมต่อทุกบริการในเครือ ThaiD ผ่าน Single Sign-On และสถาปัตยกรรม Microservices ระดับสูง",
-      icon: "hub",
-      image: "/cards/studio_pastel.jpg",
-      creator: "ThaiD Team",
-      location: "Core Engineering · Thailand",
-      tilt: "rotate-3",
-      features: [
-        "Single Sign-On และการจัดการโดเมนเดียว",
-        "เซิร์ฟเวอร์ความเร็วสูง Oracle Cloud ARM64",
-        "Reverse Proxy Traefik พร้อม SSL อัตโนมัติ",
-      ],
-      stats: { primary: "8 บริการ", primaryLabel: "ระบบนิเวศ AI", secondary: "0.14s", secondaryLabel: "เวลาตอบสนองเซิร์ฟเวอร์" },
-      actionText: "สำรวจระบบทั้งหมด",
     },
   ];
 
@@ -232,16 +462,15 @@ export default function HomePage() {
     <div className="min-h-screen bg-white text-[#171717] font-sans antialiased overflow-x-hidden selection:bg-[#0569ff]/15 selection:text-[#0569ff]">
       
       {/* ======================================================== */}
-      {/* 1. FASTWORK FLOATING PILL HEADER                         */}
+      {/* 1. FLOATING PILL NAVBAR                                  */}
       {/* ======================================================== */}
-      <header className="sticky top-0 z-50 pt-3 px-4 sm:px-6 pointer-events-none">
+      <header className="fixed top-0 inset-x-0 z-50 pt-4 px-4 sm:px-6 pointer-events-none">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           
-          {/* Invisible Left Spacer */}
           <div className="w-24 hidden sm:block" />
 
           {/* Centered Floating Fastwork-Style Brand Pill */}
-          <div className="pointer-events-auto inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-black/[0.08] bg-white/80 backdrop-blur-xl shadow-sm hover:shadow-md transition-all">
+          <div className="pointer-events-auto inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-black/[0.08] bg-white/85 backdrop-blur-xl shadow-xs hover:shadow-md transition-all">
             <a href="https://thaid.online" className="flex items-center gap-2 text-[#171717]">
               <div className="w-5 h-5 rounded-full bg-[#171717] flex items-center justify-center text-white text-[11px] font-bold">
                 ✦
@@ -252,16 +481,16 @@ export default function HomePage() {
             </a>
           </div>
 
-          {/* Right Language / Action Pill */}
+          {/* Right Action Pills */}
           <div className="pointer-events-auto flex items-center gap-2">
             <a
               href="https://vault.thaid.online"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-black/[0.08] bg-white/80 backdrop-blur-xl text-xs font-semibold text-[#171717] hover:bg-black/5 transition-colors shadow-xs"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-black/[0.08] bg-white/85 backdrop-blur-xl text-xs font-semibold text-[#171717] hover:bg-black/5 transition-colors shadow-xs"
             >
               <span className="material-symbols-outlined text-[15px] text-[#0569ff]">lock</span>
               <span>Vault</span>
             </a>
-            <div className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full border border-black/[0.08] bg-white/80 backdrop-blur-xl text-xs font-medium text-[#171717]">
+            <div className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full border border-black/[0.08] bg-white/85 backdrop-blur-xl text-xs font-medium text-[#171717]">
               <span className="text-[13px]">🌐</span>
               <span className="font-semibold">TH</span>
             </div>
@@ -271,361 +500,354 @@ export default function HomePage() {
       </header>
 
       {/* ======================================================== */}
-      {/* 2. FASTWORK EXACT HERO STAGE WITH 3D SCATTERED CARDS      */}
+      {/* 2. FASTWORK PINNED 200VH TRACK & 3D SCATTER STAGE        */}
       {/* ======================================================== */}
-      <section className="relative min-h-[85vh] sm:min-h-[92vh] flex flex-col items-center justify-center pt-8 pb-16 px-4 overflow-hidden">
-        
-        {/* ======================================================== */}
-        {/* SCATTERED 3D FLOATING PORTFOLIO CARDS (FASTWORK SIGNATURE) */}
-        {/* ======================================================== */}
-        
-        {/* LEFT COLUMN 1 (Outer Left, tilted -8deg) */}
-        <div className="hidden xl:block absolute left-4 2xl:left-12 top-[12%] z-10">
-          <a
-            href="https://mockup.thaid.online"
-            className="block w-[220px] rounded-2xl bg-white border border-black/[0.08] p-2.5 shadow-[0_20px_45px_rgba(0,0,0,0.07)] hover:shadow-[0_25px_55px_rgba(0,0,0,0.14)] -rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-300"
-          >
-            <div className="relative w-full h-[155px] rounded-xl overflow-hidden bg-stone-100">
-              <Image src="/cards/cafe_marble.jpg" alt="Mockup AI" fill className="object-cover" />
-            </div>
-            <div className="mt-2.5 flex items-center gap-2 px-1">
-              <div className="relative w-7 h-7 rounded-full bg-stone-200 overflow-hidden flex-shrink-0">
-                <span className="w-full h-full flex items-center justify-center text-xs font-bold bg-[#171717] text-white">W</span>
-                <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-[#22c55e] border-2 border-white" />
-              </div>
-              <div className="flex flex-col min-w-0">
-                <p className="text-xs font-bold text-[#171717] truncate leading-tight">Weng Kitsana</p>
-                <p className="text-[10px] text-[#737373] truncate">Photographer · Bangkok</p>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        {/* LEFT COLUMN 2 (Inner Left Top, tilted 2deg) */}
-        <div className="hidden lg:block absolute left-[12%] 2xl:left-[17%] top-[5%] z-20">
-          <a
-            href="https://novel.thaid.online"
-            className="block w-[200px] rounded-2xl bg-white border border-black/[0.08] p-2.5 shadow-[0_20px_45px_rgba(0,0,0,0.07)] hover:shadow-[0_25px_55px_rgba(0,0,0,0.14)] rotate-2 hover:rotate-0 hover:scale-105 transition-all duration-300"
-          >
-            <div className="relative w-full h-[140px] rounded-xl overflow-hidden bg-stone-100">
-              <Image src="/cards/luxury_spa.jpg" alt="Novel Studio" fill className="object-cover" />
-            </div>
-            <div className="mt-2 flex items-center gap-2 px-1">
-              <div className="relative w-7 h-7 rounded-full bg-stone-200 overflow-hidden flex-shrink-0">
-                <span className="w-full h-full flex items-center justify-center text-xs font-bold bg-[#0569ff] text-white">C</span>
-                <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-[#22c55e] border-2 border-white" />
-              </div>
-              <div className="flex flex-col min-w-0">
-                <p className="text-xs font-bold text-[#171717] truncate leading-tight">Chapavich T.</p>
-                <p className="text-[10px] text-[#737373] truncate">Novel Author · Chiang Mai</p>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        {/* LEFT COLUMN 3 (Inner Left Bottom, tilted -4deg) */}
-        <div className="hidden lg:block absolute left-[5%] 2xl:left-[10%] bottom-[8%] z-10">
-          <a
-            href="https://social.thaid.online"
-            className="block w-[210px] rounded-2xl bg-white border border-black/[0.08] p-2.5 shadow-[0_20px_45px_rgba(0,0,0,0.07)] hover:shadow-[0_25px_55px_rgba(0,0,0,0.14)] -rotate-3 hover:rotate-0 hover:scale-105 transition-all duration-300"
-          >
-            <div className="relative w-full h-[150px] rounded-xl overflow-hidden bg-stone-100">
-              <Image src="/cards/neon_cyberpunk.jpg" alt="Social Poster" fill className="object-cover" />
-            </div>
-            <div className="mt-2.5 flex items-center gap-2 px-1">
-              <div className="relative w-7 h-7 rounded-full bg-stone-200 overflow-hidden flex-shrink-0">
-                <span className="w-full h-full flex items-center justify-center text-xs font-bold bg-[#e85a2d] text-white">L</span>
-                <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-[#22c55e] border-2 border-white" />
-              </div>
-              <div className="flex flex-col min-w-0">
-                <p className="text-xs font-bold text-[#171717] truncate leading-tight">LEOBEER</p>
-                <p className="text-[10px] text-[#737373] truncate">Viral Editor · Bangkok</p>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        {/* RIGHT COLUMN 1 (Outer Right Top, tilted 6deg) */}
-        <div className="hidden xl:block absolute right-4 2xl:right-12 top-[10%] z-10">
-          <a
-            href="https://clip.thaid.online"
-            className="block w-[215px] rounded-2xl bg-white border border-black/[0.08] p-2.5 shadow-[0_20px_45px_rgba(0,0,0,0.07)] hover:shadow-[0_25px_55px_rgba(0,0,0,0.14)] rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-300"
-          >
-            <div className="relative w-full h-[150px] rounded-xl overflow-hidden bg-stone-100">
-              <Image src="/cards/golden_beach.jpg" alt="Clip AI" fill className="object-cover" />
-            </div>
-            <div className="mt-2.5 flex items-center gap-2 px-1">
-              <div className="relative w-7 h-7 rounded-full bg-stone-200 overflow-hidden flex-shrink-0">
-                <span className="w-full h-full flex items-center justify-center text-xs font-bold bg-[#ec4899] text-white">N</span>
-                <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-[#22c55e] border-2 border-white" />
-              </div>
-              <div className="flex flex-col min-w-0">
-                <p className="text-xs font-bold text-[#171717] truncate leading-tight">Nguyen Van Nam</p>
-                <p className="text-[10px] text-[#737373] truncate">Video Creator · Phuket</p>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        {/* RIGHT COLUMN 2 (Inner Right Upper, tilted -5deg) */}
-        <div className="hidden lg:block absolute right-[12%] 2xl:right-[17%] top-[6%] z-20">
-          <a
-            href="https://sticker.thaid.online"
-            className="block w-[205px] rounded-2xl bg-white border border-black/[0.08] p-2.5 shadow-[0_20px_45px_rgba(0,0,0,0.07)] hover:shadow-[0_25px_55px_rgba(0,0,0,0.14)] -rotate-4 hover:rotate-0 hover:scale-105 transition-all duration-300"
-          >
-            <div className="relative w-full h-[145px] rounded-xl overflow-hidden bg-stone-100">
-              <Image src="/cards/nature_wood.jpg" alt="LINE Sticker" fill className="object-cover" />
-            </div>
-            <div className="mt-2 flex items-center gap-2 px-1">
-              <div className="relative w-7 h-7 rounded-full bg-stone-200 overflow-hidden flex-shrink-0">
-                <span className="w-full h-full flex items-center justify-center text-xs font-bold bg-[#10b981] text-white">P</span>
-                <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-[#22c55e] border-2 border-white" />
-              </div>
-              <div className="flex flex-col min-w-0">
-                <p className="text-xs font-bold text-[#171717] truncate leading-tight">Peter Sato</p>
-                <p className="text-[10px] text-[#737373] truncate">Sticker Designer · Osaka</p>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        {/* RIGHT COLUMN 3 (Inner Right Lower, tilted 4deg) */}
-        <div className="hidden lg:block absolute right-[6%] 2xl:right-[11%] bottom-[7%] z-10">
-          <a
-            href="https://chat.thaid.online"
-            className="block w-[210px] rounded-2xl bg-white border border-black/[0.08] p-2.5 shadow-[0_20px_45px_rgba(0,0,0,0.07)] hover:shadow-[0_25px_55px_rgba(0,0,0,0.14)] rotate-4 hover:rotate-0 hover:scale-105 transition-all duration-300"
-          >
-            <div className="relative w-full h-[150px] rounded-xl overflow-hidden bg-stone-100">
-              <Image src="/cards/cozy_living.jpg" alt="Smart Chat" fill className="object-cover" />
-            </div>
-            <div className="mt-2.5 flex items-center gap-2 px-1">
-              <div className="relative w-7 h-7 rounded-full bg-stone-200 overflow-hidden flex-shrink-0">
-                <span className="w-full h-full flex items-center justify-center text-xs font-bold bg-[#06c755] text-white">M</span>
-                <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-[#22c55e] border-2 border-white" />
-              </div>
-              <div className="flex flex-col min-w-0">
-                <p className="text-xs font-bold text-[#171717] truncate leading-tight">MOD SUPACHA</p>
-                <p className="text-[10px] text-[#737373] truncate">E-Commerce Admin · Bangkok</p>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        {/* ======================================================== */}
-        {/* CENTER HERO COPY & ACTIONS (100% FASTWORK MATCH)          */}
-        {/* ======================================================== */}
-        <div className="relative z-30 max-w-2xl mx-auto text-center flex flex-col items-center">
+      <section ref={trackRef} className="hero-track">
+        <div ref={heroRef} className="hero-sticky">
           
-          {/* Main Headline with Stylized Thai Calligraphy */}
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-[#171717] leading-[1.12]">
-            Show the world <br />
-            what <span className="font-['Charm'] italic text-5xl sm:text-7xl md:text-8xl px-2 font-normal text-[#171717]">คุณ</span> can do
-          </h1>
+          {/* ======================================================== */}
+          {/* 3D FLOATING ORBIT CARDS (ZOOM OUT & SCATTER ON SCROLL)   */}
+          {/* ======================================================== */}
+          <div className="orbit-stage-viewport">
+            <div className="orbit-stage-container">
+              {orbitCards.map((card) => (
+                <article
+                  key={card.id}
+                  className={`orbit-card-scatter ${card.animClass}`}
+                  style={{
+                    left: card.left,
+                    top: card.top,
+                    width: card.width,
+                    height: card.height,
+                    ["--orbit-rot" as any]: card.rot,
+                    ["--scatter-x" as any]: card.scatterX,
+                    ["--scatter-y" as any]: card.scatterY,
+                  }}
+                >
+                  <a href={card.url} className="block w-full h-full text-left group">
+                    {/* Cover Photo */}
+                    <div className="relative w-full h-[62%] bg-stone-100 overflow-hidden">
+                      <Image
+                        src={card.cover}
+                        alt={card.name}
+                        fill
+                        sizes="260px"
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        priority
+                      />
+                      <div className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-md text-[10px] font-bold text-white tracking-wide">
+                        {card.badge}
+                      </div>
+                    </div>
 
-          {/* Subtitle */}
-          <p className="mt-4 sm:mt-5 text-sm sm:text-base md:text-lg text-[#737373] max-w-lg mx-auto font-normal">
-            In the age of AI, your portfolio proves why clients need you.
-          </p>
+                    {/* Profile Body */}
+                    <div className="relative h-[38%] bg-white px-3 py-2 flex flex-col justify-between">
+                      <div className="flex items-center gap-2.5">
+                        <div className="relative w-7 h-7 rounded-full bg-stone-200 overflow-hidden flex-shrink-0 border border-black/[0.06]">
+                          <Image
+                            src={card.avatar}
+                            alt={card.name}
+                            width={28}
+                            height={28}
+                            className="object-cover"
+                          />
+                          <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-[#22c55e] border-[1.5px] border-white" />
+                        </div>
+                        <div className="flex flex-col min-w-0">
+                          <p className="text-xs font-bold text-[#171717] truncate leading-tight group-hover:text-[#0569ff] transition-colors">
+                            {card.name}
+                          </p>
+                          <p className="text-[10px] text-[#737373] truncate leading-tight">
+                            {card.role}
+                          </p>
+                        </div>
+                      </div>
 
-          {/* Thai Secondary Subtitle */}
-          <p className="mt-1 text-xs sm:text-sm text-stone-400 font-medium">
-            ศูนย์รวมโซลูชัน AI อัจฉริยะ สำหรับครีเอเตอร์และธุรกิจไทย
-          </p>
-
-          {/* Countdown / Live Metrics Timer (Fastwork 4-Box Signature) */}
-          <div className="mt-7 sm:mt-9 flex items-center justify-center gap-2 sm:gap-3.5">
-            <div className="w-[66px] sm:w-[76px] py-3 rounded-2xl bg-[#f8f9fa] border border-black/[0.06] text-center shadow-xs">
-              <span className="block text-xl sm:text-3xl font-extrabold text-[#171717] tracking-tight">
-                {String(countdown.days).padStart(2, "0")}
-              </span>
-              <span className="block text-[10px] sm:text-[11px] text-[#737373] font-medium mt-0.5">days</span>
-            </div>
-            <div className="w-[66px] sm:w-[76px] py-3 rounded-2xl bg-[#f8f9fa] border border-black/[0.06] text-center shadow-xs">
-              <span className="block text-xl sm:text-3xl font-extrabold text-[#171717] tracking-tight">
-                {String(countdown.hours).padStart(2, "0")}
-              </span>
-              <span className="block text-[10px] sm:text-[11px] text-[#737373] font-medium mt-0.5">hours</span>
-            </div>
-            <div className="w-[66px] sm:w-[76px] py-3 rounded-2xl bg-[#f8f9fa] border border-black/[0.06] text-center shadow-xs">
-              <span className="block text-xl sm:text-3xl font-extrabold text-[#171717] tracking-tight">
-                {String(countdown.mins).padStart(2, "0")}
-              </span>
-              <span className="block text-[10px] sm:text-[11px] text-[#737373] font-medium mt-0.5">mins</span>
-            </div>
-            <div className="w-[66px] sm:w-[76px] py-3 rounded-2xl bg-[#f8f9fa] border border-black/[0.06] text-center shadow-xs">
-              <span className="block text-xl sm:text-3xl font-extrabold text-[#171717] tracking-tight">
-                {String(countdown.secs).padStart(2, "0")}
-              </span>
-              <span className="block text-[10px] sm:text-[11px] text-[#737373] font-medium mt-0.5">seconds</span>
+                      <div className="flex items-center justify-between pt-1 border-t border-black/[0.05]">
+                        <span className="text-[10px] font-semibold text-amber-500 flex items-center gap-0.5">
+                          ★ <span className="text-[#171717]">{card.rating}</span>
+                        </span>
+                        <span className="text-[10px] font-bold text-[#171717] bg-stone-100 px-2 py-0.5 rounded-full">
+                          {card.price}
+                        </span>
+                      </div>
+                    </div>
+                  </a>
+                </article>
+              ))}
             </div>
           </div>
 
-          {/* Primary Action Button (Fastwork Solid Black Pill) */}
-          <div className="mt-8">
-            <a
-              href="#ecosystem"
-              className="inline-flex items-center justify-center px-9 py-3.5 rounded-full bg-[#1f242d] hover:bg-black text-white font-semibold text-sm shadow-md hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-200"
-            >
-              Get started
-            </a>
+          {/* ======================================================== */}
+          {/* HERO CENTER COPY (HEADLINE + COUNTDOWN + COMET BUTTON)    */}
+          {/* ======================================================== */}
+          <div className="hero-copy-scatter relative z-20 flex flex-col items-center text-center px-4 max-w-4xl mx-auto pointer-events-auto">
+            
+            {/* Top Brand Pill */}
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-black/[0.08] bg-white/90 shadow-xs mb-6 backdrop-blur-md">
+              <span className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse" />
+              <span className="text-xs font-bold text-[#171717] tracking-tight">
+                ThaiD.online Studio
+              </span>
+              <span className="text-[11px] text-[#737373] border-l border-black/[0.08] pl-2 font-medium">
+                SaaS Ecosystem 2026
+              </span>
+            </div>
+
+            {/* Exact Fastwork Headline with Cursive Thai "คุณ" */}
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-[#171717] leading-[1.08] mb-6">
+              Show the world
+              <br />
+              what{" "}
+              <span className="font-['Charm'] font-bold text-[#171717] italic text-[1.18em] px-2 inline-block -rotate-2">
+                คุณ
+              </span>{" "}
+              can do
+            </h1>
+
+            {/* Subtitle */}
+            <p className="text-base sm:text-lg md:text-xl text-[#737373] max-w-2xl font-normal leading-relaxed mb-8">
+              In the age of AI, your portfolio proves why clients need you.
+              <br />
+              <span className="text-sm sm:text-base text-[#171717]/80 font-medium">
+                ในยุคแห่งปัญญาประดิษฐ์ พอร์ตผลงานของคุณคือข้อพิสูจน์ที่ดีที่สุด
+              </span>
+            </p>
+
+            {/* 4-Box Countdown Timer Pills (Fastwork Design) */}
+            <div className="flex items-center gap-2 sm:gap-3 mb-10">
+              <div className="flex flex-col items-center justify-center w-16 sm:w-20 h-16 sm:h-20 rounded-2xl bg-white border border-black/[0.08] shadow-[0_10px_25px_rgba(0,0,0,0.04)]">
+                <span className="text-xl sm:text-2xl font-bold text-[#171717] tabular-nums">
+                  {countdown.days.toString().padStart(2, "0")}
+                </span>
+                <span className="text-[10px] sm:text-xs font-semibold text-[#737373] uppercase tracking-wider">
+                  days
+                </span>
+              </div>
+              <span className="text-lg font-bold text-[#737373]/40">:</span>
+              <div className="flex flex-col items-center justify-center w-16 sm:w-20 h-16 sm:h-20 rounded-2xl bg-white border border-black/[0.08] shadow-[0_10px_25px_rgba(0,0,0,0.04)]">
+                <span className="text-xl sm:text-2xl font-bold text-[#171717] tabular-nums">
+                  {countdown.hours.toString().padStart(2, "0")}
+                </span>
+                <span className="text-[10px] sm:text-xs font-semibold text-[#737373] uppercase tracking-wider">
+                  hours
+                </span>
+              </div>
+              <span className="text-lg font-bold text-[#737373]/40">:</span>
+              <div className="flex flex-col items-center justify-center w-16 sm:w-20 h-16 sm:h-20 rounded-2xl bg-white border border-black/[0.08] shadow-[0_10px_25px_rgba(0,0,0,0.04)]">
+                <span className="text-xl sm:text-2xl font-bold text-[#171717] tabular-nums">
+                  {countdown.mins.toString().padStart(2, "0")}
+                </span>
+                <span className="text-[10px] sm:text-xs font-semibold text-[#737373] uppercase tracking-wider">
+                  mins
+                </span>
+              </div>
+              <span className="text-lg font-bold text-[#737373]/40">:</span>
+              <div className="flex flex-col items-center justify-center w-16 sm:w-20 h-16 sm:h-20 rounded-2xl bg-white border border-black/[0.08] shadow-[0_10px_25px_rgba(0,0,0,0.04)]">
+                <span className="text-xl sm:text-2xl font-bold text-[#0569ff] tabular-nums">
+                  {countdown.secs.toString().padStart(2, "0")}
+                </span>
+                <span className="text-[10px] sm:text-xs font-semibold text-[#737373] uppercase tracking-wider">
+                  seconds
+                </span>
+              </div>
+            </div>
+
+            {/* Action Buttons: Comet Glowing Orbit Button + Secondary Button */}
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <a href="#services-directory" className="hero-cta-wrap">
+                <span className="hero-cta-comet" />
+                <span className="hero-cta-inner">
+                  <span>เริ่มต้นใช้งาน (Get started)</span>
+                  <span className="text-lg leading-none">→</span>
+                </span>
+              </a>
+
+              <a href="#services-directory" className="hero-cta-secondary">
+                สำรวจสตูดิโอทั้งหมด
+              </a>
+            </div>
+
           </div>
 
-          {/* Scroll Down Indicator */}
-          <div className="mt-12 flex flex-col items-center gap-1 text-[#737373] text-[11px] font-medium">
-            <span>Scroll down</span>
-            <span className="material-symbols-outlined text-sm animate-bounce">expand_more</span>
+          {/* ======================================================== */}
+          {/* BOTTOM SCROLL CUE (BOUNCING ARROW)                       */}
+          {/* ======================================================== */}
+          <div className="scroll-cue-scatter absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 cursor-pointer pointer-events-auto">
+            <span className="text-[11px] font-semibold text-[#737373] tracking-wide uppercase">
+              Scroll down
+            </span>
+            <div className="anim-scroll-bounce text-[#737373]">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 5v14M19 12l-7 7-7-7" />
+              </svg>
+            </div>
           </div>
 
         </div>
-
       </section>
 
       {/* ======================================================== */}
-      {/* 3. PLATFORMS DIRECTORY & ECOSYSTEM (CLEAN WHITE EDITORIAL) */}
+      {/* 3. CATEGORY SELECTOR & STUDIO DIRECTORY                  */}
       {/* ======================================================== */}
-      <section id="ecosystem" className="py-16 sm:py-24 px-4 sm:px-6 bg-[#fafafa] border-t border-black/[0.06]">
-        <div className="max-w-7xl mx-auto">
-          
-          {/* Section Header */}
-          <div className="text-center max-w-2xl mx-auto mb-10">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-black/[0.08] text-xs font-semibold text-[#171717] mb-3 shadow-xs">
-              <span className="w-2 h-2 rounded-full bg-[#22c55e]" />
-              <span>ThaiD Multi-SaaS Architecture</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#171717]">
-              เลือกใช้งาน 8 แพลตฟอร์ม AI ในเครือ
-            </h2>
-            <p className="mt-2 text-sm sm:text-base text-[#737373]">
-              ทุกเครื่องมือถูกออกแบบมาเพื่อคนไทยโดยเฉพาะ เร็ว แรง ไร้ขีดจำกัด
-            </p>
+      <main id="services-directory" className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 pt-16 pb-28">
+        
+        {/* Section Header */}
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-stone-100 text-[#171717] text-xs font-bold mb-4">
+            ✦ AI Studio Directory
           </div>
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#171717] tracking-tight mb-4">
+            เลือกสตูดิโอ AI ที่คุณต้องการสร้างสรรค์
+          </h2>
+          <p className="text-[#737373] text-sm sm:text-base leading-relaxed">
+            เชื่อมต่อเครื่องมือ AI ระดับโปร ทุกระบบปรับแต่งขึ้นมาเพื่อการทำงานจริง รองรับภาษาไทย 100%
+          </p>
+        </div>
 
-          {/* Segmented Category Filter Pills */}
-          <div className="flex items-center justify-center gap-2 overflow-x-auto pb-4 mb-8">
-            {[
-              { id: "all", label: "ทั้งหมด (All)" },
-              { id: "mockup", label: "ม็อกอัพสินค้า" },
-              { id: "novel", label: "นิยาย AI" },
-              { id: "social", label: "ออโต้โพสต์ FB" },
-              { id: "clip", label: "คลิปสั้น AI" },
-              { id: "sticker", label: "สติกเกอร์ไลน์" },
-              { id: "chat", label: "แชทบอท LINE" },
-              { id: "vault", label: "คลังความปลอดภัย" },
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                type="button"
-                onClick={() => setActiveTab(tab.id)}
-                className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
-                  activeTab === tab.id
-                    ? "bg-[#1f242d] text-white shadow-xs"
-                    : "bg-white text-[#737373] hover:text-[#171717] border border-black/[0.08]"
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
+        {/* Minimalist Pill Filter Tabs */}
+        <div className="flex items-center justify-center gap-2 flex-wrap mb-14">
+          {[
+            { id: "all", label: "ทั้งหมด (All Studios)" },
+            { id: "mockup", label: "Mockup AI" },
+            { id: "novel", label: "Novel AI" },
+            { id: "social", label: "Social Poster" },
+            { id: "clip", label: "Clip Video" },
+            { id: "sticker", label: "LINE Sticker" },
+            { id: "chat", label: "Smart Chat" },
+            { id: "vault", label: "Vault Security" },
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer ${
+                activeTab === tab.id
+                  ? "bg-[#171717] text-white shadow-sm"
+                  : "bg-white text-[#737373] hover:text-[#171717] border border-black/[0.08] hover:border-black/20"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
 
-          {/* Grid of 8 Service Cards (Fastwork Clean White Style) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {filteredServices.map((service) => (
-              <div
-                key={service.id}
-                className="rounded-2xl bg-white border border-black/[0.08] p-5 flex flex-col justify-between shadow-[0_10px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-300 group"
-              >
+        {/* Grid of Clean White Fastwork Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredServices.map((service) => (
+            <article
+              key={service.id}
+              className="group rounded-3xl bg-white border border-black/[0.08] shadow-[0_15px_35px_-5px_rgba(0,0,0,0.06)] hover:shadow-[0_25px_50px_-10px_rgba(0,0,0,0.12)] transition-all duration-300 overflow-hidden flex flex-col"
+            >
+              {/* Card Image Banner */}
+              <div className="relative w-full h-56 bg-stone-100 overflow-hidden">
+                <Image
+                  src={service.image}
+                  alt={service.name}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute top-4 left-4 flex items-center gap-2">
+                  <span className="px-3 py-1 rounded-full text-xs font-bold bg-white/90 backdrop-blur-md text-[#171717] border border-black/[0.08] shadow-xs">
+                    {service.badge}
+                  </span>
+                </div>
+                <div className="absolute top-4 right-4 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-md text-[11px] font-semibold text-[#171717] border border-black/[0.08] shadow-xs">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#22c55e]" />
+                  <span>{service.status}</span>
+                </div>
+              </div>
+
+              {/* Card Content Body */}
+              <div className="p-6 flex flex-col flex-1 justify-between">
                 <div>
-                  {/* Photo Preview Thumbnail */}
-                  <div className="relative w-full h-[160px] rounded-xl overflow-hidden bg-stone-100 mb-4">
-                    <Image src={service.image} alt={service.name} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
-                    <div className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-full bg-white/90 backdrop-blur-md text-[10px] font-bold text-[#171717] border border-black/5 shadow-xs">
-                      {service.badge}
-                    </div>
+                  <div className="flex items-center gap-2 mb-2 text-[#0569ff] text-xs font-semibold">
+                    <span className="material-symbols-outlined text-base">{service.icon}</span>
+                    <span>{service.tag}</span>
                   </div>
 
-                  {/* Title & Domain */}
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="w-2 h-2 rounded-full bg-[#22c55e]" />
-                    <span className="text-[11px] font-mono text-[#737373]">{service.tag}</span>
-                  </div>
-                  <h3 className="text-base font-bold text-[#171717] tracking-tight group-hover:text-[#0569ff] transition-colors">
+                  <h3 className="text-xl font-bold text-[#171717] mb-2 group-hover:text-[#0569ff] transition-colors">
                     {service.name}
                   </h3>
-                  <p className="mt-2 text-xs text-[#737373] line-clamp-2 leading-relaxed">
+
+                  <p className="text-[#737373] text-xs sm:text-sm leading-relaxed mb-6">
                     {service.description}
                   </p>
 
-                  {/* Features Bullet List */}
-                  <ul className="mt-4 space-y-1.5 border-t border-black/[0.06] pt-3 text-[11px] text-stone-600">
-                    {service.features.map((f, i) => (
-                      <li key={i} className="flex items-center gap-1.5">
-                        <span className="text-[#0569ff] font-bold">✓</span>
-                        <span className="truncate">{f}</span>
-                      </li>
+                  {/* Feature Highlights */}
+                  <div className="space-y-2 mb-6">
+                    {service.features.map((feat, idx) => (
+                      <div key={idx} className="flex items-start gap-2 text-xs text-[#171717]">
+                        <span className="text-[#0569ff] font-bold mt-0.5">✓</span>
+                        <span className="text-stone-700 leading-tight">{feat}</span>
+                      </div>
                     ))}
-                  </ul>
+                  </div>
                 </div>
 
-                {/* Footer Action */}
-                <div className="mt-5 pt-3 border-t border-black/[0.06] flex items-center justify-between">
-                  <div>
-                    <span className="text-[10px] text-[#737373] block">{service.stats.primaryLabel}</span>
-                    <span className="text-xs font-extrabold text-[#171717]">{service.stats.primary}</span>
+                {/* Card Footer Metrics & Action */}
+                <div>
+                  <div className="grid grid-cols-2 gap-3 py-3 border-y border-black/[0.06] mb-5">
+                    <div>
+                      <span className="block text-sm font-bold text-[#171717]">
+                        {service.stats.primary}
+                      </span>
+                      <span className="text-[10px] text-[#737373]">
+                        {service.stats.primaryLabel}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="block text-sm font-bold text-[#171717]">
+                        {service.stats.secondary}
+                      </span>
+                      <span className="text-[10px] text-[#737373]">
+                        {service.stats.secondaryLabel}
+                      </span>
+                    </div>
                   </div>
+
                   <a
                     href={service.url}
-                    className="inline-flex items-center gap-1 px-4 py-2 rounded-full bg-[#1f242d] hover:bg-black text-white text-xs font-semibold shadow-xs transition-colors"
+                    className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-full bg-[#171717] hover:bg-black text-white text-xs sm:text-sm font-semibold transition-all duration-200 shadow-sm"
                   >
-                    <span>เปิดระบบ</span>
-                    <span className="material-symbols-outlined text-[13px]">arrow_outward</span>
+                    <span>{service.actionText}</span>
+                    <span className="text-base leading-none">→</span>
                   </a>
                 </div>
               </div>
-            ))}
-          </div>
-
-          {/* Infrastructure Metrics Bar */}
-          <div className="mt-14 max-w-4xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <div className="p-4 rounded-2xl bg-white border border-black/[0.08] text-center shadow-xs">
-              <span className="block text-xs font-medium text-[#737373]">Cloud Infrastructure</span>
-              <span className="block text-base font-bold text-[#171717] mt-1">Oracle Cloud ARM</span>
-              <span className="block text-[11px] text-[#22c55e] font-semibold">2 OCPU · 12 GB RAM</span>
-            </div>
-            <div className="p-4 rounded-2xl bg-white border border-black/[0.08] text-center shadow-xs">
-              <span className="block text-xs font-medium text-[#737373]">Reverse Proxy</span>
-              <span className="block text-base font-bold text-[#171717] mt-1">Traefik v3.7</span>
-              <span className="block text-[11px] text-[#22c55e] font-semibold">Auto SSL Let&apos;s Encrypt</span>
-            </div>
-            <div className="p-4 rounded-2xl bg-white border border-black/[0.08] text-center shadow-xs">
-              <span className="block text-xs font-medium text-[#737373]">DNS Routing</span>
-              <span className="block text-base font-bold text-[#171717] mt-1">ThaiD.online</span>
-              <span className="block text-[11px] text-[#22c55e] font-semibold">Wildcard Multi-Domain</span>
-            </div>
-            <div className="p-4 rounded-2xl bg-white border border-black/[0.08] text-center shadow-xs">
-              <span className="block text-xs font-medium text-[#737373]">Container Engine</span>
-              <span className="block text-base font-bold text-[#171717] mt-1">Coolify v4</span>
-              <span className="block text-[11px] text-[#22c55e] font-semibold">8 Services Isolated</span>
-            </div>
-          </div>
-
+            </article>
+          ))}
         </div>
-      </section>
+
+      </main>
 
       {/* ======================================================== */}
-      {/* 4. FOOTER                                                */}
+      {/* 4. FASTWORK CLEAN EDITORIAL FOOTER                       */}
       {/* ======================================================== */}
-      <footer className="py-10 px-4 border-t border-black/[0.06] bg-white text-center text-xs text-[#737373]">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p>© 2026 ThaiD.online — All rights reserved.</p>
-          <div className="flex items-center gap-4">
-            <a href="https://thaid.online" className="hover:text-[#171717] transition-colors">Hub</a>
+      <footer className="relative z-20 border-t border-black/[0.08] bg-[#fafafa] py-16 px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="flex flex-col items-center md:items-start gap-2">
+            <div className="flex items-center gap-2">
+              <div className="w-5 h-5 rounded-full bg-[#171717] flex items-center justify-center text-white text-[11px] font-bold">
+                ✦
+              </div>
+              <span className="font-bold text-base text-[#171717]">ThaiD.online Studio</span>
+            </div>
+            <p className="text-xs text-[#737373]">
+              Next-generation AI Ecosystem for Thai Creators & Businesses.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-6 text-xs text-[#737373]">
+            <a href="https://thaid.online" className="hover:text-[#171717] transition-colors">หน้าแรก</a>
             <a href="https://mockup.thaid.online" className="hover:text-[#171717] transition-colors">Mockup AI</a>
             <a href="https://novel.thaid.online" className="hover:text-[#171717] transition-colors">Novel AI</a>
             <a href="https://social.thaid.online" className="hover:text-[#171717] transition-colors">Social AI</a>
-            <a href="https://clip.thaid.online" className="hover:text-[#171717] transition-colors">Clip AI</a>
-            <a href="https://sticker.thaid.online" className="hover:text-[#171717] transition-colors">Sticker AI</a>
-            <a href="https://chat.thaid.online" className="hover:text-[#171717] transition-colors">Chat AI</a>
-            <a href="https://vault.thaid.online" className="hover:text-[#171717] transition-colors">Vault</a>
+            <a href="https://vault.thaid.online" className="hover:text-[#171717] transition-colors">Security Vault</a>
+          </div>
+
+          <div className="text-xs text-[#737373]">
+            © 2026 ThaiD.online. All rights reserved.
           </div>
         </div>
       </footer>

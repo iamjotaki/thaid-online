@@ -51,3 +51,5 @@ push_and_deploy_all.py
 
 inspect_fastwork.py
 
+apply_white_fastwork_tokens.py
+
