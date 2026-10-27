@@ -12,6 +12,7 @@
 | **ThaiD Hub** | เว็บหลัก / รวมบริการ / Marketing | [https://thaid.online](https://thaid.online) | `c:\ThaiD.online`<br>[iamjotaki/thaid-online](https://github.com/iamjotaki/thaid-online) | Next.js 16 (Turbopack), React 19, Tailwind CSS v4, Lucide | 🟢 Live |
 | **Novel Studio** | สตูดิโอแต่งนิยาย AI & Auto-Upload | [https://novel.thaid.online](https://novel.thaid.online) | `C:\ReadAWrite`<br>[iamjotaki/thaid-novel-studio](https://github.com/iamjotaki/thaid-novel-studio) | Python 3.10, Playwright Chromium, SQLite, Gemini Flash | 🟢 Live |
 | **Social Poster** | ผลิตคอนเทนต์ & วิดีโอ Reels เฟสบุ๊ค | [https://social.thaid.online](https://social.thaid.online) | `C:\Auto Post FB`<br>[iamjotaki/thaid-social-poster](https://github.com/iamjotaki/thaid-social-poster) | Python 3.11, Flask, FFmpeg, Thai TLWG Fonts, Neon Postgres | 🟢 Live |
+| **ThaiD Vault** | คลังข้อมูลความปลอดภัย บัญชี & โฮสติ้ง | [https://vault.thaid.online](https://vault.thaid.online) | `C:\ThaiD-Vault`<br>[iamjotaki/thaid-vault](https://github.com/iamjotaki/thaid-vault) | Python 3.11, FastAPI, SQLite, AES-256 Fernet, Tailwind | 🟢 Live |
 | **LINE Sticker** | เจนชุดสติกเกอร์ไลน์ 24/40 แอ็กชัน | [https://sticker.thaid.online](https://sticker.thaid.online) | *จอง DNS ไว้แล้ว พร้อม Deploy เมื่อโปรเจกต์เสร็จ* | Generative Image Model, APNG/PNG Exporter | 🟡 In Prep |
 
 ---
@@ -41,6 +42,7 @@
 - **App ID 1:** `thaid-online` (พอร์ต 3000, Build Pack: `nixpacks` / Node.js)
 - **App ID 2:** `thaid-novel-studio` (พอร์ต 8080, Build Pack: `dockerfile` / Python 3.10)
 - **App ID 3:** `thaid-social-poster` (พอร์ต 5000, Build Pack: `dockerfile` / Python 3.11)
+- **App ID 4:** `thaid-vault` (พอร์ต 8088, Build Pack: `dockerfile` / Python 3.11)
 
 ---
 
