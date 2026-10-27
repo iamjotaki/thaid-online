@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import OrbitShowcase from "./components/OrbitShowcase";
 
 export default function HomePage() {
   const [isDark, setIsDark] = useState(true);
@@ -388,8 +389,15 @@ export default function HomePage() {
             </a>
           </div>
 
+          {/* ======================================================== */}
+          {/* FASTWORK-STYLE 3D ORBIT SHOWCASE STAGE                   */}
+          {/* ======================================================== */}
+          <div className="mt-8">
+            <OrbitShowcase />
+          </div>
+
           {/* Live Ecosystem Bar */}
-          <div className="mt-12 max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-3 text-left">
+          <div className="mt-8 max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-3 text-left">
             <div className="p-3.5 rounded-2xl bg-white dark:bg-[#161619] border border-black/[0.06] dark:border-white/[0.08] shadow-xs">
               <div className="flex items-center gap-2 text-xs font-semibold text-[#86868b] dark:text-stone-400">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
