@@ -104,14 +104,14 @@ export default function HomePage() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // 10 Fastwork Exact Orbit Cards Data
+  // 10 Real Fastwork Orbit Cards (Actual ThaiD AI Tools & Outputs)
   const orbitCards: OrbitCardConfig[] = [
     {
-      id: "weng",
-      name: "Weng Kitsana",
-      role: "Photographer · Bangkok",
+      id: "mockup_1",
+      name: "ThaiD Mockup AI",
+      role: "Product Staging · Bangkok",
       avatar: "/avatars/weng.png",
-      cover: "/cards/cafe_marble.jpg",
+      cover: "/cards/mockup_real_1.jpg",
       url: "https://mockup.thaid.online",
       left: "-1.8%",
       top: "9.2%",
@@ -121,16 +121,16 @@ export default function HomePage() {
       scatterX: "-55vw",
       scatterY: "-28vh",
       animClass: "anim-float-a",
-      badge: "Mockup AI",
+      badge: "Mockup 3D",
       rating: "5.0 (214)",
-      price: "฿1,200",
+      price: "1080×1080",
     },
     {
-      id: "buttercup",
-      name: "Buttercup AI",
-      role: "Fiction Author · Bangkok",
-      avatar: "/avatars/buttercup.png",
-      cover: "/cards/luxury_spa.jpg",
+      id: "novel_1",
+      name: "ReadAWrite AI",
+      role: "Fiction Studio · Chiang Mai",
+      avatar: "/avatars/chapavich.png",
+      cover: "/cards/novel_real_1.jpg",
       url: "https://novel.thaid.online",
       left: "76.4%",
       top: "-4.5%",
@@ -140,16 +140,16 @@ export default function HomePage() {
       scatterX: "55vw",
       scatterY: "-28vh",
       animClass: "anim-float-b",
-      badge: "Novel Studio",
-      rating: "4.9 (189)",
-      price: "฿890",
+      badge: "Novel Cover",
+      rating: "5.0 (389)",
+      price: "10 ตอนจบ",
     },
     {
-      id: "leobeer",
-      name: "LEOBEER Studio",
-      role: "Viral Editor · Bangkok",
+      id: "social_1",
+      name: "Social Auto-Poster",
+      role: "Viral News · Bangkok",
       avatar: "/avatars/leobeer.png",
-      cover: "/cards/neon_cyberpunk.jpg",
+      cover: "/cards/social_real_1.jpg",
       url: "https://social.thaid.online",
       left: "8.5%",
       top: "-5.0%",
@@ -159,17 +159,17 @@ export default function HomePage() {
       scatterX: "-45vw",
       scatterY: "-30vh",
       animClass: "anim-float-c",
-      badge: "Social Poster",
+      badge: "Viral Card",
       rating: "5.0 (342)",
-      price: "฿1,500",
+      price: "Reels 9:16",
     },
     {
-      id: "slayalldeep",
-      name: "SlayAllDeep",
-      role: "Motion Video · Chiang Mai",
-      avatar: "/avatars/slayalldeep.png",
-      cover: "/cards/golden_beach.jpg",
-      url: "https://clip.thaid.online",
+      id: "sticker_1",
+      name: "LINE Sticker AI",
+      role: "Sticker Pack · Bangkok",
+      avatar: "/avatars/peter.png",
+      cover: "/cards/sticker_real_1.jpg",
+      url: "https://sticker.thaid.online",
       left: "13.0%",
       top: "27.2%",
       width: "210px",
@@ -178,17 +178,17 @@ export default function HomePage() {
       scatterX: "-50vw",
       scatterY: "12vh",
       animClass: "anim-float-b",
-      badge: "Clip AI",
-      rating: "5.0 (178)",
-      price: "฿2,000",
+      badge: "24 Stickers",
+      rating: "5.0 (310)",
+      price: "LINE Store",
     },
     {
-      id: "bold",
-      name: "Bold Architecture",
-      role: "3D Visualizer · Bangkok",
-      avatar: "/avatars/bold.png",
-      cover: "/cards/podium_minimal.jpg",
-      url: "https://vault.thaid.online",
+      id: "clip_1",
+      name: "AI Clip Studio",
+      role: "Viral Video · Phuket",
+      avatar: "/avatars/nam.png",
+      cover: "/cards/clip_real_1_sq.jpg",
+      url: "https://clip.thaid.online",
       left: "-0.7%",
       top: "48.5%",
       width: "240px",
@@ -197,17 +197,17 @@ export default function HomePage() {
       scatterX: "-55vw",
       scatterY: "18vh",
       animClass: "anim-float-a",
-      badge: "ThaiD Vault",
-      rating: "5.0 (98)",
-      price: "฿2,500",
+      badge: "Karaoke Sub",
+      rating: "5.0 (195)",
+      price: "1080p Shorts",
     },
     {
-      id: "chapavich",
-      name: "Chapavich T.",
-      role: "Sound Composer · Bangkok",
-      avatar: "/avatars/chapavich.png",
-      cover: "/cards/nature_wood.jpg",
-      url: "https://vault.thaid.online",
+      id: "mockup_2",
+      name: "Luxury Mockup Studio",
+      role: "Cast Shadow · Bangkok",
+      avatar: "/avatars/bold.png",
+      cover: "/cards/mockup_real_2.jpg",
+      url: "https://mockup.thaid.online",
       left: "5.3%",
       top: "68.5%",
       width: "260px",
@@ -216,16 +216,16 @@ export default function HomePage() {
       scatterX: "-55vw",
       scatterY: "38vh",
       animClass: "anim-float-c",
-      badge: "Media Vault",
+      badge: "Studio Scene",
       rating: "5.0 (412)",
-      price: "฿3,000",
+      price: "AI Matting",
     },
     {
-      id: "pakincht",
-      name: "Pakinchit Dev",
-      role: "Security Engineer · Bangkok",
+      id: "vault_1",
+      name: "ThaiD Vault Security",
+      role: "Cloud Vault · Bangkok",
       avatar: "/avatars/pakincht.png",
-      cover: "/cards/studio_pastel.jpg",
+      cover: "/cards/vault_real_1.jpg",
       url: "https://vault.thaid.online",
       left: "76.3%",
       top: "75.8%",
@@ -235,17 +235,17 @@ export default function HomePage() {
       scatterX: "52vw",
       scatterY: "38vh",
       animClass: "anim-float-b",
-      badge: "API Vault",
+      badge: "AES-256",
       rating: "4.9 (127)",
-      price: "฿1,800",
+      price: "API Vault",
     },
     {
-      id: "peter",
-      name: "Peter Visuals",
-      role: "Graphic Artist · Phuket",
-      avatar: "/avatars/peter.png",
-      cover: "/cards/cozy_living.jpg",
-      url: "https://sticker.thaid.online",
+      id: "novel_2",
+      name: "Fantasy Novel Studio",
+      role: "Story Engine · Chiang Mai",
+      avatar: "/avatars/buttercup.png",
+      cover: "/cards/novel_real_2.jpg",
+      url: "https://novel.thaid.online",
       left: "86.3%",
       top: "6.4%",
       width: "200px",
@@ -254,16 +254,16 @@ export default function HomePage() {
       scatterX: "55vw",
       scatterY: "-28vh",
       animClass: "anim-float-a",
-      badge: "Sticker Pro",
-      rating: "5.0 (310)",
-      price: "฿990",
+      badge: "Thai Web Novel",
+      rating: "4.9 (189)",
+      price: "ReadAWrite",
     },
     {
-      id: "mod",
-      name: "MOD SUPACHA",
-      role: "E-Commerce Admin · Bangkok",
+      id: "chat_1",
+      name: "Smart Chatbot AI",
+      role: "LINE OA 24/7 · Bangkok",
       avatar: "/avatars/mod.png",
-      cover: "/cards/cafe_marble.jpg",
+      cover: "/cards/chat_real_1.jpg",
       url: "https://chat.thaid.online",
       left: "88.5%",
       top: "62.1%",
@@ -273,17 +273,17 @@ export default function HomePage() {
       scatterX: "55vw",
       scatterY: "36vh",
       animClass: "anim-float-c",
-      badge: "Smart Chat",
+      badge: "LINE OA Bot",
       rating: "5.0 (260)",
-      price: "฿1,400",
+      price: "ตอบใน 1 วิ",
     },
     {
-      id: "nam",
-      name: "Nguyen Van Nam",
-      role: "Video Director · Bangkok",
-      avatar: "/avatars/nam.png",
-      cover: "/cards/neon_cyberpunk.jpg",
-      url: "https://clip.thaid.online",
+      id: "sticker_2",
+      name: "Chibi Sticker Pack",
+      role: "LINE Creator · Chiang Mai",
+      avatar: "/avatars/slayalldeep.png",
+      cover: "/cards/sticker_real_2.jpg",
+      url: "https://sticker.thaid.online",
       left: "82.5%",
       top: "32.0%",
       width: "235px",
@@ -292,13 +292,13 @@ export default function HomePage() {
       scatterX: "55vw",
       scatterY: "-5vh",
       animClass: "anim-float-b",
-      badge: "Viral Reels",
-      rating: "5.0 (195)",
-      price: "฿2,200",
+      badge: "ZIP Ready",
+      rating: "5.0 (178)",
+      price: "ไดคัตขาว",
     },
   ];
 
-  // Services Directory Data
+  // Services Directory Data with Real Product Visuals
   const services: ServiceItem[] = [
     {
       id: "mockup",
@@ -311,7 +311,7 @@ export default function HomePage() {
       badge: "E-Commerce",
       description: "สตูดิโอถ่ายภาพสินค้าและม็อกอัพระดับลักชัวรีด้วย AI ไดคัตพื้นหลังอัตโนมัติ จัดวางฉากพรีเมียม สังเคราะห์แสงเงาสมจริง",
       icon: "photo_camera",
-      image: "/cards/cafe_marble.jpg",
+      image: "/cards/mockup_real_1.jpg",
       creator: "Weng Kitsana",
       location: "Photographer · Bangkok",
       features: [
@@ -333,7 +333,7 @@ export default function HomePage() {
       badge: "Most Popular",
       description: "ระบบผู้ช่วยนักเขียนอัจฉริยะ วางโครงเรื่อง แต่งนิยาย 10 ตอนจบ พร้อมเชื่อมต่ออัปโหลดขึ้น ReadAWrite.com อัตโนมัติ",
       icon: "edit_note",
-      image: "/cards/luxury_spa.jpg",
+      image: "/cards/novel_real_1.jpg",
       creator: "Chapavich T.",
       location: "Fiction Author · Chiang Mai",
       features: [
@@ -355,7 +355,7 @@ export default function HomePage() {
       badge: "High Viral",
       description: "ระบบ AI ค้นหาข่าวไวรัล เรียบเรียงใหม่ เจนภาพประกอบและตัดต่อวิดีโอสั้นพร้อมเสียงพากย์ ยิงโพสต์ขึ้น Facebook Page 24 ชม.",
       icon: "campaign",
-      image: "/cards/neon_cyberpunk.jpg",
+      image: "/cards/social_real_1.jpg",
       creator: "LEOBEER",
       location: "Viral Editor · Bangkok",
       features: [
@@ -377,7 +377,7 @@ export default function HomePage() {
       badge: "Trending",
       description: "สตูดิโอสร้างคลิปวิดีโอสั้นอัตโนมัติด้วย AI พากย์เสียงภาษาไทย สร้างซับไตเติลคาราโอเกะแบบคำต่อคำ และภาพประกอบแบบไดนามิก",
       icon: "movie_creation",
-      image: "/cards/golden_beach.jpg",
+      image: "/cards/clip_real_1_sq.jpg",
       creator: "Nguyen Van Nam",
       location: "Video Creator · Phuket",
       features: [
@@ -399,7 +399,7 @@ export default function HomePage() {
       badge: "New Release",
       description: "ระบบสร้างสติกเกอร์ไลน์อัตโนมัติด้วย AI เจนภาพชุด 8/16/24/40 ตัวละครคงที่ พร้อมไดคัตพื้นหลังโปร่งใสและแพ็กเกจส่ง LINE Creators Market",
       icon: "sentiment_satisfied",
-      image: "/cards/nature_wood.jpg",
+      image: "/cards/sticker_real_1.jpg",
       creator: "Peter Visuals",
       location: "Graphic Artist · Phuket",
       features: [
@@ -421,7 +421,7 @@ export default function HomePage() {
       badge: "E-Commerce",
       description: "ระบบ AI แอดมินตอบแชทลูกค้าบน LINE Official Account อัจฉริยะ 24 ชั่วโมง มีคลังความรู้สินค้า ปิดการขาย ตอบไวใน 1 วินาที",
       icon: "forum",
-      image: "/cards/cozy_living.jpg",
+      image: "/cards/chat_real_1.jpg",
       creator: "MOD SUPACHA",
       location: "E-Commerce Admin · Bangkok",
       features: [
@@ -443,7 +443,7 @@ export default function HomePage() {
       badge: "Security",
       description: "คลังเก็บข้อมูลส่วนตัว กุญแจ API Keys และระบบความปลอดภัย เข้ารหัสข้อมูลระดับทหาร AES-256",
       icon: "lock",
-      image: "/cards/podium_minimal.jpg",
+      image: "/cards/vault_real_1.jpg",
       creator: "Pakinchit",
       location: "Security Engineer · Bangkok",
       features: [
@@ -506,7 +506,7 @@ export default function HomePage() {
         <div ref={heroRef} className="hero-sticky">
           
           {/* ======================================================== */}
-          {/* 3D FLOATING ORBIT CARDS (ZOOM OUT & SCATTER ON SCROLL)   */}
+          {/* 3D FLOATING ORBIT CARDS (REAL PRODUCT PHOTOS)            */}
           {/* ======================================================== */}
           <div className="orbit-stage-viewport">
             <div className="orbit-stage-container">
@@ -525,7 +525,7 @@ export default function HomePage() {
                   }}
                 >
                   <a href={card.url} className="block w-full h-full text-left group">
-                    {/* Cover Photo */}
+                    {/* Cover Photo: Real Output of the Tool */}
                     <div className="relative w-full h-[62%] bg-stone-100 overflow-hidden">
                       <Image
                         src={card.cover}
@@ -614,7 +614,7 @@ export default function HomePage() {
               </span>
             </p>
 
-            {/* 4-Box Countdown Timer Pills (Fastwork Design) */}
+            {/* 4-Box Countdown Timer Pills */}
             <div className="flex items-center gap-2 sm:gap-3 mb-10">
               <div className="flex flex-col items-center justify-center w-16 sm:w-20 h-16 sm:h-20 rounded-2xl bg-white border border-black/[0.08] shadow-[0_10px_25px_rgba(0,0,0,0.04)]">
                 <span className="text-xl sm:text-2xl font-bold text-[#171717] tabular-nums">
@@ -671,7 +671,7 @@ export default function HomePage() {
           </div>
 
           {/* ======================================================== */}
-          {/* BOTTOM SCROLL CUE (BOUNCING ARROW)                       */}
+          {/* BOTTOM SCROLL CUE                                        */}
           {/* ======================================================== */}
           <div className="scroll-cue-scatter absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 cursor-pointer pointer-events-auto">
             <span className="text-[11px] font-semibold text-[#737373] tracking-wide uppercase">
@@ -701,7 +701,7 @@ export default function HomePage() {
             เลือกสตูดิโอ AI ที่คุณต้องการสร้างสรรค์
           </h2>
           <p className="text-[#737373] text-sm sm:text-base leading-relaxed">
-            เชื่อมต่อเครื่องมือ AI ระดับโปร ทุกระบบปรับแต่งขึ้นมาเพื่อการทำงานจริง รองรับภาษาไทย 100%
+            เชื่อมต่อเครื่องมือ AI ระดับโปร ผลงานจริงจากเครื่องมือในระบบ รองรับภาษาไทย 100%
           </p>
         </div>
 
