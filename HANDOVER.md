@@ -20,17 +20,21 @@
 ## 🖥️ 2. โครงสร้างเซิร์ฟเวอร์ & บัญชีเข้าถึง (Infrastructure & Credentials)
 
 ### 2.1 เซิร์ฟเวอร์จริง (Oracle Cloud Always Free VM)
-- **Instance Name:** `yayni-node2-12gb` (`yayni-arm-node2-384382`)
-- **Public IP:** `129.221.170.225` (Private IP: `10.0.0.241`)
-- **OS / Spec:** Ubuntu 24.04 LTS (Ampere ARM A1, 2 OCPU, 12 GB RAM, 48 GB NVMe)
-- **SSH Access:**
-  - User: `ubuntu`
-  - SSH Key Location: `C:\NV\oracle_key.pem`
-  - SSH Command:
-    ```bash
-    ssh -i C:\NV\oracle_key.pem -o StrictHostKeyChecking=no ubuntu@129.221.170.225
-    ```
-  - สิทธิ์ Docker บน Host: รันผ่าน `sudo docker ...`
+Oracle Cloud มีการเปิดใช้งานอยู่ทั้งหมด **2 เครื่อง (Nodes)** ใช้งานโควตา Ampere ARM 4 OCPU / 24 GB RAM ครบเต็มประสิทธิภาพ:
+
+1. **เครื่องที่ 1 (Primary Production Host - Yayni Platform):**
+   - **Instance Name:** `yayni-arm-18gb`
+   - **Public IP:** `129.221.220.121` (Private IP: `10.0.0.224`)
+   - **OS / Spec:** Ubuntu 24.04 LTS (Ampere ARM A1, 2 OCPU, 12 GB RAM, 80 GB NVMe)
+   - **หน้าที่:** รันเว็บไซต์ [https://yayni.com](https://yayni.com), PM2 Processes, PostgreSQL 16
+   - **SSH Command:** `ssh -i C:\NV\oracle_key.pem ubuntu@129.221.220.121`
+
+2. **เครื่องที่ 2 (Worker Node 2 - ThaiD.online Ecosystem):**
+   - **Instance Name:** `yayni-node2-12gb` (`yayni-arm-node2-384382`)
+   - **Public IP:** `129.221.170.225` (Private IP: `10.0.0.241`)
+   - **OS / Spec:** Ubuntu 24.04 LTS (Ampere ARM A1, 2 OCPU, 12 GB RAM, 48 GB NVMe)
+   - **หน้าที่:** รัน Coolify v4, Docker Containers, Traefik v3.7 Proxy ควบคุม [https://thaid.online](https://thaid.online), [https://novel.thaid.online](https://novel.thaid.online), [https://social.thaid.online](https://social.thaid.online), [https://vault.thaid.online](https://vault.thaid.online)
+   - **SSH Command:** `ssh -i C:\NV\oracle_key.pem ubuntu@129.221.170.225`
 
 ### 2.2 ระบบจัดการคอนเทนเนอร์ (Coolify Control Panel)
 - **Web Dashboard:** [http://thaid.online:8000](http://thaid.online:8000) (หรือ `http://129.221.170.225:8000`)
