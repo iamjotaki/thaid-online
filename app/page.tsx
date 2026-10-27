@@ -478,9 +478,12 @@ export default function HomePage() {
           
           {/* Left: Brand Logo + ThaiD */}
           <a href="https://thaid.online" className="flex items-center gap-2.5 text-[#2b313b] hover:opacity-85 transition-opacity">
-            <svg width="24" height="24" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-[#2b313b]" aria-hidden="true">
-              <path d="M5.5 7.5h13 M12 7.5v17 M12 7.5c6 0 13 3 13 8.5s-7 8.5-13 8.5" />
-            </svg>
+            <div className="w-7 h-7 rounded-lg bg-[#2b313b] flex items-center justify-center text-white shadow-xs group-hover:scale-105 transition-transform">
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 6.5H15M9.5 6.5V19" stroke="white" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M14 10.5C14 10.5 18 10.8 18 14.5C18 18.2 14 18.5 14 18.5" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
+              </svg>
+            </div>
             <span className="font-bold text-xl tracking-tight text-[#2b313b]">
               ThaiD
             </span>
@@ -862,9 +865,12 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="flex flex-col items-center md:items-start gap-2">
             <div className="flex items-center gap-2.5">
-              <svg width="22" height="22" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-[#171717]" aria-hidden="true">
-                <path d="M5.5 7.5h13 M12 7.5v17 M12 7.5c6 0 13 3 13 8.5s-7 8.5-13 8.5" />
-              </svg>
+              <div className="w-6 h-6 rounded-lg bg-[#2b313b] flex items-center justify-center text-white">
+                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 6.5H15M9.5 6.5V19" stroke="white" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M14 10.5C14 10.5 18 10.8 18 14.5C18 18.2 14 18.5 14 18.5" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
+                </svg>
+              </div>
               <span className="font-bold text-base text-[#171717]">ThaiD Studio</span>
             </div>
             <p className="text-xs text-[#737373]">
