@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 export default function HomePage() {
   const [isDark, setIsDark] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<"all" | "novel" | "social" | "sticker" | "clip" | "chat">("all");
+  const [activeTab, setActiveTab] = useState<"all" | "novel" | "social" | "sticker" | "clip" | "chat" | "mockup">("all");
 
   useEffect(() => {
     // Check initial dark mode from document or storage
@@ -143,6 +143,29 @@ export default function HomePage() {
       stats: { primary: "24/7", primaryLabel: "ตอบแชทอัตโนมัติ", secondary: "0 บาท", secondaryLabel: "ต้นทุน API (Vault Keys)" },
       actionText: "เปิดใช้งาน Smart Chat",
     },
+    {
+      id: "mockup",
+      name: "ThaiD Mockup AI Studio",
+      subname: "AI Product Photography & Mockup Platform",
+      tag: "mockup.thaid.online",
+      url: "https://mockup.thaid.online",
+      category: "mockup",
+      status: "ออนไลน์ (Live)",
+      statusColor: "emerald",
+      badge: "E-Commerce Pro",
+      description:
+        "สตูดิโอถ่ายภาพสินค้าและม็อกอัพระดับลักชัวรีด้วย AI ไดคัตพื้นหลังอัตโนมัติ วางสินค้าลงบนฉากหลังพรีเมียม สังเคราะห์แสงเงาเสมือนจริง สำหรับ Shopee, Lazada, TikTok และ Facebook",
+      icon: "photo_camera",
+      accentColor: "#e85a2d",
+      features: [
+        "ตัดพื้นหลังสินค้าอัตโนมัติด้วย AI Matting ภายใน 1 วินาที",
+        "8 ฉากหลังพรีเซ็ตลักชัวรี (หินอ่อน, ไม้โอ๊ค, สปาหรู, โพเดียม)",
+        "เจนฉากหลังใหม่ตามจินตนาการด้วย Custom AI Prompt Studio",
+        "สังเคราะห์แสงเงา Contact & Cast Shadow สมจริงระดับสตูดิโอ",
+      ],
+      stats: { primary: "1080×1080", primaryLabel: "Full HD 1:1 / 4:5 / 9:16", secondary: "< 1 วิ", secondaryLabel: "ต่อการเรนเดอร์ภาพ" },
+      actionText: "เปิดใช้งาน Mockup Studio",
+    },
   ];
 
   const filteredServices =
@@ -216,6 +239,13 @@ export default function HomePage() {
             >
               <span className="material-symbols-outlined text-[14px]">forum</span>
               <span>แชทบอท LINE</span>
+            </a>
+            <a
+              href="https://mockup.thaid.online"
+              className="px-3 py-1 rounded-lg text-[#86868b] hover:text-[#1d1d1f] dark:text-stone-400 dark:hover:text-white transition-colors flex items-center gap-1.5"
+            >
+              <span className="material-symbols-outlined text-[14px]">photo_camera</span>
+              <span>ม็อกอัพสินค้า</span>
             </a>
           </nav>
 
@@ -483,6 +513,17 @@ export default function HomePage() {
               }`}
             >
               แชทบอท LINE
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab("mockup")}
+              className={`px-3 py-1.5 rounded-lg transition-all ${
+                activeTab === "mockup"
+                  ? "bg-white dark:bg-white/10 text-[#1d1d1f] dark:text-white shadow-xs font-semibold"
+                  : "text-[#86868b] dark:text-stone-400 hover:text-[#1d1d1f] dark:hover:text-white"
+              }`}
+            >
+              ม็อกอัพสินค้า
             </button>
           </div>
         </div>

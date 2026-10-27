@@ -5,7 +5,7 @@
 ---
 
 ## 📌 1. ภาพรวมโปรเจกต์ (Project Overview)
-ระบบ Multi-SaaS แพลตฟอร์มศูนย์รวมเครื่องมือ AI สำหรับคนไทย ใช้โดเมนหลัก `ThaiD.online` และแยกบริการย่อยเป็น Subdomain โดยมี Wildcard DNS `*.thaid.online` รองรับ:
+ระบบ Multi-SaaS แพลตฟอร์มศูนย์รวมเครื่องมือ AI สำหรับคนไทย ใช้โดเมนหลัก `ThaiD.online` และแยกบริการย่อยเป็น Subdomain โดยมี Wildcard DNS `*.thaid.online` รองรับทั้งหมด **8 บริการหลัก**:
 
 | บริการ | หน้าที่ | โดเมนจริง (Live URL) | ที่มาโค้ด (Source / GitHub) | เทคโนโลยีหลัก | พอร์ต | สถานะ |
 | :--- | :--- | :--- | :--- | :--- | :---: | :---: |
@@ -16,6 +16,7 @@
 | **LINE Sticker** | เจนชุดสติกเกอร์ไลน์ 8/16/24/40 รูป | [https://sticker.thaid.online](https://sticker.thaid.online) | `C:\ThaiD-Sticker`<br>[iamjotaki/thaid-sticker](https://github.com/iamjotaki/thaid-sticker) | Python 3.11, FastAPI, Pillow, NumPy, REST API (Flux Turbo & Google Flow) | 8090 | 🟢 Live |
 | **Clip AI Studio** | สร้างวิดีโอสั้น 9:16 (TikTok, Reels, Shorts) | [https://clip.thaid.online](https://clip.thaid.online) | `C:\ThaiD-Clip`<br>[iamjotaki/thaid-clip](https://github.com/iamjotaki/thaid-clip) | Python 3.11, FastAPI, FFmpeg, gTTS, Gemini 3.5, Google Flow Veo | 8092 | 🟢 Live |
 | **Smart Chat AI** | แอดมิน AI ตอบแชท LINE OA 24 ชม. | [https://chat.thaid.online](https://chat.thaid.online) | `C:\ThaiD-Chat`<br>[iamjotaki/thaid-chat](https://github.com/iamjotaki/thaid-chat) | Python 3.11, FastAPI, Gemini 3.5, LINE Messaging API Webhook | 8094 | 🟢 Live |
+| **Mockup AI Studio** | ถ่ายภาพสินค้า & สตูดิโอม็อกอัพเสมือนจริง | [https://mockup.thaid.online](https://mockup.thaid.online) | `C:\ThaiD-Mockup`<br>[iamjotaki/thaid-mockup](https://github.com/iamjotaki/thaid-mockup) | Python 3.11, FastAPI, Pillow, NumPy, Google Flow Dual-Lane, Apple UI | 8096 | 🟢 Live |
 
 ---
 
@@ -28,14 +29,14 @@ Oracle Cloud มีการเปิดใช้งานอยู่ทั้�
    - **Instance Name:** `yayni-arm-18gb`
    - **Public IP:** `129.221.220.121` (Private IP: `10.0.0.224`)
    - **OS / Spec:** Ubuntu 24.04 LTS (Ampere ARM A1, 2 OCPU, 12 GB RAM, 80 GB NVMe)
-   - **หน้าที่:** รันเว็บไซต์ [https://yayni.com](https://yayni.com), PM2 Processes, PostgreSQL 16
+   - **หน้าที่:** รันเว็บไซต์ [https://yayni.com](https://yayni.com), PM2 Processes, PostgreSQL 16, และ Google Flow Dual-Lane Cloud Service (พอร์ต 9222 และ 9223)
    - **SSH Command:** `ssh -i C:\NV\oracle_key.pem ubuntu@129.221.220.121`
 
 2. **เครื่องที่ 2 (Worker Node 2 - ThaiD.online Ecosystem):**
    - **Instance Name:** `yayni-node2-12gb` (`yayni-arm-node2-384382`)
    - **Public IP:** `129.221.170.225` (Private IP: `10.0.0.241`)
    - **OS / Spec:** Ubuntu 24.04 LTS (Ampere ARM A1, 2 OCPU, 12 GB RAM, 48 GB NVMe)
-   - **หน้าที่:** รัน Coolify v4, Docker Containers, Traefik v3.7 Proxy ควบคุมคอนเทนเนอร์ทั้งหมด 7 ตัวของ `*.thaid.online`
+   - **หน้าที่:** รัน Coolify v4, Docker Containers, Traefik v3.7 Proxy ควบคุมคอนเทนเนอร์ทั้งหมด 8 ตัวของ `*.thaid.online`
    - **SSH Command:** `ssh -i C:\NV\oracle_key.pem ubuntu@129.221.170.225`
 
 3. **เครื่องที่ 3 (AMD Micro Server):**
@@ -59,6 +60,7 @@ Oracle Cloud มีการเปิดใช้งานอยู่ทั้�
 - **App ID 5:** `thaid-sticker` (UUID: `k8c80gwcc8g80wccogskkss4`, พอร์ต 8090, Build Pack: `dockerfile` / Python 3.11)
 - **App ID 6:** `thaid-clip` (UUID: `swspkwo1d8qtbquvbzqr9iir`, พอร์ต 8092, Build Pack: `dockerfile` / Python 3.11)
 - **App ID 7:** `thaid-chat` (UUID: `304ytjxowbaewvgxk9xxurt4`, พอร์ต 8094, Build Pack: `dockerfile` / Python 3.11)
+- **App ID 8:** `thaid-mockup` (UUID: `fyaupc6xbnxcxnqnhyxdjar9`, พอร์ต 8096, Build Pack: `dockerfile` / Python 3.11)
 
 ---
 
@@ -74,6 +76,7 @@ Oracle Cloud มีการเปิดใช้งานอยู่ทั้�
   - `iamjotaki/thaid-sticker`
   - `iamjotaki/thaid-clip`
   - `iamjotaki/thaid-chat`
+  - `iamjotaki/thaid-mockup`
 
 ### 3.2 External API Keys & Database
 - ตัวแปรทั้งหมดถูกผูกไว้ในระบบ **Coolify Environment Variables** เรียบร้อยแล้ว (ทั้ง Runtime และ Buildtime)
@@ -109,6 +112,7 @@ Oracle Cloud มีการเปิดใช้งานอยู่ทั้�
      4. 🎨 `สติกเกอร์ไลน์` (`https://sticker.thaid.online`)
      5. 🎬 `คลิปสั้น AI` (`https://clip.thaid.online`)
      6. 💬 `แชทบอท LINE` (`https://chat.thaid.online`)
+     7. 📸 `ม็อกอัพสินค้า` (`https://mockup.thaid.online`)
      - เว็บปัจจุบันจะมีแถบไฮไลต์ Active ส่วนเว็บอื่นเป็นลิงก์กดสลับได้ทันที
    - **Right Controls:** ปุ่มสลับ Dark/Light mode (`toggleDarkMode()`) -> ปุ่ม Action หลัก -> ปุ่มแฮมเบอร์เกอร์สำหรับมือถือ
 4. **Tailwind v4 Rule สำคัญมาก:**
@@ -149,6 +153,9 @@ ssh -i C:\NV\oracle_key.pem -o StrictHostKeyChecking=no ubuntu@129.221.170.225 "
 
 # App 7 (ThaiD Smart Chat AI)
 ssh -i C:\NV\oracle_key.pem -o StrictHostKeyChecking=no ubuntu@129.221.170.225 "echo 'queue_application_deployment(application: App\Models\Application::find(7), deployment_uuid: (string) Str::uuid(), force_rebuild: true);' | sudo docker exec -i coolify php artisan tinker"
+
+# App 8 (ThaiD Mockup AI Studio)
+ssh -i C:\NV\oracle_key.pem -o StrictHostKeyChecking=no ubuntu@129.221.170.225 "echo 'queue_application_deployment(application: App\Models\Application::find(8), deployment_uuid: (string) Str::uuid(), force_rebuild: true);' | sudo docker exec -i coolify php artisan tinker"
 ```
 
 ### 5.3 ตรวจสอบสถานะการ Deploy และ Container
@@ -163,8 +170,8 @@ ssh -i C:\NV\oracle_key.pem -o StrictHostKeyChecking=no ubuntu@129.221.170.225 "
 ---
 
 ## 🎯 6. สถานะระบบและความคืบหน้า (System Status & Milestones)
-1. **ครบถ้วนทั้ง 7 บริการ (All 7 Apps 100% Live in Production):**
-   - ThaiD Hub, Novel Studio, Social Poster, ThaiD Vault, LINE Sticker Studio, Clip AI Studio, และ Smart Chat AI ทั้งหมดออนไลน์สมบูรณ์แบบพร้อม SSL อัตโนมัติ
+1. **ครบถ้วนทั้ง 8 บริการ (All 8 Apps 100% Live in Production):**
+   - ThaiD Hub, Novel Studio, Social Poster, ThaiD Vault, LINE Sticker Studio, Clip AI Studio, Smart Chat AI, และ Mockup AI Studio ทั้งหมดออนไลน์สมบูรณ์แบบพร้อม SSL อัตโนมัติ
 2. **Central Auth / SSO (`auth.thaid.online`):**
    - แผนพัฒนาถัดไป: เชื่อมต่อระบบสมาชิกให้ล็อกอินครั้งเดียวใช้ได้ทุก Subdomain (Cookie Domain: `.thaid.online`)
 
