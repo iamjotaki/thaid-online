@@ -49,3 +49,5 @@ apply_exact_fastwork_tokens.py
 
 push_and_deploy_all.py
 
+inspect_fastwork.py
+
