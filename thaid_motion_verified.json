@@ -1,0 +1,47 @@
+[
+  {
+    "scrollY": 0,
+    "exitOpacity": "1.0000",
+    "exitScatter": "0.0000",
+    "cardTransform": "matrix(0.998583, 0.0532074, -0.0532074, 0.998583, 0, -6.65095)",
+    "cardOpacity": "1",
+    "cardScale": "1",
+    "copyOpacity": "1"
+  },
+  {
+    "scrollY": 250,
+    "exitOpacity": "0.6142",
+    "exitScatter": "0.3858",
+    "cardTransform": "matrix(0.998583, 0.0532074, -0.0532074, 0.998583, 0, -4.04242)",
+    "cardOpacity": "0.55633",
+    "cardScale": "1.16975",
+    "copyOpacity": "0.6142"
+  },
+  {
+    "scrollY": 500,
+    "exitOpacity": "0.2284",
+    "exitScatter": "0.7716",
+    "cardTransform": "matrix(0.998583, 0.0532074, -0.0532074, 0.998583, 0, -1.40878)",
+    "cardOpacity": "0.11266",
+    "cardScale": "1.3395",
+    "copyOpacity": "0.2284"
+  },
+  {
+    "scrollY": 750,
+    "exitOpacity": "0.0000",
+    "exitScatter": "1.0000",
+    "cardTransform": "matrix(0.998583, 0.0532074, -0.0532074, 0.998583, 0, -0.14844)",
+    "cardOpacity": "0",
+    "cardScale": "1.44",
+    "copyOpacity": "0"
+  },
+  {
+    "scrollY": 1100,
+    "exitOpacity": "0.0000",
+    "exitScatter": "1.0000",
+    "cardTransform": "matrix(0.998583, 0.0532074, -0.0532074, 0.998583, 0, -0.0969331)",
+    "cardOpacity": "0",
+    "cardScale": "1.44",
+    "copyOpacity": "0"
+  }
+]
