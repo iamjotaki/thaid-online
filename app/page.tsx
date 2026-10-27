@@ -478,8 +478,8 @@ export default function HomePage() {
           
           {/* Left: Brand Logo + ThaiD */}
           <a href="https://thaid.online" className="flex items-center gap-2.5 text-[#2b313b] hover:opacity-85 transition-opacity">
-            <svg width="24" height="24" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" className="text-[#2b313b]" aria-hidden="true">
-              <path d="M5 9.5 C5 7 7 5 9.5 5 L22.5 5 C25 5 27 7 27 9.5 C27 12 25 14 22.5 14 L19 14 L19 24.5 C19 27 17.5 28.5 16 28.5 C14.5 28.5 13 27 13 24.5 L13 14 L9.5 14 C7 14 5 12 5 9.5 Z" />
+            <svg width="24" height="24" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-[#2b313b]" aria-hidden="true">
+              <path d="M5.5 7.5h13 M12 7.5v17 M12 7.5c6 0 13 3 13 8.5s-7 8.5-13 8.5" />
             </svg>
             <span className="font-bold text-xl tracking-tight text-[#2b313b]">
               ThaiD
@@ -870,8 +870,8 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="flex flex-col items-center md:items-start gap-2">
             <div className="flex items-center gap-2.5">
-              <svg width="22" height="22" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" className="text-[#171717]" aria-hidden="true">
-                <path d="M5 9.5 C5 7 7 5 9.5 5 L22.5 5 C25 5 27 7 27 9.5 C27 12 25 14 22.5 14 L19 14 L19 24.5 C19 27 17.5 28.5 16 28.5 C14.5 28.5 13 27 13 24.5 L13 14 L9.5 14 C7 14 5 12 5 9.5 Z" />
+              <svg width="22" height="22" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-[#171717]" aria-hidden="true">
+                <path d="M5.5 7.5h13 M12 7.5v17 M12 7.5c6 0 13 3 13 8.5s-7 8.5-13 8.5" />
               </svg>
               <span className="font-bold text-base text-[#171717]">ThaiD Studio</span>
             </div>
