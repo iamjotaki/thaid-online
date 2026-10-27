@@ -202,6 +202,8 @@ html, body {
   box-shadow: 0 -30px 70px -15px rgba(0, 0, 0, 0.08), 0 -1px 3px rgba(0, 0, 0, 0.04);
   border-top: 1px solid rgba(0, 0, 0, 0.06);
   margin-top: -65vh;
+  padding-top: 72px;
+  scroll-margin-top: 0px;
   transition: transform 0.25s ease-out;
 }
 
@@ -210,6 +212,7 @@ html, body {
     border-top-left-radius: 56px;
     border-top-right-radius: 56px;
     margin-top: -75vh;
+    padding-top: 84px;
   }
 }
 

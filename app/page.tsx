@@ -717,7 +717,7 @@ export default function HomePage() {
       <section id="services-directory" className="services-sheet-stage">
         
         {/* Tactile Sheet Handle (Spring Card Indicator) */}
-        <div className="pt-6 pb-2 flex justify-center">
+        <div className="pt-2 pb-3 flex justify-center">
           <button
             type="button"
             onClick={handleScrollDown}
