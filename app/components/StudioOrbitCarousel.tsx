@@ -6,6 +6,7 @@ import Image from "next/image";
 export interface StudioItem {
   id: string;
   name: string;
+  shortLabel: string;
   subname: string;
   tag: string;
   url: string;
@@ -30,6 +31,7 @@ const STUDIOS: StudioItem[] = [
   {
     id: "mockup",
     name: "ThaiD Mockup AI Studio",
+    shortLabel: "Mockup AI",
     subname: "AI Product Photography & Studio",
     tag: "mockup.thaid.online",
     url: "https://mockup.thaid.online",
@@ -51,6 +53,7 @@ const STUDIOS: StudioItem[] = [
   {
     id: "novel",
     name: "ReadAWrite Pro Studio",
+    shortLabel: "Novel AI",
     subname: "AI Novel & Chapter Generator",
     tag: "novel.thaid.online",
     url: "https://novel.thaid.online",
@@ -72,6 +75,7 @@ const STUDIOS: StudioItem[] = [
   {
     id: "social",
     name: "Social Auto-Poster Pro",
+    shortLabel: "Social Poster",
     subname: "Facebook Content & Video Reels",
     tag: "social.thaid.online",
     url: "https://social.thaid.online",
@@ -93,6 +97,7 @@ const STUDIOS: StudioItem[] = [
   {
     id: "clip",
     name: "AI Clip Studio Pro",
+    shortLabel: "Clip Video",
     subname: "Viral Video & Subtitle Generator",
     tag: "clip.thaid.online",
     url: "https://clip.thaid.online",
@@ -114,6 +119,7 @@ const STUDIOS: StudioItem[] = [
   {
     id: "sticker",
     name: "LINE Sticker AI Creator",
+    shortLabel: "LINE Sticker",
     subname: "40-Action Character Pack Studio",
     tag: "sticker.thaid.online",
     url: "https://sticker.thaid.online",
@@ -135,6 +141,7 @@ const STUDIOS: StudioItem[] = [
   {
     id: "chat",
     name: "ThaiD Smart Chat AI",
+    shortLabel: "Smart Chat",
     subname: "LINE Official Account Bot",
     tag: "chat.thaid.online",
     url: "https://chat.thaid.online",
@@ -265,8 +272,8 @@ export default function StudioOrbitCarousel() {
               : "bg-white text-[#737373] hover:text-[#171717] border border-black/[0.08] hover:border-black/20"
           }`}
         >
-          <span className="text-sm">🎡</span>
-          <span>หมุน 360° (ทั้งหมด)</span>
+          <span className="text-xs">✦</span>
+          <span>ทั้งหมด (All Studios)</span>
         </button>
 
         {STUDIOS.map((s, idx) => (
@@ -287,7 +294,7 @@ export default function StudioOrbitCarousel() {
               className="w-2 h-2 rounded-full"
               style={{ backgroundColor: s.accent }}
             />
-            <span>{s.badge} ({s.name.split(" ")[1] || s.name})</span>
+            <span>{s.shortLabel}</span>
           </button>
         ))}
       </div>
