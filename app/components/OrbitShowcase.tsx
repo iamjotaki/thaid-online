@@ -192,7 +192,7 @@ export default function OrbitShowcase() {
         {/* Section Pill Badge */}
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/80 dark:bg-white/[0.08] backdrop-blur-md border border-black/[0.08] dark:border-white/[0.08] shadow-xs text-xs font-semibold mb-4">
           <span className="w-2 h-2 rounded-full animate-ping" style={{ backgroundColor: activeService.accent }} />
-          <span className="text-[#1d1d1f] dark:text-stone-300">Fastwork-Style 3D Stage</span>
+          <span className="text-[#1d1d1f] dark:text-stone-300">ThaiD 3D Stage</span>
           <span className="text-stone-300 dark:text-stone-600">•</span>
           <span className="font-mono text-xs font-bold" style={{ color: activeService.accent }}>8 Platforms Orbit</span>
         </div>

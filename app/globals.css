@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ======================================================== */
-/* FASTWORK OFFICIAL TYPOGRAPHY ENGINE                      */
+/* THAID OFFICIAL TYPOGRAPHY ENGINE                         */
 /* Exact Google Sans WOFF2 (Latin + Thai) & Playpen Sans     */
 /* ======================================================== */
 @font-face {
@@ -49,11 +49,11 @@
 }
 
 @font-face {
-  font-family: "Fastwork";
+  font-family: "ThaiDStudio";
   font-weight: 400 700;
   font-style: normal;
   font-display: swap;
-  src: url("/fonts/fastwork-Bold.ttf") format("truetype");
+  src: url("/fonts/thaid-studio-bold.ttf") format("truetype");
 }
 
 @theme {
@@ -62,10 +62,10 @@
   --color-brand-dark: #1f242d;
   --color-brand-coral: #e85a2d;
 
-  --color-fastwork-bg: #ffffff;
-  --color-fastwork-card: #ffffff;
-  --color-fastwork-surface: #f5f5f7;
-  --color-fastwork-border: rgba(0, 0, 0, 0.08);
+  --color-thaid-bg: #ffffff;
+  --color-thaid-card: #ffffff;
+  --color-thaid-surface: #f5f5f7;
+  --color-thaid-border: rgba(0, 0, 0, 0.08);
 
   --font-sans: "Google Sans", -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", "Adwaita Sans", Cantarell, Ubuntu, Roboto, Noto, Helvetica, Arial, sans-serif;
   --font-thai: "Google Sans", "Noto Sans Thai", sans-serif;
@@ -81,10 +81,10 @@
   --text-main: #171717;
   --text-muted: #737373;
   --border-subtle: rgba(0, 0, 0, 0.08);
-  --color-fastwork: #0569ff;
-  --color-fastwork-dark: #1f242d;
+  --color-thaid-primary: #0569ff;
+  --color-thaid-dark: #1f242d;
   
-  /* Fastwork Hero Dynamic Motion Variables */
+  /* ThaiD Hero Dynamic Motion Variables */
   --exit-opacity: 1;
   --exit-scatter: calc(1 - var(--exit-opacity));
 }
@@ -106,7 +106,7 @@ html, body {
 }
 
 /* ======================================================== */
-/* FASTWORK 3D ORBIT HERO & SCATTER MOTION ENGINE           */
+/* THAID 3D ORBIT HERO & SCATTER MOTION ENGINE              */
 /* ======================================================== */
 
 .hero-track {
@@ -163,7 +163,7 @@ html, body {
   transition: box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
   overflow: hidden;
   
-  /* The Exact Fastwork Zoom Outward & Scatter Equation: Crisp, NO BLUR! */
+  /* The Exact ThaiD Zoom Outward & Scatter Equation: Crisp, NO BLUR! */
   translate: calc(var(--exit-scatter) * var(--scatter-x, 0px)) calc(var(--exit-scatter) * var(--scatter-y, 0px));
   scale: calc(1 + var(--exit-scatter) * 0.44);
   opacity: calc(1 - var(--exit-scatter) * 1.15);
@@ -386,10 +386,10 @@ html, body {
 }
 
 /* ======================================================== */
-/* FASTWORK EXACT VECTOR HANDWRITING STROKE ANIMATION       */
+/* THAID VECTOR HANDWRITING STROKE ANIMATION                */
 /* ======================================================== */
-.hero-headline-fastwork {
-  font-family: "Google Sans", "Fastwork", -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", "Adwaita Sans", Cantarell, Ubuntu, Roboto, Noto, Helvetica, Arial, sans-serif;
+.hero-headline-thaid {
+  font-family: "Google Sans", "ThaiDStudio", -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", "Adwaita Sans", Cantarell, Ubuntu, Roboto, Noto, Helvetica, Arial, sans-serif;
   font-weight: 500;
   letter-spacing: -0.025em;
   line-height: 1.15;

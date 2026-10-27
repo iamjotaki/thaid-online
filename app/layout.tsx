@@ -8,7 +8,8 @@ export const metadata: Metadata = {
   keywords: [
     "ThaiD",
     "ThaiD.online",
-    "Fastwork AI",
+    "ThaiD Studio",
+    "ThaiD AI",
     "ReadAWrite AI",
     "แต่งนิยาย AI",
     "Auto Post Facebook",
