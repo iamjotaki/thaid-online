@@ -81,9 +81,9 @@ export default function HomePage() {
       tag: "sticker.thaid.online",
       url: "https://sticker.thaid.online",
       category: "sticker",
-      status: "กำลังเชื่อมต่อระบบ",
-      statusColor: "amber",
-      badge: "Coming Soon",
+      status: "ออนไลน์ (Live)",
+      statusColor: "emerald",
+      badge: "Creative Suite",
       description:
         "เครื่องมือสร้างชุดสติกเกอร์ไลน์ด้วยโมเดล AI ลิขสิทธิ์เฉพาะ คุมความสม่ำเสมอของตัวละคร (Consistent Character) ไดคัทพื้นหลังโปร่งใส และ Export ขนาด 24/40 รูปตามสเปก LINE Official",
       icon: "sentiment_satisfied",
@@ -95,7 +95,7 @@ export default function HomePage() {
         "Export แพ็กไฟล์ ZIP พร้อมส่งขึ้น LINE Creators Market",
       ],
       stats: { primary: "40 แอ็กชัน", primaryLabel: "ชุดสติกเกอร์ครบเซ็ต", secondary: "PNG/APNG", secondaryLabel: "มาตรฐาน LINE" },
-      actionText: "ติดตามอัปเดตสติกเกอร์",
+      actionText: "เปิดใช้งาน Sticker Studio",
     },
   ];
 
