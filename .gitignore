@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Coolify Ops & Verification Tools
+coolify_ops.py
+deploy_batch.py
+verify_all_endpoints.py
+
