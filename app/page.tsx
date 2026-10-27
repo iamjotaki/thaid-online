@@ -1,759 +1,635 @@
 "use client";
 
-import React, { useState } from "react";
-import OrbitShowcase from "./components/OrbitShowcase";
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+
+interface ServiceItem {
+  id: string;
+  name: string;
+  subname: string;
+  tag: string;
+  url: string;
+  category: "novel" | "social" | "sticker" | "clip" | "chat" | "mockup" | "vault";
+  status: string;
+  badge: string;
+  description: string;
+  icon: string;
+  image: string;
+  creator: string;
+  location: string;
+  tilt: string;
+  features: string[];
+  stats: { primary: string; primaryLabel: string; secondary: string; secondaryLabel: string };
+  actionText: string;
+}
 
 export default function HomePage() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<"all" | "novel" | "social" | "sticker" | "clip" | "chat" | "mockup">("all");
+  const [activeTab, setActiveTab] = useState<string>("all");
+  const [countdown, setCountdown] = useState({ days: 19, hours: 18, mins: 30, secs: 49 });
 
-  const services = [
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev.secs > 0) return { ...prev, secs: prev.secs - 1 };
+        if (prev.mins > 0) return { ...prev, mins: 59, secs: 59 };
+        if (prev.hours > 0) return { ...prev, hours: prev.hours - 1, mins: 59, secs: 59 };
+        return { ...prev, days: Math.max(0, prev.days - 1), hours: 23, mins: 59, secs: 59 };
+      });
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const services: ServiceItem[] = [
+    {
+      id: "mockup",
+      name: "ThaiD Mockup AI Studio",
+      subname: "AI Product Photography & Studio",
+      tag: "mockup.thaid.online",
+      url: "https://mockup.thaid.online",
+      category: "mockup",
+      status: "พร้อมใช้งาน",
+      badge: "E-Commerce",
+      description: "สตูดิโอถ่ายภาพสินค้าและม็อกอัพระดับลักชัวรีด้วย AI ไดคัตพื้นหลังอัตโนมัติ จัดวางฉากพรีเมียม สังเคราะห์แสงเงาสมจริง",
+      icon: "photo_camera",
+      image: "/cards/cafe_marble.jpg",
+      creator: "Weng Kitsana",
+      location: "Photographer · Bangkok",
+      tilt: "-rotate-6",
+      features: [
+        "ตัดพื้นหลังอัตโนมัติด้วย AI Matting ภายใน 1 วินาที",
+        "8 ฉากหลังพรีเซ็ตลักชัวรีจาก Google Flow",
+        "สังเคราะห์แสงเงา Contact & Cast Shadow สมจริง",
+      ],
+      stats: { primary: "1080×1080", primaryLabel: "Full HD Studio", secondary: "< 1 วิ", secondaryLabel: "เรนเดอร์ภาพ" },
+      actionText: "เปิดใช้งาน Mockup Studio",
+    },
     {
       id: "novel",
       name: "ReadAWrite Pro Studio",
-      subname: "AI Novel & Storytelling Platform",
+      subname: "AI Novel & Chapter Generator",
       tag: "novel.thaid.online",
       url: "https://novel.thaid.online",
       category: "novel",
-      status: "ออนไลน์ (Live)",
-      statusColor: "emerald",
-      badge: "Flagship Service",
-      description:
-        "สตูดิโอแต่งนิยาย AI ระดับโปร รองรับระบบ Multi-Agent แต่งนิยายภาษาไทยสละสลวย จัดการคลังตัวละคร พล็อตเรื่อง และอัปโหลดตอนขึ้น ReadAWrite อัตโนมัติ",
+      status: "พร้อมใช้งาน",
+      badge: "Most Popular",
+      description: "ระบบผู้ช่วยนักเขียนอัจฉริยะ วางโครงเรื่อง แต่งนิยาย 10 ตอนจบ พร้อมเชื่อมต่ออัปโหลดขึ้น ReadAWrite.com อัตโนมัติ",
       icon: "edit_note",
-      accentColor: "#0569ff",
+      image: "/cards/luxury_spa.jpg",
+      creator: "Chapavich T.",
+      location: "Fiction Author · Chiang Mai",
+      tilt: "rotate-2",
       features: [
-        "แต่งนิยายไทยภาษาลื่นไหล สละสลวยด้วย Gemini Flash",
-        "Character Bible จัดการตัวละครและปูมหลังแม่นยำ",
-        "ProofAI ตรวจคำผิด ปรับสำนวน และจัดหน้าบทความ",
-        "Playwright Auto-Upload ส่งบทขึ้น ReadAWrite โดยตรง",
+        "Gemini Multi-Agent Plot & Chapter Engine",
+        "ProofAI ตรวจคำผิดและขัดเกลาสำนวนภาษาไทย",
+        "อัปโหลดบทและภาพปกขึ้น ReadAWrite อัตโนมัติ",
       ],
-      stats: { primary: "10 ตอนจบ", primaryLabel: "นิยายพร้อมลงขาย", secondary: "0 บาท", secondaryLabel: "ต้นทุน API (Vault Keys)" },
+      stats: { primary: "10 ตอนจบ", primaryLabel: "โครงเรื่องอัตโนมัติ", secondary: "50,000", secondaryLabel: "โควตาคำทดลองฟรี" },
       actionText: "เปิดใช้งาน Novel Studio",
     },
     {
       id: "social",
-      name: "Social Content Poster",
-      subname: "Auto Content & Video Reels Engine",
+      name: "Social Auto-Poster Pro",
+      subname: "Facebook Content & Video Reels",
       tag: "social.thaid.online",
       url: "https://social.thaid.online",
       category: "social",
-      status: "ออนไลน์ (Live)",
-      statusColor: "emerald",
-      badge: "High Engagement",
-      description:
-        "ระบบปั่นคอนเทนต์เพจ Facebook อัตโนมัติ ดึงประเด็นข่าวไวรัล สรุปเนื้อหา เจนเนอเรตภาพอินโฟกราฟิก และตัดต่อวิดีโอ Reels พร้อมเสียงพากย์ไทย ยิงโพสต์ทุก 30 นาที",
+      status: "พร้อมใช้งาน",
+      badge: "High Viral",
+      description: "ระบบ AI ค้นหาข่าวไวรัล เรียบเรียงใหม่ เจนภาพประกอบและตัดต่อวิดีโอสั้นพร้อมเสียงพากย์ ยิงโพสต์ขึ้น Facebook Page 24 ชม.",
       icon: "campaign",
-      accentColor: "#1877f2",
+      image: "/cards/neon_cyberpunk.jpg",
+      creator: "LEOBEER",
+      location: "Social Producer · Bangkok",
+      tilt: "-rotate-3",
       features: [
-        "AI สรุปข่าวไวรัลและร่างแคปชันโพสต์เฟสบุ๊คคมกริบ",
-        "FFmpeg เรนเดอร์คลิป Reels 9:16 สไตล์ข่าวด่วน/สารคดี",
-        "ระบบคิวโพสต์อัตโนมัติตลอด 24 ชม. ไม่ต้องเฝ้าจอ",
-        "เชื่อมต่อ Meta Graph API ปลอดภัย มีประวัติย้อนหลัง",
+        "AI ดึงฟีดข่าวกีฬาและไลฟ์สไตล์ไวรัลอัตโนมัติ",
+        "ตัดต่อวิดีโอสั้นพร้อมเสียงพากย์ภาษาไทยและซับไตเติล",
+        "โพสต์ขึ้น Facebook Page และ Group อัตโนมัติ",
       ],
-      stats: { primary: "ทุก 30 นาที", primaryLabel: "ความถี่โพสต์เพจ", secondary: "Reels 9:16", secondaryLabel: "วิดีโอความยาว 30-60 วิ" },
+      stats: { primary: "24 ชม.", primaryLabel: "ทำงานอัตโนมัติ", secondary: "100%", secondaryLabel: "เชื่อมต่อ FB Graph API" },
       actionText: "เปิดใช้งาน Social Poster",
     },
     {
-      id: "sticker",
-      name: "LINE Sticker Studio",
-      subname: "AI Sticker Set & Merchandising",
-      tag: "sticker.thaid.online",
-      url: "https://sticker.thaid.online",
-      category: "sticker",
-      status: "ออนไลน์ (Live)",
-      statusColor: "emerald",
-      badge: "Creators Choice",
-      description:
-        "เครื่องมือสร้างชุดสติกเกอร์ไลน์อัตโนมัติ 8, 16, 24 และ 40 รูป คุมลายเส้นตัวละครให้คงที่ พร้อมไดคัทพื้นหลังใสและใส่ข้อความฟอนต์ไทยยอดนิยมในคลิกเดียว",
-      icon: "sentiment_satisfied",
-      accentColor: "#10b981",
-      features: [
-        "สร้างตัวละครหลักคงเส้นคงวาในทุกอิริยาบถและอารมณ์",
-        "Auto Background Removal ไดคัทเนียนคมกริบ",
-        "จัดสัดส่วนและฟอนต์ข้อความคำพูดยอดนิยมภาษาไทย",
-        "Export แพ็กไฟล์ ZIP พร้อมส่งขึ้น LINE Creators Market",
-      ],
-      stats: { primary: "40 แอ็กชัน", primaryLabel: "ชุดสติกเกอร์ครบเซ็ต", secondary: "PNG/APNG", secondaryLabel: "มาตรฐาน LINE" },
-      actionText: "เปิดใช้งาน Sticker Studio",
-    },
-    {
       id: "clip",
-      name: "ThaiD Clip AI Studio",
-      subname: "Automated 9:16 Shorts & Reels Studio",
+      name: "AI Clip & Reels Studio",
+      subname: "Short-form Vertical Video Studio",
       tag: "clip.thaid.online",
       url: "https://clip.thaid.online",
       category: "clip",
-      status: "ออนไลน์ (Live)",
-      statusColor: "emerald",
-      badge: "High Viral",
-      description:
-        "ระบบสร้างคลิปสั้นแนวตั้ง 9:16 สำหรับ TikTok, Instagram Reels และ YouTube Shorts อัตโนมัติ ร่างสคริปต์ไวรัลด้วย Gemini พากย์เสียงไทย ผสมผสานภาพ AI/Google Flow Veo และซับคาราโอเกะ",
+      status: "พร้อมใช้งาน",
+      badge: "TikTok & Reels",
+      description: "สตูดิโอสร้างคลิปวิดีโอสั้นแนวตั้ง 9:16 ด้วย AI สคริปต์รีวิวป้ายยา พากย์เสียงไทย ผสมภาพ AI และซับไตเติลคาราโอเกะ",
       icon: "movie",
-      accentColor: "#ec4899",
+      image: "/cards/golden_beach.jpg",
+      creator: "Nguyen Van Nam",
+      location: "Video Creator · Phuket",
+      tilt: "rotate-6",
       features: [
-        "สคริปต์ไวรัลสไตล์รีวิวป้ายยา/สารคดี/ข่าวสั้น ด้วย Gemini 3.5",
-        "พากย์เสียงภาษาไทยสมจริงพร้อมคำนวณไทม์มิ่งเป๊ะ",
-        "ภาพแนวตั้ง 9:16 (1080x1920) พร้อม Ken Burns motion zoom",
-        "ซับไตเติลคาราโอเกะฟอนต์ไทยไม่ลอย มิกซ์เพลงพื้นหลัง BGM",
+        "เขียนสคริปต์วิดีโอสั้นไวรัล 30-60 วินาทีตามสไตล์",
+        "เจนภาพประกอบแต่ละฉากด้วย AI ความละเอียดสูง",
+        "สังเคราะห์เสียงพากย์ไทยและเรนเดอร์ซับไตเติลคาราโอเกะ",
       ],
-      stats: { primary: "1080×1920", primaryLabel: "Full HD 9:16", secondary: "< 25 วิ", secondaryLabel: "ต่อการเรนเดอร์คลิป" },
+      stats: { primary: "9:16", primaryLabel: "แนวตั้ง TikTok/Reels", secondary: "1080p", secondaryLabel: "ความละเอียดสูง" },
       actionText: "เปิดใช้งาน Clip Studio",
     },
     {
+      id: "sticker",
+      name: "LINE Sticker AI Studio",
+      subname: "LINE Creators Market Studio",
+      tag: "sticker.thaid.online",
+      url: "https://sticker.thaid.online",
+      category: "sticker",
+      status: "พร้อมใช้งาน",
+      badge: "Creators Choice",
+      description: "สร้างชุดสติกเกอร์ไลน์ครบเซ็ต 8, 16, 24, 40 รูปด้วย AI ไดคัตพื้นหลังโปร่งใส ขอบขาวไดคัต มาตรฐาน LINE Creators",
+      icon: "sentiment_satisfied",
+      image: "/cards/nature_wood.jpg",
+      creator: "Peter Sato",
+      location: "Character Designer · Osaka",
+      tilt: "-rotate-4",
+      features: [
+        "คลังคำพูดยอดนิยมภาษาไทยสำหรับสติกเกอร์ไลน์",
+        "สร้างตัวละครคาแรกเตอร์คงที่ในทุกแอ็กชัน",
+        "ไดคัตพื้นหลังโปร่งใสใส่ขอบขาวพร้อมดาวน์โหลด ZIP",
+      ],
+      stats: { primary: "40 แอ็กชัน", primaryLabel: "ชุดสมบูรณ์", secondary: "370×320", secondaryLabel: "มาตรฐาน LINE API" },
+      actionText: "เปิดใช้งาน Sticker Studio",
+    },
+    {
       id: "chat",
-      name: "ThaiD Smart Chat AI",
-      subname: "AI Customer Service & LINE OA Assistant",
+      name: "Smart Chat AI",
+      subname: "LINE OA 24/7 AI Assistant",
       tag: "chat.thaid.online",
       url: "https://chat.thaid.online",
       category: "chat",
-      status: "ออนไลน์ (Live)",
-      statusColor: "emerald",
-      badge: "E-Commerce Suite",
-      description:
-        "แอดมิน AI ตอบแชทลูกค้าบน LINE Official Account ตลอด 24 ชั่วโมง มีคลังความรู้สินค้า โปรโมชั่น และข้อมูลจัดส่ง ช่วยปิดการขายอย่างสุภาพ ตอบกลับรวดเร็วภายใน 1 วินาที",
+      status: "พร้อมใช้งาน",
+      badge: "E-Commerce",
+      description: "ระบบ AI แอดมินตอบแชทลูกค้าบน LINE Official Account อัจฉริยะ 24 ชั่วโมง มีคลังความรู้สินค้า ปิดการขาย ตอบไวใน 1 วินาที",
       icon: "forum",
-      accentColor: "#06c755",
+      image: "/cards/cozy_living.jpg",
+      creator: "MOD SUPACHA",
+      location: "E-Commerce Admin · Bangkok",
+      tilt: "rotate-4",
       features: [
-        "เชื่อมต่อ Webhook กับ LINE Official Account ใน 2 นาที",
-        "Knowledge Base จัดการข้อมูลสินค้า ราคา เลขบัญชี และ FAQ",
-        "ตอบตรงประเด็น สุภาพ ปิดการขาย ช่วยลดต้นทุนจ้างแอดมิน",
-        "จำลองห้องแชทเสมือนจริงในเบราว์เซอร์ก่อนเปิดใช้งานจริง",
+        "เชื่อมต่อ LINE Messaging API Webhook พร้อมใช้งาน",
+        "คลังข้อมูลสินค้า คำถามที่พบบ่อย และเงื่อนไขบริการ",
+        "ตอบตรงประเด็น สุภาพ ปิดการขาย ช่วยลดต้นทุนแอดมิน",
       ],
-      stats: { primary: "24/7", primaryLabel: "ตอบแชทอัตโนมัติ", secondary: "0 บาท", secondaryLabel: "ต้นทุน API (Vault Keys)" },
+      stats: { primary: "24/7", primaryLabel: "ตอบแชทอัตโนมัติ", secondary: "1 วินาที", secondaryLabel: "ความเร็วตอบกลับ" },
       actionText: "เปิดใช้งาน Smart Chat",
     },
     {
-      id: "mockup",
-      name: "ThaiD Mockup AI Studio",
-      subname: "AI Product Photography & Mockup Platform",
-      tag: "mockup.thaid.online",
-      url: "https://mockup.thaid.online",
-      category: "mockup",
-      status: "ออนไลน์ (Live)",
-      statusColor: "emerald",
-      badge: "E-Commerce Pro",
-      description:
-        "สตูดิโอถ่ายภาพสินค้าและม็อกอัพระดับลักชัวรีด้วย AI ไดคัตพื้นหลังอัตโนมัติ วางสินค้าลงบนฉากหลังพรีเมียม สังเคราะห์แสงเงาเสมือนจริง สำหรับ Shopee, Lazada, TikTok และ Facebook",
-      icon: "photo_camera",
-      accentColor: "#e85a2d",
+      id: "vault",
+      name: "ThaiD Vault",
+      subname: "Personal Cloud Vault & Security",
+      tag: "vault.thaid.online",
+      url: "https://vault.thaid.online",
+      category: "vault",
+      status: "พร้อมใช้งาน",
+      badge: "Security",
+      description: "คลังเก็บข้อมูลส่วนตัว กุญแจ API Keys และระบบความปลอดภัย เข้ารหัสข้อมูลระดับทหาร AES-256",
+      icon: "lock",
+      image: "/cards/podium_minimal.jpg",
+      creator: "Pakinchit",
+      location: "Security Engineer · Bangkok",
+      tilt: "-rotate-3",
       features: [
-        "ตัดพื้นหลังสินค้าอัตโนมัติด้วย AI Matting ภายใน 1 วินาที",
-        "8 ฉากหลังพรีเซ็ตลักชัวรีจาก Google Flow (หินอ่อน, ไม้โอ๊ค, สปาหรู, โพเดียม)",
-        "เจนฉากหลังใหม่ตามจินตนาการด้วย Custom AI Prompt Studio",
-        "สังเคราะห์แสงเงา Contact & Cast Shadow สมจริงระดับสตูดิโอ",
+        "เข้ารหัสความปลอดภัยระดับทหาร AES-256",
+        "จัดเก็บ Gemini API Keys และหมุนเวียนคีย์อัตโนมัติ",
+        "สำรองข้อมูลและจัดการสภาพแวดล้อมระบบนิเวศ",
       ],
-      stats: { primary: "1080×1080", primaryLabel: "Full HD 1:1 / 4:5 / 9:16", secondary: "< 1 วิ", secondaryLabel: "ต่อการเรนเดอร์ภาพ" },
-      actionText: "เปิดใช้งาน Mockup Studio",
+      stats: { primary: "AES-256", primaryLabel: "การเข้ารหัสข้อมูล", secondary: "80 Keys", secondaryLabel: "คลังคีย์ความปลอดภัย" },
+      actionText: "เปิดใช้งาน ThaiD Vault",
+    },
+    {
+      id: "studio_hub",
+      name: "ThaiD Cloud Ecosystem",
+      subname: "Central SaaS Orchestration",
+      tag: "thaid.online",
+      url: "https://thaid.online",
+      category: "mockup",
+      status: "พร้อมใช้งาน",
+      badge: "Enterprise",
+      description: "ศูนย์กลางควบคุมและเชื่อมต่อทุกบริการในเครือ ThaiD ผ่าน Single Sign-On และสถาปัตยกรรม Microservices ระดับสูง",
+      icon: "hub",
+      image: "/cards/studio_pastel.jpg",
+      creator: "ThaiD Team",
+      location: "Core Engineering · Thailand",
+      tilt: "rotate-3",
+      features: [
+        "Single Sign-On และการจัดการโดเมนเดียว",
+        "เซิร์ฟเวอร์ความเร็วสูง Oracle Cloud ARM64",
+        "Reverse Proxy Traefik พร้อม SSL อัตโนมัติ",
+      ],
+      stats: { primary: "8 บริการ", primaryLabel: "ระบบนิเวศ AI", secondary: "0.14s", secondaryLabel: "เวลาตอบสนองเซิร์ฟเวอร์" },
+      actionText: "สำรวจระบบทั้งหมด",
     },
   ];
 
-  const filteredServices =
-    activeTab === "all"
-      ? services
-      : services.filter((s) => s.category === activeTab);
+  const filteredServices = activeTab === "all" ? services : services.filter((s) => s.category === activeTab);
 
   return (
-    <div className="min-h-screen bg-[#131922] text-[#ffffff] flex flex-col font-sans selection:bg-[#0569ff]/30 selection:text-white">
+    <div className="min-h-screen bg-white text-[#171717] font-sans antialiased overflow-x-hidden selection:bg-[#0569ff]/15 selection:text-[#0569ff]">
       
       {/* ======================================================== */}
-      {/* 1. FASTWORK-STYLE DARK STUDIO NAVIGATION BAR (h-[54px])  */}
+      {/* 1. FASTWORK FLOATING PILL HEADER                         */}
       {/* ======================================================== */}
-      <header className="sticky top-0 z-50 h-[54px] border-b border-[#2b313b] bg-[#131922]/85 backdrop-blur-2xl">
-        <div className="max-w-[1400px] mx-auto h-full px-4 sm:px-6 flex items-center justify-between gap-4">
+      <header className="sticky top-0 z-50 pt-3 px-4 sm:px-6 pointer-events-none">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
           
-          {/* Left: Brand Identity */}
-          <div className="flex items-center gap-3">
-            <a href="https://thaid.online" className="flex items-center gap-2.5 group">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#0569ff] to-[#e85a2d] flex items-center justify-center text-white shadow-md shadow-[#0569ff]/25 group-hover:scale-105 transition-transform">
-                <span className="material-symbols-outlined text-[19px]">hub</span>
+          {/* Invisible Left Spacer */}
+          <div className="w-24 hidden sm:block" />
+
+          {/* Centered Floating Fastwork-Style Brand Pill */}
+          <div className="pointer-events-auto inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-black/[0.08] bg-white/80 backdrop-blur-xl shadow-sm hover:shadow-md transition-all">
+            <a href="https://thaid.online" className="flex items-center gap-2 text-[#171717]">
+              <div className="w-5 h-5 rounded-full bg-[#171717] flex items-center justify-center text-white text-[11px] font-bold">
+                ✦
               </div>
-              <div className="flex flex-col">
-                <span className="font-extrabold text-sm tracking-tight leading-none text-white flex items-center gap-1.5">
-                  ThaiD<span className="text-[#0569ff]">.online</span>
-                  <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded-full bg-white/[0.08] text-stone-300 font-semibold border border-[#2b313b]">Studio</span>
-                </span>
-                <span className="text-[10px] text-stone-400 font-medium leading-tight">AI Multi-SaaS Platform</span>
-              </div>
+              <span className="font-bold text-sm tracking-tight text-[#171717]">
+                ThaiD<span className="text-[#0569ff]">.online</span>
+              </span>
             </a>
           </div>
 
-          {/* Center: Contextual Segmented Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-1 bg-white/[0.04] p-1 rounded-xl border border-white/[0.06] text-xs font-medium">
-            <a
-              href="https://thaid.online"
-              className="px-3 py-1 rounded-lg text-white bg-white/10 shadow-xs font-semibold flex items-center gap-1.5"
-            >
-              <span className="material-symbols-outlined text-[14px]">hub</span>
-              <span>Hub</span>
-            </a>
-            <a
-              href="https://novel.thaid.online"
-              className="px-3 py-1 rounded-lg text-stone-400 hover:text-white transition-colors flex items-center gap-1.5"
-            >
-              <span className="material-symbols-outlined text-[14px]">edit_note</span>
-              <span>นิยาย AI</span>
-            </a>
-            <a
-              href="https://social.thaid.online"
-              className="px-3 py-1 rounded-lg text-stone-400 hover:text-white transition-colors flex items-center gap-1.5"
-            >
-              <span className="material-symbols-outlined text-[14px]">campaign</span>
-              <span>โพสต์ FB</span>
-            </a>
-            <a
-              href="https://sticker.thaid.online"
-              className="px-3 py-1 rounded-lg text-stone-400 hover:text-white transition-colors flex items-center gap-1.5"
-            >
-              <span className="material-symbols-outlined text-[14px]">sentiment_satisfied</span>
-              <span>สติกเกอร์</span>
-            </a>
-            <a
-              href="https://clip.thaid.online"
-              className="px-3 py-1 rounded-lg text-stone-400 hover:text-white transition-colors flex items-center gap-1.5"
-            >
-              <span className="material-symbols-outlined text-[14px]">movie</span>
-              <span>คลิปสั้น AI</span>
-            </a>
-            <a
-              href="https://chat.thaid.online"
-              className="px-3 py-1 rounded-lg text-stone-400 hover:text-white transition-colors flex items-center gap-1.5"
-            >
-              <span className="material-symbols-outlined text-[14px]">forum</span>
-              <span>แชทบอท LINE</span>
-            </a>
-            <a
-              href="https://mockup.thaid.online"
-              className="px-3 py-1 rounded-lg text-stone-400 hover:text-white transition-colors flex items-center gap-1.5"
-            >
-              <span className="material-symbols-outlined text-[14px]">photo_camera</span>
-              <span>ม็อกอัพสินค้า</span>
-            </a>
-          </nav>
-
-          {/* Right Controls: ThaiD Vault & Direct Launch */}
-          <div className="flex items-center gap-2 flex-shrink-0">
+          {/* Right Language / Action Pill */}
+          <div className="pointer-events-auto flex items-center gap-2">
             <a
               href="https://vault.thaid.online"
-              className="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg border border-[#2b313b] hover:border-white/25 text-stone-300 hover:text-white transition-all bg-white/[0.04]"
-              title="คลังความปลอดภัยและ API Keys"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-black/[0.08] bg-white/80 backdrop-blur-xl text-xs font-semibold text-[#171717] hover:bg-black/5 transition-colors shadow-xs"
             >
-              <span className="material-symbols-outlined text-[15px] text-amber-400">lock</span>
-              <span>ThaiD Vault</span>
+              <span className="material-symbols-outlined text-[15px] text-[#0569ff]">lock</span>
+              <span>Vault</span>
             </a>
-
-            <a
-              href="https://novel.thaid.online"
-              className="inline-flex items-center gap-1.5 text-xs font-bold px-4 py-1.5 rounded-lg bg-[#0569ff] hover:bg-[#4276fc] text-white shadow-md shadow-[#0569ff]/25 transition-all hover:scale-[1.02] active:scale-[0.98]"
-            >
-              <span className="material-symbols-outlined text-[15px]">rocket_launch</span>
-              <span>เข้าใช้งานระบบ</span>
-            </a>
-
-            {/* Mobile Menu Button */}
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-1.5 rounded-lg text-stone-400 hover:text-white hover:bg-white/10"
-              aria-label="Toggle menu"
-            >
-              <span className="material-symbols-outlined text-[22px]">
-                {mobileMenuOpen ? "close" : "menu"}
-              </span>
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Dropdown Sheet */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden border-b border-[#2b313b] bg-[#131922]/98 backdrop-blur-2xl px-4 py-4 space-y-2 text-sm shadow-2xl">
-            <a
-              href="https://thaid.online"
-              onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center justify-between px-3 py-2 rounded-lg font-semibold bg-white/10 text-white"
-            >
-              <span className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-[17px] text-[#0569ff]">hub</span>
-                <span>ThaiD Hub (หน้าแรก)</span>
-              </span>
-              <span className="text-[10px] bg-[#0569ff]/20 text-[#0569ff] px-2 py-0.5 rounded font-bold border border-[#0569ff]/30">ACTIVE</span>
-            </a>
-            <a
-              href="https://novel.thaid.online"
-              className="flex items-center justify-between px-3 py-2 rounded-lg font-medium text-stone-300 hover:bg-white/5"
-            >
-              <span className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-[17px] text-[#0569ff]">edit_note</span>
-                <span>นิยาย AI (Novel Studio)</span>
-              </span>
-              <span className="material-symbols-outlined text-xs">arrow_outward</span>
-            </a>
-            <a
-              href="https://social.thaid.online"
-              className="flex items-center justify-between px-3 py-2 rounded-lg font-medium text-stone-300 hover:bg-white/5"
-            >
-              <span className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-[17px] text-[#1877f2]">campaign</span>
-                <span>โพสต์ Facebook (Social Poster)</span>
-              </span>
-              <span className="material-symbols-outlined text-xs">arrow_outward</span>
-            </a>
-            <a
-              href="https://sticker.thaid.online"
-              className="flex items-center justify-between px-3 py-2 rounded-lg font-medium text-stone-300 hover:bg-white/5"
-            >
-              <span className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-[17px] text-emerald-400">sentiment_satisfied</span>
-                <span>สติกเกอร์ไลน์ (LINE Sticker)</span>
-              </span>
-              <span className="material-symbols-outlined text-xs">arrow_outward</span>
-            </a>
-            <a
-              href="https://clip.thaid.online"
-              className="flex items-center justify-between px-3 py-2 rounded-lg font-medium text-stone-300 hover:bg-white/5"
-            >
-              <span className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-[17px] text-pink-400">movie</span>
-                <span>คลิปสั้น AI (Clip Studio)</span>
-              </span>
-              <span className="material-symbols-outlined text-xs">arrow_outward</span>
-            </a>
-            <a
-              href="https://chat.thaid.online"
-              className="flex items-center justify-between px-3 py-2 rounded-lg font-medium text-stone-300 hover:bg-white/5"
-            >
-              <span className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-[17px] text-green-400">forum</span>
-                <span>แชทบอท LINE (Smart Chat)</span>
-              </span>
-              <span className="material-symbols-outlined text-xs">arrow_outward</span>
-            </a>
-            <a
-              href="https://mockup.thaid.online"
-              className="flex items-center justify-between px-3 py-2 rounded-lg font-medium text-stone-300 hover:bg-white/5"
-            >
-              <span className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-[17px] text-orange-400">photo_camera</span>
-                <span>ม็อกอัพสินค้า (Mockup Studio)</span>
-              </span>
-              <span className="material-symbols-outlined text-xs">arrow_outward</span>
-            </a>
-            <div className="pt-2 border-t border-[#2b313b]">
-              <a
-                href="https://novel.thaid.online"
-                className="w-full py-2.5 rounded-xl bg-[#0569ff] text-white font-bold text-center flex items-center justify-center gap-2"
-              >
-                <span className="material-symbols-outlined text-[17px]">rocket_launch</span>
-                <span>เปิดใช้งาน Novel Studio</span>
-              </a>
+            <div className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full border border-black/[0.08] bg-white/80 backdrop-blur-xl text-xs font-medium text-[#171717]">
+              <span className="text-[13px]">🌐</span>
+              <span className="font-semibold">TH</span>
             </div>
           </div>
-        )}
+
+        </div>
       </header>
 
       {/* ======================================================== */}
-      {/* 2. HERO SECTION (FASTWORK STUDIO DARK HERO)              */}
+      {/* 2. FASTWORK EXACT HERO STAGE WITH 3D SCATTERED CARDS      */}
       {/* ======================================================== */}
-      <section id="overview" className="relative pt-12 sm:pt-16 pb-12 overflow-hidden border-b border-[#2b313b]">
+      <section className="relative min-h-[85vh] sm:min-h-[92vh] flex flex-col items-center justify-center pt-8 pb-16 px-4 overflow-hidden">
         
-        {/* Ambient Subtle Gradients */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-tr from-[#0569ff]/15 via-[#e85a2d]/10 to-transparent blur-3xl pointer-events-none rounded-full" />
+        {/* ======================================================== */}
+        {/* SCATTERED 3D FLOATING PORTFOLIO CARDS (FASTWORK SIGNATURE) */}
+        {/* ======================================================== */}
+        
+        {/* LEFT COLUMN 1 (Outer Left, tilted -8deg) */}
+        <div className="hidden xl:block absolute left-4 2xl:left-12 top-[12%] z-10">
+          <a
+            href="https://mockup.thaid.online"
+            className="block w-[220px] rounded-2xl bg-white border border-black/[0.08] p-2.5 shadow-[0_20px_45px_rgba(0,0,0,0.07)] hover:shadow-[0_25px_55px_rgba(0,0,0,0.14)] -rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-300"
+          >
+            <div className="relative w-full h-[155px] rounded-xl overflow-hidden bg-stone-100">
+              <Image src="/cards/cafe_marble.jpg" alt="Mockup AI" fill className="object-cover" />
+            </div>
+            <div className="mt-2.5 flex items-center gap-2 px-1">
+              <div className="relative w-7 h-7 rounded-full bg-stone-200 overflow-hidden flex-shrink-0">
+                <span className="w-full h-full flex items-center justify-center text-xs font-bold bg-[#171717] text-white">W</span>
+                <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-[#22c55e] border-2 border-white" />
+              </div>
+              <div className="flex flex-col min-w-0">
+                <p className="text-xs font-bold text-[#171717] truncate leading-tight">Weng Kitsana</p>
+                <p className="text-[10px] text-[#737373] truncate">Photographer · Bangkok</p>
+              </div>
+            </div>
+          </a>
+        </div>
 
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 relative z-10 text-center">
+        {/* LEFT COLUMN 2 (Inner Left Top, tilted 2deg) */}
+        <div className="hidden lg:block absolute left-[12%] 2xl:left-[17%] top-[5%] z-20">
+          <a
+            href="https://novel.thaid.online"
+            className="block w-[200px] rounded-2xl bg-white border border-black/[0.08] p-2.5 shadow-[0_20px_45px_rgba(0,0,0,0.07)] hover:shadow-[0_25px_55px_rgba(0,0,0,0.14)] rotate-2 hover:rotate-0 hover:scale-105 transition-all duration-300"
+          >
+            <div className="relative w-full h-[140px] rounded-xl overflow-hidden bg-stone-100">
+              <Image src="/cards/luxury_spa.jpg" alt="Novel Studio" fill className="object-cover" />
+            </div>
+            <div className="mt-2 flex items-center gap-2 px-1">
+              <div className="relative w-7 h-7 rounded-full bg-stone-200 overflow-hidden flex-shrink-0">
+                <span className="w-full h-full flex items-center justify-center text-xs font-bold bg-[#0569ff] text-white">C</span>
+                <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-[#22c55e] border-2 border-white" />
+              </div>
+              <div className="flex flex-col min-w-0">
+                <p className="text-xs font-bold text-[#171717] truncate leading-tight">Chapavich T.</p>
+                <p className="text-[10px] text-[#737373] truncate">Novel Author · Chiang Mai</p>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        {/* LEFT COLUMN 3 (Inner Left Bottom, tilted -4deg) */}
+        <div className="hidden lg:block absolute left-[5%] 2xl:left-[10%] bottom-[8%] z-10">
+          <a
+            href="https://social.thaid.online"
+            className="block w-[210px] rounded-2xl bg-white border border-black/[0.08] p-2.5 shadow-[0_20px_45px_rgba(0,0,0,0.07)] hover:shadow-[0_25px_55px_rgba(0,0,0,0.14)] -rotate-3 hover:rotate-0 hover:scale-105 transition-all duration-300"
+          >
+            <div className="relative w-full h-[150px] rounded-xl overflow-hidden bg-stone-100">
+              <Image src="/cards/neon_cyberpunk.jpg" alt="Social Poster" fill className="object-cover" />
+            </div>
+            <div className="mt-2.5 flex items-center gap-2 px-1">
+              <div className="relative w-7 h-7 rounded-full bg-stone-200 overflow-hidden flex-shrink-0">
+                <span className="w-full h-full flex items-center justify-center text-xs font-bold bg-[#e85a2d] text-white">L</span>
+                <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-[#22c55e] border-2 border-white" />
+              </div>
+              <div className="flex flex-col min-w-0">
+                <p className="text-xs font-bold text-[#171717] truncate leading-tight">LEOBEER</p>
+                <p className="text-[10px] text-[#737373] truncate">Viral Editor · Bangkok</p>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        {/* RIGHT COLUMN 1 (Outer Right Top, tilted 6deg) */}
+        <div className="hidden xl:block absolute right-4 2xl:right-12 top-[10%] z-10">
+          <a
+            href="https://clip.thaid.online"
+            className="block w-[215px] rounded-2xl bg-white border border-black/[0.08] p-2.5 shadow-[0_20px_45px_rgba(0,0,0,0.07)] hover:shadow-[0_25px_55px_rgba(0,0,0,0.14)] rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-300"
+          >
+            <div className="relative w-full h-[150px] rounded-xl overflow-hidden bg-stone-100">
+              <Image src="/cards/golden_beach.jpg" alt="Clip AI" fill className="object-cover" />
+            </div>
+            <div className="mt-2.5 flex items-center gap-2 px-1">
+              <div className="relative w-7 h-7 rounded-full bg-stone-200 overflow-hidden flex-shrink-0">
+                <span className="w-full h-full flex items-center justify-center text-xs font-bold bg-[#ec4899] text-white">N</span>
+                <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-[#22c55e] border-2 border-white" />
+              </div>
+              <div className="flex flex-col min-w-0">
+                <p className="text-xs font-bold text-[#171717] truncate leading-tight">Nguyen Van Nam</p>
+                <p className="text-[10px] text-[#737373] truncate">Video Creator · Phuket</p>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        {/* RIGHT COLUMN 2 (Inner Right Upper, tilted -5deg) */}
+        <div className="hidden lg:block absolute right-[12%] 2xl:right-[17%] top-[6%] z-20">
+          <a
+            href="https://sticker.thaid.online"
+            className="block w-[205px] rounded-2xl bg-white border border-black/[0.08] p-2.5 shadow-[0_20px_45px_rgba(0,0,0,0.07)] hover:shadow-[0_25px_55px_rgba(0,0,0,0.14)] -rotate-4 hover:rotate-0 hover:scale-105 transition-all duration-300"
+          >
+            <div className="relative w-full h-[145px] rounded-xl overflow-hidden bg-stone-100">
+              <Image src="/cards/nature_wood.jpg" alt="LINE Sticker" fill className="object-cover" />
+            </div>
+            <div className="mt-2 flex items-center gap-2 px-1">
+              <div className="relative w-7 h-7 rounded-full bg-stone-200 overflow-hidden flex-shrink-0">
+                <span className="w-full h-full flex items-center justify-center text-xs font-bold bg-[#10b981] text-white">P</span>
+                <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-[#22c55e] border-2 border-white" />
+              </div>
+              <div className="flex flex-col min-w-0">
+                <p className="text-xs font-bold text-[#171717] truncate leading-tight">Peter Sato</p>
+                <p className="text-[10px] text-[#737373] truncate">Sticker Designer · Osaka</p>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        {/* RIGHT COLUMN 3 (Inner Right Lower, tilted 4deg) */}
+        <div className="hidden lg:block absolute right-[6%] 2xl:right-[11%] bottom-[7%] z-10">
+          <a
+            href="https://chat.thaid.online"
+            className="block w-[210px] rounded-2xl bg-white border border-black/[0.08] p-2.5 shadow-[0_20px_45px_rgba(0,0,0,0.07)] hover:shadow-[0_25px_55px_rgba(0,0,0,0.14)] rotate-4 hover:rotate-0 hover:scale-105 transition-all duration-300"
+          >
+            <div className="relative w-full h-[150px] rounded-xl overflow-hidden bg-stone-100">
+              <Image src="/cards/cozy_living.jpg" alt="Smart Chat" fill className="object-cover" />
+            </div>
+            <div className="mt-2.5 flex items-center gap-2 px-1">
+              <div className="relative w-7 h-7 rounded-full bg-stone-200 overflow-hidden flex-shrink-0">
+                <span className="w-full h-full flex items-center justify-center text-xs font-bold bg-[#06c755] text-white">M</span>
+                <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-[#22c55e] border-2 border-white" />
+              </div>
+              <div className="flex flex-col min-w-0">
+                <p className="text-xs font-bold text-[#171717] truncate leading-tight">MOD SUPACHA</p>
+                <p className="text-[10px] text-[#737373] truncate">E-Commerce Admin · Bangkok</p>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        {/* ======================================================== */}
+        {/* CENTER HERO COPY & ACTIONS (100% FASTWORK MATCH)          */}
+        {/* ======================================================== */}
+        <div className="relative z-30 max-w-2xl mx-auto text-center flex flex-col items-center">
           
-          {/* Top Pill Chip */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.05] border border-white/[0.1] shadow-xs text-xs font-semibold mb-6">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-stone-300">ThaiD Cloud Multi-SaaS Platform</span>
-            <span className="text-stone-600">|</span>
-            <span className="text-[#0569ff] font-bold">Fastwork-Style Studio UI</span>
-          </div>
-
-          {/* Main Headline */}
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white max-w-4xl mx-auto leading-[1.15]">
-            ศูนย์รวมโซลูชัน AI อัจฉริยะ <br className="hidden sm:inline" />
-            <span className="bg-gradient-to-r from-[#0569ff] via-[#4276fc] to-[#e85a2d] bg-clip-text text-transparent">
-              สำหรับครีเอเตอร์และธุรกิจไทย
-            </span>
+          {/* Main Headline with Stylized Thai Calligraphy */}
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-[#171717] leading-[1.12]">
+            Show the world <br />
+            what <span className="font-['Charm'] italic text-5xl sm:text-7xl md:text-8xl px-2 font-normal text-[#171717]">คุณ</span> can do
           </h1>
 
-          <p className="mt-5 text-sm sm:text-lg text-stone-400 max-w-2xl mx-auto leading-relaxed">
-            เชื่อมต่อเครื่องมือ AI ระดับโปรภายใต้ระบบนิเวศเดียวกัน ทั้งแต่งนิยาย ออโต้โพสต์โซเชียล สติกเกอร์ไลน์ คลิปสั้น แชทบอท และสตูดิโอม็อกอัพ
+          {/* Subtitle */}
+          <p className="mt-4 sm:mt-5 text-sm sm:text-base md:text-lg text-[#737373] max-w-lg mx-auto font-normal">
+            In the age of AI, your portfolio proves why clients need you.
           </p>
 
-          {/* Main Hero Actions */}
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 max-w-md mx-auto">
+          {/* Thai Secondary Subtitle */}
+          <p className="mt-1 text-xs sm:text-sm text-stone-400 font-medium">
+            ศูนย์รวมโซลูชัน AI อัจฉริยะ สำหรับครีเอเตอร์และธุรกิจไทย
+          </p>
+
+          {/* Countdown / Live Metrics Timer (Fastwork 4-Box Signature) */}
+          <div className="mt-7 sm:mt-9 flex items-center justify-center gap-2 sm:gap-3.5">
+            <div className="w-[66px] sm:w-[76px] py-3 rounded-2xl bg-[#f8f9fa] border border-black/[0.06] text-center shadow-xs">
+              <span className="block text-xl sm:text-3xl font-extrabold text-[#171717] tracking-tight">
+                {String(countdown.days).padStart(2, "0")}
+              </span>
+              <span className="block text-[10px] sm:text-[11px] text-[#737373] font-medium mt-0.5">days</span>
+            </div>
+            <div className="w-[66px] sm:w-[76px] py-3 rounded-2xl bg-[#f8f9fa] border border-black/[0.06] text-center shadow-xs">
+              <span className="block text-xl sm:text-3xl font-extrabold text-[#171717] tracking-tight">
+                {String(countdown.hours).padStart(2, "0")}
+              </span>
+              <span className="block text-[10px] sm:text-[11px] text-[#737373] font-medium mt-0.5">hours</span>
+            </div>
+            <div className="w-[66px] sm:w-[76px] py-3 rounded-2xl bg-[#f8f9fa] border border-black/[0.06] text-center shadow-xs">
+              <span className="block text-xl sm:text-3xl font-extrabold text-[#171717] tracking-tight">
+                {String(countdown.mins).padStart(2, "0")}
+              </span>
+              <span className="block text-[10px] sm:text-[11px] text-[#737373] font-medium mt-0.5">mins</span>
+            </div>
+            <div className="w-[66px] sm:w-[76px] py-3 rounded-2xl bg-[#f8f9fa] border border-black/[0.06] text-center shadow-xs">
+              <span className="block text-xl sm:text-3xl font-extrabold text-[#171717] tracking-tight">
+                {String(countdown.secs).padStart(2, "0")}
+              </span>
+              <span className="block text-[10px] sm:text-[11px] text-[#737373] font-medium mt-0.5">seconds</span>
+            </div>
+          </div>
+
+          {/* Primary Action Button (Fastwork Solid Black Pill) */}
+          <div className="mt-8">
             <a
-              href="https://novel.thaid.online"
-              className="w-full sm:w-auto px-6 py-3 rounded-xl bg-[#0569ff] hover:bg-[#4276fc] text-white font-bold text-sm shadow-lg shadow-[#0569ff]/25 transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
+              href="#ecosystem"
+              className="inline-flex items-center justify-center px-9 py-3.5 rounded-full bg-[#1f242d] hover:bg-black text-white font-semibold text-sm shadow-md hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-200"
             >
-              <span className="material-symbols-outlined text-[18px]">edit_note</span>
-              <span>เข้าสู่ Novel Studio</span>
-            </a>
-            <a
-              href="https://social.thaid.online"
-              className="w-full sm:w-auto px-6 py-3 rounded-xl bg-white/[0.06] hover:bg-white/[0.1] text-white font-semibold text-sm border border-white/[0.1] shadow-xs transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
-            >
-              <span className="material-symbols-outlined text-[18px]">campaign</span>
-              <span>เข้าสู่ Social Poster</span>
+              Get started
             </a>
           </div>
 
-          {/* ======================================================== */}
-          {/* FASTWORK-STYLE 3D ORBIT SHOWCASE STAGE                   */}
-          {/* ======================================================== */}
-          <div className="mt-6">
-            <OrbitShowcase />
-          </div>
-
-          {/* Live Ecosystem Bar */}
-          <div className="mt-8 max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-3 text-left">
-            <div className="p-3.5 rounded-2xl bg-[#1f252e] border border-[#2b313b] shadow-xs">
-              <div className="flex items-center gap-2 text-xs font-semibold text-stone-400">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                <span>โฮสต์เซิร์ฟเวอร์</span>
-              </div>
-              <p className="mt-1 text-sm font-bold text-white">Oracle Cloud ARM</p>
-              <p className="text-[11px] text-stone-500">2 OCPU · 12 GB RAM</p>
-            </div>
-
-            <div className="p-3.5 rounded-2xl bg-[#1f252e] border border-[#2b313b] shadow-xs">
-              <div className="flex items-center gap-2 text-xs font-semibold text-stone-400">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                <span>Reverse Proxy</span>
-              </div>
-              <p className="mt-1 text-sm font-bold text-white">Traefik v3.7</p>
-              <p className="text-[11px] text-stone-500">Auto SSL Let&apos;s Encrypt</p>
-            </div>
-
-            <div className="p-3.5 rounded-2xl bg-[#1f252e] border border-[#2b313b] shadow-xs">
-              <div className="flex items-center gap-2 text-xs font-semibold text-stone-400">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                <span>โดเมนหลัก</span>
-              </div>
-              <p className="mt-1 text-sm font-bold text-white">ThaiD.online</p>
-              <p className="text-[11px] text-stone-500">Wildcard DNS (*.thaid)</p>
-            </div>
-
-            <div className="p-3.5 rounded-2xl bg-[#1f252e] border border-[#2b313b] shadow-xs">
-              <div className="flex items-center gap-2 text-xs font-semibold text-stone-400">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                <span>ระบบคอนเทนเนอร์</span>
-              </div>
-              <p className="mt-1 text-sm font-bold text-white">Coolify v4</p>
-              <p className="text-[11px] text-stone-500">8 Services Isolated</p>
-            </div>
+          {/* Scroll Down Indicator */}
+          <div className="mt-12 flex flex-col items-center gap-1 text-[#737373] text-[11px] font-medium">
+            <span>Scroll down</span>
+            <span className="material-symbols-outlined text-sm animate-bounce">expand_more</span>
           </div>
 
         </div>
+
       </section>
 
       {/* ======================================================== */}
-      {/* 3. PRODUCT SUITE CATALOG (BENTO GRID SHOWCASE)           */}
+      {/* 3. PLATFORMS DIRECTORY & ECOSYSTEM (CLEAN WHITE EDITORIAL) */}
       {/* ======================================================== */}
-      <section id="services" className="max-w-[1400px] w-full mx-auto px-4 sm:px-6 py-14 sm:py-20">
-        
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
-          <div>
-            <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0569ff] uppercase tracking-wider mb-1">
-              <span className="material-symbols-outlined text-[15px]">apps</span>
-              <span>AI PRODUCT PORTFOLIO</span>
+      <section id="ecosystem" className="py-16 sm:py-24 px-4 sm:px-6 bg-[#fafafa] border-t border-black/[0.06]">
+        <div className="max-w-7xl mx-auto">
+          
+          {/* Section Header */}
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-black/[0.08] text-xs font-semibold text-[#171717] mb-3 shadow-xs">
+              <span className="w-2 h-2 rounded-full bg-[#22c55e]" />
+              <span>ThaiD Multi-SaaS Architecture</span>
             </div>
-            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white">
-              ระบบและบริการทั้งหมดในเครือข่าย
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#171717]">
+              เลือกใช้งาน 8 แพลตฟอร์ม AI ในเครือ
             </h2>
+            <p className="mt-2 text-sm sm:text-base text-[#737373]">
+              ทุกเครื่องมือถูกออกแบบมาเพื่อคนไทยโดยเฉพาะ เร็ว แรง ไร้ขีดจำกัด
+            </p>
           </div>
 
-          {/* Segmented Filter Control */}
-          <div className="flex flex-wrap items-center gap-1 bg-white/[0.04] p-1 rounded-xl border border-[#2b313b] text-xs">
-            <button
-              type="button"
-              onClick={() => setActiveTab("all")}
-              className={`px-3 py-1.5 rounded-lg transition-all ${
-                activeTab === "all"
-                  ? "bg-white/10 text-white shadow-xs font-bold"
-                  : "text-stone-400 hover:text-white"
-              }`}
-            >
-              ทั้งหมด (8)
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveTab("novel")}
-              className={`px-3 py-1.5 rounded-lg transition-all ${
-                activeTab === "novel"
-                  ? "bg-white/10 text-white shadow-xs font-bold"
-                  : "text-stone-400 hover:text-white"
-              }`}
-            >
-              นิยาย AI
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveTab("social")}
-              className={`px-3 py-1.5 rounded-lg transition-all ${
-                activeTab === "social"
-                  ? "bg-white/10 text-white shadow-xs font-bold"
-                  : "text-stone-400 hover:text-white"
-              }`}
-            >
-              โพสต์ Facebook
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveTab("sticker")}
-              className={`px-3 py-1.5 rounded-lg transition-all ${
-                activeTab === "sticker"
-                  ? "bg-white/10 text-white shadow-xs font-bold"
-                  : "text-stone-400 hover:text-white"
-              }`}
-            >
-              สติกเกอร์ไลน์
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveTab("clip")}
-              className={`px-3 py-1.5 rounded-lg transition-all ${
-                activeTab === "clip"
-                  ? "bg-white/10 text-white shadow-xs font-bold"
-                  : "text-stone-400 hover:text-white"
-              }`}
-            >
-              คลิปสั้น AI
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveTab("chat")}
-              className={`px-3 py-1.5 rounded-lg transition-all ${
-                activeTab === "chat"
-                  ? "bg-white/10 text-white shadow-xs font-bold"
-                  : "text-stone-400 hover:text-white"
-              }`}
-            >
-              แชทบอท LINE
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveTab("mockup")}
-              className={`px-3 py-1.5 rounded-lg transition-all ${
-                activeTab === "mockup"
-                  ? "bg-white/10 text-white shadow-xs font-bold"
-                  : "text-stone-400 hover:text-white"
-              }`}
-            >
-              ม็อกอัพสินค้า
-            </button>
+          {/* Segmented Category Filter Pills */}
+          <div className="flex items-center justify-center gap-2 overflow-x-auto pb-4 mb-8">
+            {[
+              { id: "all", label: "ทั้งหมด (All)" },
+              { id: "mockup", label: "ม็อกอัพสินค้า" },
+              { id: "novel", label: "นิยาย AI" },
+              { id: "social", label: "ออโต้โพสต์ FB" },
+              { id: "clip", label: "คลิปสั้น AI" },
+              { id: "sticker", label: "สติกเกอร์ไลน์" },
+              { id: "chat", label: "แชทบอท LINE" },
+              { id: "vault", label: "คลังความปลอดภัย" },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => setActiveTab(tab.id)}
+                className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
+                  activeTab === tab.id
+                    ? "bg-[#1f242d] text-white shadow-xs"
+                    : "bg-white text-[#737373] hover:text-[#171717] border border-black/[0.08]"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
           </div>
-        </div>
 
-        {/* Bento Grid Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredServices.map((service) => (
-            <div
-              key={service.id}
-              className="rounded-3xl bg-[#1f252e] border border-[#2b313b] p-6 sm:p-7 flex flex-col justify-between fastwork-card-hover fastwork-card-shadow"
-            >
-              <div>
-                {/* Top Row: Icon + Badge + Status */}
-                <div className="flex items-center justify-between gap-2 mb-5">
-                  <div
-                    className="w-12 h-12 rounded-2xl flex items-center justify-center text-white shadow-md"
-                    style={{ backgroundColor: service.accentColor }}
-                  >
-                    <span className="material-symbols-outlined text-[24px]">
-                      {service.icon}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-[10px] sm:text-xs font-bold px-2.5 py-0.5 rounded-full bg-white/[0.08] text-stone-300 border border-white/[0.06]">
+          {/* Grid of 8 Service Cards (Fastwork Clean White Style) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+            {filteredServices.map((service) => (
+              <div
+                key={service.id}
+                className="rounded-2xl bg-white border border-black/[0.08] p-5 flex flex-col justify-between shadow-[0_10px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-300 group"
+              >
+                <div>
+                  {/* Photo Preview Thumbnail */}
+                  <div className="relative w-full h-[160px] rounded-xl overflow-hidden bg-stone-100 mb-4">
+                    <Image src={service.image} alt={service.name} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
+                    <div className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-full bg-white/90 backdrop-blur-md text-[10px] font-bold text-[#171717] border border-black/5 shadow-xs">
                       {service.badge}
-                    </span>
-                    <span
-                      className={`inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-0.5 rounded-full ${
-                        service.statusColor === "emerald"
-                          ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                          : "bg-amber-500/10 text-amber-400 border border-amber-500/20"
-                      }`}
-                    >
-                      <span
-                        className={`w-1.5 h-1.5 rounded-full ${
-                          service.statusColor === "emerald"
-                            ? "bg-emerald-500"
-                            : "bg-amber-500"
-                        }`}
-                      />
-                      {service.status}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Service Name & Tag */}
-                <h3 className="text-xl sm:text-2xl font-extrabold tracking-tight text-white">
-                  {service.name}
-                </h3>
-                <p className="text-xs font-mono text-stone-400 mt-1">
-                  {service.tag}
-                </p>
-
-                {/* Description */}
-                <p className="mt-4 text-xs sm:text-sm text-stone-400 leading-relaxed">
-                  {service.description}
-                </p>
-
-                {/* Feature Bullets */}
-                <div className="mt-6 space-y-2.5 pt-5 border-t border-[#2b313b]">
-                  {service.features.map((feat, idx) => (
-                    <div key={idx} className="flex items-start gap-2.5 text-xs text-stone-300">
-                      <span
-                        className="material-symbols-outlined text-[16px] mt-0.5 flex-shrink-0"
-                        style={{ color: service.accentColor }}
-                      >
-                        check_circle
-                      </span>
-                      <span>{feat}</span>
                     </div>
-                  ))}
+                  </div>
+
+                  {/* Title & Domain */}
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="w-2 h-2 rounded-full bg-[#22c55e]" />
+                    <span className="text-[11px] font-mono text-[#737373]">{service.tag}</span>
+                  </div>
+                  <h3 className="text-base font-bold text-[#171717] tracking-tight group-hover:text-[#0569ff] transition-colors">
+                    {service.name}
+                  </h3>
+                  <p className="mt-2 text-xs text-[#737373] line-clamp-2 leading-relaxed">
+                    {service.description}
+                  </p>
+
+                  {/* Features Bullet List */}
+                  <ul className="mt-4 space-y-1.5 border-t border-black/[0.06] pt-3 text-[11px] text-stone-600">
+                    {service.features.map((f, i) => (
+                      <li key={i} className="flex items-center gap-1.5">
+                        <span className="text-[#0569ff] font-bold">✓</span>
+                        <span className="truncate">{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Footer Action */}
+                <div className="mt-5 pt-3 border-t border-black/[0.06] flex items-center justify-between">
+                  <div>
+                    <span className="text-[10px] text-[#737373] block">{service.stats.primaryLabel}</span>
+                    <span className="text-xs font-extrabold text-[#171717]">{service.stats.primary}</span>
+                  </div>
+                  <a
+                    href={service.url}
+                    className="inline-flex items-center gap-1 px-4 py-2 rounded-full bg-[#1f242d] hover:bg-black text-white text-xs font-semibold shadow-xs transition-colors"
+                  >
+                    <span>เปิดระบบ</span>
+                    <span className="material-symbols-outlined text-[13px]">arrow_outward</span>
+                  </a>
                 </div>
               </div>
+            ))}
+          </div>
 
-              {/* Bottom Card Footer: KPIs + Action CTA */}
-              <div className="mt-8 pt-5 border-t border-[#2b313b]">
-                <div className="grid grid-cols-2 gap-3 mb-5">
-                  <div className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.05]">
-                    <p className="text-base font-bold text-white">
-                      {service.stats.primary}
-                    </p>
-                    <p className="text-[10px] text-stone-400">
-                      {service.stats.primaryLabel}
-                    </p>
-                  </div>
-                  <div className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.05]">
-                    <p className="text-base font-bold text-white">
-                      {service.stats.secondary}
-                    </p>
-                    <p className="text-[10px] text-stone-400">
-                      {service.stats.secondaryLabel}
-                    </p>
-                  </div>
-                </div>
-
-                <a
-                  href={service.url}
-                  className="w-full py-2.5 px-4 rounded-xl font-bold text-xs sm:text-sm text-center flex items-center justify-center gap-2 transition-all shadow-md hover:scale-[1.02] active:scale-[0.98]"
-                  style={{
-                    backgroundColor: service.accentColor,
-                    color: "#ffffff",
-                  }}
-                >
-                  <span>{service.actionText}</span>
-                  <span className="material-symbols-outlined text-[16px]">
-                    arrow_forward
-                  </span>
-                </a>
-              </div>
+          {/* Infrastructure Metrics Bar */}
+          <div className="mt-14 max-w-4xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="p-4 rounded-2xl bg-white border border-black/[0.08] text-center shadow-xs">
+              <span className="block text-xs font-medium text-[#737373]">Cloud Infrastructure</span>
+              <span className="block text-base font-bold text-[#171717] mt-1">Oracle Cloud ARM</span>
+              <span className="block text-[11px] text-[#22c55e] font-semibold">2 OCPU · 12 GB RAM</span>
             </div>
-          ))}
+            <div className="p-4 rounded-2xl bg-white border border-black/[0.08] text-center shadow-xs">
+              <span className="block text-xs font-medium text-[#737373]">Reverse Proxy</span>
+              <span className="block text-base font-bold text-[#171717] mt-1">Traefik v3.7</span>
+              <span className="block text-[11px] text-[#22c55e] font-semibold">Auto SSL Let&apos;s Encrypt</span>
+            </div>
+            <div className="p-4 rounded-2xl bg-white border border-black/[0.08] text-center shadow-xs">
+              <span className="block text-xs font-medium text-[#737373]">DNS Routing</span>
+              <span className="block text-base font-bold text-[#171717] mt-1">ThaiD.online</span>
+              <span className="block text-[11px] text-[#22c55e] font-semibold">Wildcard Multi-Domain</span>
+            </div>
+            <div className="p-4 rounded-2xl bg-white border border-black/[0.08] text-center shadow-xs">
+              <span className="block text-xs font-medium text-[#737373]">Container Engine</span>
+              <span className="block text-base font-bold text-[#171717] mt-1">Coolify v4</span>
+              <span className="block text-[11px] text-[#22c55e] font-semibold">8 Services Isolated</span>
+            </div>
+          </div>
+
         </div>
       </section>
 
       {/* ======================================================== */}
-      {/* 4. CLOUD INFRASTRUCTURE & SECURITY SPECIFICATION        */}
+      {/* 4. FOOTER                                                */}
       {/* ======================================================== */}
-      <section id="cloud-infra" className="py-14 sm:py-20 border-t border-[#2b313b] bg-[#111114]">
-        <div className="max-w-[1400px] w-full mx-auto px-4 sm:px-6">
-          <div className="max-w-2xl mb-10">
-            <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0569ff] uppercase tracking-wider mb-1">
-              <span className="material-symbols-outlined text-[15px]">dns</span>
-              <span>ENTERPRISE ARCHITECTURE</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-              โครงสร้างระบบ Cloud มาตรฐานความปลอดภัยสูง
-            </h2>
-            <p className="mt-2 text-xs sm:text-sm text-stone-400">
-              ทุก Subdomain ทำงานแยก Container อิสระ ไม่กระทบซึ่งกันและกัน มี Proxy คอยจัดการ Traffic และต่ออายุ SSL ใบรับรองความปลอดภัยตลอดชีพ
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-6 rounded-3xl bg-[#1f252e] border border-[#2b313b]">
-              <div className="w-10 h-10 rounded-xl bg-[#0569ff]/15 text-[#0569ff] flex items-center justify-center mb-4">
-                <span className="material-symbols-outlined text-[20px]">security</span>
-              </div>
-              <h4 className="font-bold text-base text-white">Automatic Let&apos;s Encrypt SSL</h4>
-              <p className="mt-2 text-xs text-stone-400 leading-relaxed">
-                ทุกการเชื่อมต่อผ่านพอร์ต 443 ถูกเข้ารหัสด้วยใบรับรอง TLS ล่าสุด ปลอดภัยจากการดักจับข้อมูล รองรับ HTTP/2 และ HTTP/3
-              </p>
-            </div>
-
-            <div className="p-6 rounded-3xl bg-[#1f252e] border border-[#2b313b]">
-              <div className="w-10 h-10 rounded-xl bg-[#0569ff]/15 text-[#0569ff] flex items-center justify-center mb-4">
-                <span className="material-symbols-outlined text-[20px]">memory</span>
-              </div>
-              <h4 className="font-bold text-base text-white">Oracle Cloud Ampere ARM A1</h4>
-              <p className="mt-2 text-xs text-stone-400 leading-relaxed">
-                ประมวลผลด้วย CPU สถาปัตยกรรม ARM 2 OCPU และ RAM 12 GB ช่วยให้รันโมเดลภาษาและการเรนเดอร์วิดีโอได้อย่างรวดเร็ว
-              </p>
-            </div>
-
-            <div className="p-6 rounded-3xl bg-[#1f252e] border border-[#2b313b]">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center mb-4">
-                <span className="material-symbols-outlined text-[20px]">sync</span>
-              </div>
-              <h4 className="font-bold text-base text-white">Zero-Downtime Deployment</h4>
-              <p className="mt-2 text-xs text-stone-400 leading-relaxed">
-                อัปเดตโค้ดใหม่ผ่าน GitHub Webhook และ Coolify อัตโนมัติด้วย Rolling Updates เว็บไซต์ทำงานต่อเนื่องโดยไม่มีจังหวะสะดุด
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ======================================================== */}
-      {/* 5. FOOTER (FASTWORK MINIMALIST STUDIO FOOTER)            */}
-      {/* ======================================================== */}
-      <footer className="mt-auto border-t border-[#2b313b] bg-[#111114] py-10 text-xs text-stone-400">
-        <div className="max-w-[1400px] w-full mx-auto px-4 sm:px-6">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pb-6 border-b border-[#2b313b]">
-            <div className="flex items-center gap-2">
-              <div className="w-5 h-5 rounded-md bg-[#0569ff] flex items-center justify-center text-white">
-                <span className="material-symbols-outlined text-[13px]">hub</span>
-              </div>
-              <span className="font-bold text-sm text-white">ThaiD.online</span>
-              <span className="text-[11px] text-stone-500">· Multi-SaaS AI Ecosystem</span>
-            </div>
-            <div className="flex flex-wrap items-center gap-4 text-xs">
-              <a href="https://novel.thaid.online" className="hover:text-white transition-colors">
-                novel.thaid.online
-              </a>
-              <a href="https://social.thaid.online" className="hover:text-white transition-colors">
-                social.thaid.online
-              </a>
-              <a href="https://sticker.thaid.online" className="hover:text-white transition-colors">
-                sticker.thaid.online
-              </a>
-              <a href="https://clip.thaid.online" className="hover:text-white transition-colors">
-                clip.thaid.online
-              </a>
-              <a href="https://chat.thaid.online" className="hover:text-white transition-colors">
-                chat.thaid.online
-              </a>
-              <a href="https://mockup.thaid.online" className="hover:text-white transition-colors">
-                mockup.thaid.online
-              </a>
-            </div>
-          </div>
-
-          <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-stone-500">
-            <p>© 2026 ThaiD.online. All rights reserved. สงวนลิขสิทธิ์ระบบและเครื่องหมายบริการ</p>
-            <p className="flex items-center gap-2">
-              <span>Host: Node 2 (Oracle Cloud 12GB ARM)</span>
-              <span>·</span>
-              <span>Protected with SSL/TLS</span>
-            </p>
+      <footer className="py-10 px-4 border-t border-black/[0.06] bg-white text-center text-xs text-[#737373]">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p>© 2026 ThaiD.online — All rights reserved.</p>
+          <div className="flex items-center gap-4">
+            <a href="https://thaid.online" className="hover:text-[#171717] transition-colors">Hub</a>
+            <a href="https://mockup.thaid.online" className="hover:text-[#171717] transition-colors">Mockup AI</a>
+            <a href="https://novel.thaid.online" className="hover:text-[#171717] transition-colors">Novel AI</a>
+            <a href="https://social.thaid.online" className="hover:text-[#171717] transition-colors">Social AI</a>
+            <a href="https://clip.thaid.online" className="hover:text-[#171717] transition-colors">Clip AI</a>
+            <a href="https://sticker.thaid.online" className="hover:text-[#171717] transition-colors">Sticker AI</a>
+            <a href="https://chat.thaid.online" className="hover:text-[#171717] transition-colors">Chat AI</a>
+            <a href="https://vault.thaid.online" className="hover:text-[#171717] transition-colors">Vault</a>
           </div>
         </div>
       </footer>
+
     </div>
   );
 }

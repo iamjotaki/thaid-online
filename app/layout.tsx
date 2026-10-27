@@ -2,12 +2,13 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "ThaiD.online — Luxury AI Ecosystem สำหรับคนไทย",
+  title: "ThaiD.online — Show the world what AI can do",
   description:
     "ศูนย์รวมเครื่องมือ AI อัจฉริยะมาตรฐานระดับโลก ออกแบบมาเพื่อคนไทยโดยเฉพาะ: ReadAWrite Pro Studio แต่งนิยายอัตโนมัติ, ระบบสร้างคอนเทนต์ & วิดีโอโพสต์ Facebook, และระบบเจนสติกเกอร์ไลน์",
   keywords: [
     "ThaiD",
     "ThaiD.online",
+    "Fastwork AI",
     "ReadAWrite AI",
     "แต่งนิยาย AI",
     "Auto Post Facebook",
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "ThaiD Platform Team" }],
   openGraph: {
-    title: "ThaiD.online — Luxury AI Ecosystem สำหรับคนไทย",
+    title: "ThaiD.online — Show the world what AI can do",
     description:
       "ศูนย์รวมเครื่องมือ AI อัจฉริยะมาตรฐานระดับโลก แต่งนิยาย สร้างคอนเทนต์โซเชียล สติกเกอร์ไลน์ ในแพลตฟอร์มเดียว",
     url: "https://thaid.online",
@@ -32,7 +33,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#131922",
+  themeColor: "#ffffff",
 };
 
 export default function RootLayout({
@@ -41,7 +42,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="th" className="scroll-smooth dark bg-[#131922] text-[#fafafa]">
+    <html lang="th" className="scroll-smooth bg-white text-[#171717]">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
@@ -49,16 +50,17 @@ export default function RootLayout({
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
+        {/* Google Sans, Noto Sans Thai, Charm (Calligraphy), Plus Jakarta Sans */}
         <link
-          href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Noto+Sans+Thai:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Google+Sans:wght@400;500;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
           rel="stylesheet"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
           rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
         />
       </head>
-      <body className="antialiased selection:bg-[#0074e2]/30 selection:text-white custom-scrollbar bg-[#141414] text-[#f5f5f7]">
+      <body className="min-h-screen bg-white text-[#171717] antialiased selection:bg-[#0569ff]/15 selection:text-[#0569ff]">
         {children}
       </body>
     </html>
