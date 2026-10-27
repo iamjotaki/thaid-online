@@ -471,38 +471,36 @@ export default function HomePage() {
     <div className="min-h-screen bg-white text-[#171717] font-sans antialiased overflow-x-hidden selection:bg-[#0569ff]/15 selection:text-[#0569ff]">
       
       {/* ======================================================== */}
-      {/* 1. FLOATING PILL NAVBAR                                  */}
+      {/* 1. FASTWORK FLOATING TOP NAVBAR                          */}
       {/* ======================================================== */}
       <header className="fixed top-0 inset-x-0 z-50 pt-4 px-4 sm:px-6 pointer-events-none">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+        <div className="max-w-5xl mx-auto flex items-center justify-between pointer-events-auto bg-white/70 backdrop-blur-xl border border-black/[0.08] shadow-[0_4px_24px_rgba(0,0,0,0.04)] rounded-full px-5 py-2.5">
           
-          <div className="w-24 hidden sm:block" />
+          {/* Left: Brand Logo + ThaiD */}
+          <a href="https://thaid.online" className="flex items-center gap-2.5 text-[#2b313b] hover:opacity-85 transition-opacity">
+            <svg width="24" height="24" viewBox="0 0 46 46" fill="currentColor" className="text-[#2b313b]" aria-hidden="true">
+              <path d="m41.1140999 29.3425-6.746-5.2124.1342 1.008c.0644.4101.0967.8246.0966 1.2398-.0008.3604-.0241.7205-.0698 1.078l4.9911 3.8594c.4634.33.7875.8218.9089 1.3793.1214.5574.0313 1.1402-.2527 1.6344-.2839.4942-.7413.8642-1.2825 1.0375-.5413.1734-1.1275.1376-1.6438-.1002l-7.5134-3.121c1.0175-.5754 1.8645-1.4123 2.4539-2.4249.5894-1.0125.9001-2.1643.9003-3.3372-.0013-.4213-.0409-.8417-.1181-1.2559l-1.712-12.93641c-.1505-1.15896-.7157-2.22333-1.5901-2.99448-.8745-.77116-1.9984-1.19641-3.1621-1.19641s-2.2876.42525-3.1621 1.19641c-.8744.77115-1.4396 1.83552-1.5901 2.99448l-1.1217 8.47341.7997-.6199c.3227-.2604.6654-.4947 1.025-.7007.3055-.1763.6208-.3347.9445-.4744l.8319-6.26875c.0549-.56645.3178-1.0921.7374-1.47455.4197-.38244.966-.5943 1.5327-.5943s1.113.21186 1.5327.5943c.4196.38245.6825.9081.7374 1.47455l1.0734 8.08525c-1.1992-.707-2.5902-1.0152-3.9743-.8806-1.3841.1345-2.6904.705-3.7323 1.6299l-10.25582 7.9235c-.92682.7097-1.564422 1.7342-1.7934863 2.8819-.2290637 1.1477-.0338963 2.3399.5489873 3.3535.582889 1.0136 1.513539 1.7791 2.617799 2.1534 1.10426.3742 2.30645.3315 3.38161-.1202l7.86221-3.2611-.9338-.3881c-.3828-.1523-.7541-.3324-1.1109-.539-.3067-.1769-.6008-.375-.8801-.5929l-5.82829 2.4202c-.51638.2378-1.10256.2736-1.64381.1002-.54124-.1733-.9986-.5433-1.28255-1.0375s-.37405-1.077-.25268-1.6344c.12138-.5575.4455-1.0493.90893-1.3793l6.44005-4.9806v.0485c.0011 1.3497.41295 2.6667 1.18025 3.7746.7674 1.1079 1.8536 1.9538 3.1131 2.4241l12.1556 5.0291c1.0747.4481 2.275.4882 3.377.1128s2.0303-1.1406 2.6118-2.153c.5815-1.0123.7764-2.2025.5484-3.3486-.228-1.146-.8634-2.1696-1.7876-2.8797zm-18.697607-2.9754c.001007-.8079.240507-1.5973.688207-2.2685.4476-.6712 1.0833-1.194 1.8267-1.5024s1.5612-.3886 2.3499-.2303c.7888.1582 1.5131.5478 2.0815 1.1194s.9553 1.2996 1.1118 2.0921c.1566.7924.0757 1.6136-.2324 2.3599-.308.7462-.8294 1.384-1.4983 1.8327-.6688.4487-1.4551.6882-2.2595.6882-.5346 0-1.064-.1058-1.5579-.3115s-.9426-.5071-1.3204-.8871c-.3779-.38-.6774-.831-.8815-1.3273-.2041-.4964-.3088-1.0282-.308107-1.5652z" />
+            </svg>
+            <span className="font-bold text-xl tracking-tight text-[#2b313b]">
+              ThaiD
+            </span>
+          </a>
 
-          {/* Centered Floating Fastwork-Style Brand Pill */}
-          <div className="pointer-events-auto inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-black/[0.08] bg-white/85 backdrop-blur-xl shadow-xs hover:shadow-md transition-all">
-            <a href="https://thaid.online" className="flex items-center gap-2 text-[#171717]">
-              <div className="w-5 h-5 rounded-full bg-[#171717] flex items-center justify-center text-white text-[11px] font-bold">
-                ✦
-              </div>
-              <span className="font-bold text-sm tracking-tight text-[#171717]">
-                ThaiD<span className="text-[#0569ff]">.online</span>
-              </span>
-            </a>
-          </div>
-
-          {/* Right Action Pills */}
-          <div className="pointer-events-auto flex items-center gap-2">
-            <a
-              href="https://vault.thaid.online"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-black/[0.08] bg-white/85 backdrop-blur-xl text-xs font-semibold text-[#171717] hover:bg-black/5 transition-colors shadow-xs"
+          {/* Right: Language Switcher (No Vault button) */}
+          <div className="flex items-center">
+            <button
+              type="button"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-black/[0.08] bg-white/80 hover:bg-white text-xs font-semibold text-[#2b313b] transition-colors shadow-2xs cursor-pointer"
             >
-              <span className="material-symbols-outlined text-[15px] text-[#0569ff]">lock</span>
-              <span>Vault</span>
-            </a>
-            <div className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full border border-black/[0.08] bg-white/85 backdrop-blur-xl text-xs font-medium text-[#171717]">
-              <span className="text-[13px]">🌐</span>
-              <span className="font-semibold">TH</span>
-            </div>
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.8" className="text-[#2b313b]">
+                <circle cx="12" cy="12" r="8.5" />
+                <path d="M3.8 12h16.4M12 3.5c2.3 2.3 3.5 5.1 3.5 8.5S14.3 18.2 12 20.5M12 3.5C9.7 5.8 8.5 8.6 8.5 12s1.2 6.2 3.5 8.5" />
+              </svg>
+              <span>TH</span>
+              <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.2">
+                <path d="m4.5 6 3.5 3.5L11.5 6" />
+              </svg>
+            </button>
           </div>
 
         </div>
@@ -596,7 +594,7 @@ export default function HomePage() {
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-black/[0.08] bg-white/90 shadow-xs mb-6 backdrop-blur-md">
               <span className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse" />
               <span className="text-xs font-bold text-[#171717] tracking-tight">
-                ThaiD.online Studio
+                ThaiD Studio
               </span>
               <span className="text-[11px] text-[#737373] border-l border-black/[0.08] pl-2 font-medium">
                 SaaS Ecosystem 2026
