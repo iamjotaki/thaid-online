@@ -6,7 +6,7 @@ import { signSSOToken, getCookieDomain, ThaiDUser } from "@/lib/sso";
  * Handles the redirect from Google OAuth consent screen with authorization code.
  */
 export async function GET(req: NextRequest) {
-  const host = req.headers.get("host") || "thaid.online";
+  const host = req.headers.get("x-forwarded-host") || req.headers.get("host") || "thaid.online";
   const domain = getCookieDomain(host);
   const searchParams = req.nextUrl.searchParams;
 

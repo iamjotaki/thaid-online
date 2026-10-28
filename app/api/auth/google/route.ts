@@ -14,7 +14,7 @@ export async function OPTIONS(req: NextRequest) {
  * Initiates the Google OAuth 2.0 authorization redirect.
  */
 export async function GET(req: NextRequest) {
-  const host = req.headers.get("host") || "thaid.online";
+  const host = req.headers.get("x-forwarded-host") || req.headers.get("host") || "thaid.online";
   const searchParams = req.nextUrl.searchParams;
   const returnTo = searchParams.get("from") || `https://${host}`;
 

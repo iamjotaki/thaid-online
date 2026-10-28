@@ -57,23 +57,43 @@ export default function HomePage() {
   const profileMenuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    // 1. Read wildcard cookie thaid_user from .thaid.online (Authority Source)
-    let currentUser = null;
-    const match = document.cookie.match(/(^|;\s*)thaid_user=([^;]*)/);
-    if (match && match[2]) {
+    // 1. Bulletproof parser for wildcard cookie thaid_user from .thaid.online
+    let currentUser: any = null;
+    const parseCookie = (name: string) => {
+      if (typeof document === 'undefined' || !document.cookie) return null;
+      const prefix = name + '=';
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        let ck = cookies[i].trim();
+        if (ck.indexOf(prefix) === 0) {
+          let val = ck.substring(prefix.length);
+          try {
+            val = decodeURIComponent(val);
+            if (typeof val === 'string' && val.startsWith('%')) val = decodeURIComponent(val);
+          } catch (e) {}
+          return val;
+        }
+      }
+      return null;
+    };
+
+    const cookieVal = parseCookie('thaid_user');
+    if (cookieVal) {
       try {
-        let raw = decodeURIComponent(match[2]);
-        if (raw.startsWith("%")) raw = decodeURIComponent(raw);
-        currentUser = JSON.parse(raw);
+        currentUser = JSON.parse(cookieVal);
         setUser(currentUser);
         localStorage.setItem("thaid_user", JSON.stringify(currentUser));
       } catch (e) {}
-    } else {
-      // If wildcard cookie is absent or expired, clear local cache for Global Sign-Out
-      const hasSessionCookie = document.cookie.includes("thaid_session=");
-      if (!hasSessionCookie) {
-        localStorage.removeItem("thaid_user");
-        setUser(null);
+    }
+
+    // Fallback to localStorage if cookie not yet read
+    if (!currentUser) {
+      const rawLocal = localStorage.getItem("thaid_user");
+      if (rawLocal) {
+        try {
+          currentUser = JSON.parse(rawLocal);
+          setUser(currentUser);
+        } catch (e) {}
       }
     }
 
@@ -84,6 +104,13 @@ export default function HomePage() {
         if (d?.ok && d?.authenticated && d?.user) {
           setUser(d.user);
           localStorage.setItem("thaid_user", JSON.stringify(d.user));
+          document.cookie = `thaid_user=${encodeURIComponent(JSON.stringify(d.user))}; Path=/; Domain=.thaid.online; Max-Age=2592000; SameSite=lax; Secure`;
+        } else if (d?.ok && d?.authenticated === false) {
+          const hasSessionCookie = document.cookie.includes("thaid_session=");
+          if (!hasSessionCookie) {
+            localStorage.removeItem("thaid_user");
+            setUser(null);
+          }
         }
       })
       .catch(() => {});
@@ -122,12 +149,24 @@ export default function HomePage() {
   };
 
   const handleLogin = async (name: string, email: string, avatar: string) => {
-    const u = { name, email, avatar };
+    const isSuperAdmin = email === "iamjotaki@gmail.com";
+    const ALL_SERVICES = ["novel", "social", "vault", "sticker", "clip", "chat", "mockup"];
+    const u = {
+      name: isSuperAdmin ? "Jotaki" : name,
+      email,
+      avatar,
+      role: isSuperAdmin ? "superadmin" : "member",
+      plan: isSuperAdmin ? "Owner & Super Admin (All Access)" : "Free Member",
+      credits: isSuperAdmin ? 999999 : 0,
+      subscriptions: isSuperAdmin ? ALL_SERVICES : [],
+    };
     setUser(u);
     localStorage.setItem("thaid_user", JSON.stringify(u));
+    // Write wildcard cookie for all *.thaid.online instantly on client side
+    document.cookie = `thaid_user=${encodeURIComponent(JSON.stringify(u))}; Path=/; Domain=.thaid.online; Max-Age=2592000; SameSite=lax; Secure`;
     setAuthModalOpen(false);
 
-    // Call SSO central login API to set Domain=.thaid.online wildcard cookies
+    // Call SSO central login API to set HttpOnly session cookie
     try {
       await fetch("/api/auth/login", {
         method: "POST",

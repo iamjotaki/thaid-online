@@ -69,8 +69,15 @@ export function verifySSOToken(token: string, secret = DEFAULT_SECRET): ThaiDUse
 }
 
 export function getCookieDomain(host?: string | null): string | undefined {
+  // If running in production or host is thaid.online, always return wildcard domain
+  if (process.env.NODE_ENV === "production") {
+    return ".thaid.online";
+  }
   if (!host) return ".thaid.online";
-  const clean = host.split(":")[0];
+  const clean = host.split(":")[0].toLowerCase();
+  if (clean.endsWith("thaid.online")) {
+    return ".thaid.online";
+  }
   if (clean.includes("localhost") || clean.includes("127.0.0.1") || /^\d+\.\d+\.\d+\.\d+$/.test(clean)) {
     return undefined;
   }
