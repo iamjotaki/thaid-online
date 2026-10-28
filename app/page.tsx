@@ -55,12 +55,38 @@ export default function HomePage() {
   const profileMenuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const saved = localStorage.getItem("thaid_user");
-    if (saved) {
+    // 1. Read wildcard cookie thaid_user from .thaid.online
+    let currentUser = null;
+    const match = document.cookie.match(/(^|;\s*)thaid_user=([^;]*)/);
+    if (match) {
       try {
-        setUser(JSON.parse(saved));
+        currentUser = JSON.parse(decodeURIComponent(match[2]));
+        setUser(currentUser);
+        localStorage.setItem("thaid_user", JSON.stringify(currentUser));
       } catch (e) {}
     }
+
+    // 2. Fallback to localStorage
+    if (!currentUser) {
+      const saved = localStorage.getItem("thaid_user");
+      if (saved) {
+        try {
+          currentUser = JSON.parse(saved);
+          setUser(currentUser);
+        } catch (e) {}
+      }
+    }
+
+    // 3. Verify session in background with SSO Authority
+    fetch("/api/auth/me", { credentials: "include" })
+      .then((r) => r.json())
+      .then((d) => {
+        if (d?.ok && d?.authenticated && d?.user) {
+          setUser(d.user);
+          localStorage.setItem("thaid_user", JSON.stringify(d.user));
+        }
+      })
+      .catch(() => {});
 
     const handleClickOutside = (e: MouseEvent) => {
       if (saasMenuRef.current && !saasMenuRef.current.contains(e.target as Node)) {
@@ -74,17 +100,39 @@ export default function HomePage() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleLogin = (name: string, email: string, avatar: string) => {
+  const handleLogin = async (name: string, email: string, avatar: string) => {
     const u = { name, email, avatar };
     setUser(u);
     localStorage.setItem("thaid_user", JSON.stringify(u));
     setAuthModalOpen(false);
+
+    // Call SSO central login API to set Domain=.thaid.online wildcard cookies
+    try {
+      await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ name, email, avatar }),
+      });
+    } catch (err) {
+      console.warn("SSO Cookie sync error:", err);
+    }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     setUser(null);
     localStorage.removeItem("thaid_user");
     setProfileMenuOpen(false);
+
+    // Call SSO logout API to clear Domain=.thaid.online cookies
+    try {
+      await fetch("/api/auth/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+    } catch (err) {
+      console.warn("SSO Logout error:", err);
+    }
   };
 
   const saasServices = [
