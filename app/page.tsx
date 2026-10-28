@@ -759,26 +759,111 @@ export default function HomePage() {
                         <div className="text-[10px] text-stone-400 truncate">{user.email}</div>
                       </div>
                     </div>
-                    <div className="py-2 text-[11px] space-y-1">
-                      <div className="flex items-center justify-between px-2 py-1 rounded-lg bg-stone-50">
-                        <span className="text-stone-500">สถานะสมาชิก:</span>
-                        <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-bold text-[10px]">Active Pro</span>
+                    <div className="py-2 text-[11px] space-y-2">
+                      {/* Subscription Status Badge */}
+                      <div className="flex items-center justify-between px-2.5 py-1.5 rounded-xl bg-stone-50 border border-black/[0.04]">
+                        <span className="text-stone-500 font-medium">สถานะสมาชิก:</span>
+                        {user.role === 'superadmin' || user.email === 'iamjotaki@gmail.com' ? (
+                          <span className="px-2 py-0.5 rounded-full bg-purple-100 text-purple-800 font-bold text-[10px] border border-purple-200/50">
+                            👑 Super Admin (All Access)
+                          </span>
+                        ) : (user.subscriptions && user.subscriptions.length > 0) ? (
+                          <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold text-[10px] border border-emerald-200/50">
+                            Active ({user.subscriptions.length} แอป)
+                          </span>
+                        ) : (
+                          <span className="px-2 py-0.5 rounded-full bg-stone-200/80 text-stone-600 font-bold text-[10px]">
+                            Free Member (ยังไม่มีแพ็กเกจ)
+                          </span>
+                        )}
                       </div>
-                      <a
-                        href="https://novel.thaid.online"
-                        className="flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-stone-50 text-stone-700 text-xs transition-colors"
-                      >
-                        <span>ไปที่ Novel Studio</span>
-                        <span className="text-[10px] text-stone-400">→</span>
-                      </a>
-                      <a
-                        href="https://social.thaid.online/dashboard"
-                        className="flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-stone-50 text-stone-700 text-xs transition-colors"
-                      >
-                        <span>ไปที่ Social Dashboard</span>
-                        <span className="text-[10px] text-stone-400">→</span>
-                      </a>
-                      
+
+                      {/* Super Admin Center link */}
+                      {(user.role === 'superadmin' || user.email === 'iamjotaki@gmail.com') && (
+                        <a
+                          href="https://thaid.online/admin"
+                          className="flex items-center justify-between px-2.5 py-1.5 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-900 font-semibold text-xs transition-colors border border-purple-200/60"
+                        >
+                          <span className="flex items-center gap-1.5">
+                            <span>⚙️</span>
+                            <span>ศูนย์กลางแอดมิน (Central Admin)</span>
+                          </span>
+                          <span className="text-[10px] text-purple-600">→</span>
+                        </a>
+                      )}
+
+                      {/* Subscribed Apps Section */}
+                      <div className="space-y-1">
+                        <div className="px-1 text-[10px] uppercase font-bold text-stone-400 tracking-wider">
+                          บริการที่คุณสมัครใช้งานแล้ว
+                        </div>
+                        {user.role === 'superadmin' || user.email === 'iamjotaki@gmail.com' ? (
+                          [
+                            { slug: 'novel', name: 'Novel Studio', url: 'https://novel.thaid.online' },
+                            { slug: 'social', name: 'Social Poster', url: 'https://social.thaid.online/dashboard' },
+                            { slug: 'vault', name: 'Vault Storage', url: 'https://vault.thaid.online' },
+                            { slug: 'sticker', name: 'Sticker Studio', url: 'https://sticker.thaid.online' },
+                            { slug: 'clip', name: 'Clip AI Shorts', url: 'https://clip.thaid.online' },
+                            { slug: 'chat', name: 'Smart Chat AI', url: 'https://chat.thaid.online' },
+                            { slug: 'mockup', name: 'Mockup Studio', url: 'https://mockup.thaid.online' },
+                          ].map((app) => (
+                            <a
+                              key={app.slug}
+                              href={app.url}
+                              className="flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-stone-50 text-stone-700 text-xs transition-colors"
+                            >
+                              <span className="flex items-center gap-1.5">
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                <span>{app.name}</span>
+                              </span>
+                              <span className="text-[10px] text-stone-400">→</span>
+                            </a>
+                          ))
+                        ) : (user.subscriptions && user.subscriptions.length > 0) ? (
+                          [
+                            { slug: 'novel', name: 'Novel Studio', url: 'https://novel.thaid.online' },
+                            { slug: 'social', name: 'Social Poster', url: 'https://social.thaid.online/dashboard' },
+                            { slug: 'vault', name: 'Vault Storage', url: 'https://vault.thaid.online' },
+                            { slug: 'sticker', name: 'Sticker Studio', url: 'https://sticker.thaid.online' },
+                            { slug: 'clip', name: 'Clip AI Shorts', url: 'https://clip.thaid.online' },
+                            { slug: 'chat', name: 'Smart Chat AI', url: 'https://chat.thaid.online' },
+                            { slug: 'mockup', name: 'Mockup Studio', url: 'https://mockup.thaid.online' },
+                          ].filter((app) => user.subscriptions?.includes(app.slug)).map((app) => (
+                            <a
+                              key={app.slug}
+                              href={app.url}
+                              className="flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-stone-50 text-stone-700 text-xs transition-colors"
+                            >
+                              <span className="flex items-center gap-1.5">
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                <span>{app.name}</span>
+                              </span>
+                              <span className="text-[10px] text-stone-400">→</span>
+                            </a>
+                          ))
+                        ) : (
+                          <div className="p-2.5 rounded-xl bg-amber-50 border border-amber-200/60 text-left space-y-1.5">
+                            <div className="text-[11px] font-bold text-amber-900 flex items-center gap-1">
+                              <span>⚠️</span>
+                              <span>ยังไม่มีบริการที่สมัครสมาชิก</span>
+                            </div>
+                            <p className="text-[10px] text-amber-700 leading-snug">
+                              กรุณาสมัครสมาชิกรายเดือน/รายปี หรือซื้อเครดิต เพื่อเข้าใช้งานแอปที่คุณต้องการ
+                            </p>
+                            <a
+                              href="#pricing"
+                              onClick={() => {
+                                setProfileMenuOpen(false);
+                                const el = document.getElementById('pricing');
+                                if (el) el.scrollIntoView({ behavior: 'smooth' });
+                              }}
+                              className="inline-flex items-center gap-1 text-[11px] font-bold text-[#0569ff] hover:underline"
+                            >
+                              ดูแพ็กเกจและราคา →
+                            </a>
+                          </div>
+                        )}
+                      </div>
                     </div>
                     <button
                       type="button"
