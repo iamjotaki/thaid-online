@@ -933,7 +933,9 @@ export default function CentralizedAdminPage() {
             }`}
           >
             <span>💻 1. คอนเทนเนอร์ & บริการ</span>
-            <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-white/20 text-white font-mono">
+            <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-mono ${
+              activeTab === "overview" ? "bg-white/20 text-white" : "bg-stone-100 text-stone-700"
+            }`}>
               8
             </span>
           </button>
