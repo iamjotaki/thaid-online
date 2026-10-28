@@ -55,25 +55,21 @@ export default function HomePage() {
   const profileMenuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    // 1. Read wildcard cookie thaid_user from .thaid.online
+    // 1. Read wildcard cookie thaid_user from .thaid.online (Authority Source)
     let currentUser = null;
     const match = document.cookie.match(/(^|;\s*)thaid_user=([^;]*)/);
-    if (match) {
+    if (match && match[2]) {
       try {
         currentUser = JSON.parse(decodeURIComponent(match[2]));
         setUser(currentUser);
         localStorage.setItem("thaid_user", JSON.stringify(currentUser));
       } catch (e) {}
-    }
-
-    // 2. Fallback to localStorage
-    if (!currentUser) {
-      const saved = localStorage.getItem("thaid_user");
-      if (saved) {
-        try {
-          currentUser = JSON.parse(saved);
-          setUser(currentUser);
-        } catch (e) {}
+    } else {
+      // If wildcard cookie is absent or expired, clear local cache for Global Sign-Out
+      const hasSessionCookie = document.cookie.includes("thaid_session=");
+      if (!hasSessionCookie) {
+        localStorage.removeItem("thaid_user");
+        setUser(null);
       }
     }
 
