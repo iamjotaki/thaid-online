@@ -51,7 +51,7 @@ export default function HomePage() {
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [cookieConsentOpen, setCookieConsentOpen] = useState(false);
   const [cookiePolicyModalOpen, setCookiePolicyModalOpen] = useState(false);
-  const [user, setUser] = useState<{ name: string; email: string; avatar: string } | null>(null);
+  const [user, setUser] = useState<{ name: string; email: string; avatar: string; role?: string; plan?: string; credits?: number; subscriptions?: string[] } | null>(null);
 
   const saasMenuRef = useRef<HTMLDivElement | null>(null);
   const profileMenuRef = useRef<HTMLDivElement | null>(null);

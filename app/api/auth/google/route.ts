@@ -107,21 +107,20 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Determine user role and plan
-    const isAdmin =
-      email === "boss@thaid.online" ||
-      email === "admin@thaid.online" ||
-      email === "iamjotaki@gmail.com" ||
-      email.includes("admin");
+    const isSuperAdmin = email === "iamjotaki@gmail.com";
+    const isAdmin = isSuperAdmin || email === "boss@thaid.online" || email === "admin@thaid.online" || email.includes("admin");
+
+    const ALL_SERVICES = ["novel", "social", "vault", "sticker", "clip", "chat", "mockup"];
 
     const user: ThaiDUser = {
-      id: "g_" + googleSub,
-      name,
+      id: isSuperAdmin ? "u_jotaki_root" : "g_" + googleSub,
+      name: isSuperAdmin ? "Jotaki" : name,
       email,
-      avatar,
-      role: isAdmin ? "admin" : "member",
-      plan: isAdmin ? "VIP Enterprise" : "Free Trial",
-      credits: isAdmin ? 9999 : 50,
+      avatar: avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(name)}`,
+      role: isSuperAdmin ? "superadmin" : (isAdmin ? "admin" : "member"),
+      plan: isSuperAdmin ? "Owner & Super Admin (All Access)" : (isAdmin ? "VIP Enterprise" : "Free Member"),
+      credits: isSuperAdmin ? 999999 : (isAdmin ? 9999 : 0),
+      subscriptions: isSuperAdmin || isAdmin ? ALL_SERVICES : [],
       createdAt: Date.now(),
     };
 

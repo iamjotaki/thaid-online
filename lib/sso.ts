@@ -8,6 +8,7 @@ export interface ThaiDUser {
   role?: string;
   plan?: string;
   credits?: number;
+  subscriptions?: string[]; // e.g. ['novel', 'social', 'vault', 'sticker', 'clip', 'chat', 'mockup']
   createdAt?: number;
 }
 

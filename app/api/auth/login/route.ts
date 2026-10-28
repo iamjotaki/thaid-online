@@ -25,27 +25,31 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Standard preset or custom user mapping
+    const isSuperAdmin = email === "iamjotaki@gmail.com";
+    const isAdmin = isSuperAdmin || email === "admin@thaid.online" || email.includes("admin");
+
+    const ALL_SERVICES = ["novel", "social", "vault", "sticker", "clip", "chat", "mockup"];
+
     let name = body.name || email.split("@")[0];
     let avatar = body.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(name)}`;
-    let role = body.role || (email.includes("admin") || email === "iamjotaki@gmail.com" ? "admin" : "member");
-    let plan = body.plan || (role === "admin" ? "VIP Enterprise" : "Free Trial");
+    let role = isSuperAdmin ? "superadmin" : (isAdmin ? "admin" : "member");
+    let plan = isSuperAdmin ? "Owner & Super Admin (All Access)" : (isAdmin ? "VIP Enterprise" : "Free Member");
+    let credits = isSuperAdmin ? 999999 : (isAdmin ? 9999 : 0);
+    let subscriptions = isSuperAdmin || isAdmin ? ALL_SERVICES : (body.subscriptions || []);
 
-    if (email === "admin@thaid.online" || email === "admin@lfcautonews.com" || email === "boss@fanpage.com") {
-      name = "Admin Boss";
-      role = "admin";
-      plan = "VIP Enterprise";
-      avatar = "https://api.dicebear.com/7.x/bottts/svg?seed=AdminBoss";
+    if (isSuperAdmin) {
+      name = "Jotaki";
     }
 
     const user: ThaiDUser = {
-      id: "u_" + Math.random().toString(36).substring(2, 10),
+      id: isSuperAdmin ? "u_jotaki_root" : "u_" + Math.random().toString(36).substring(2, 10),
       name,
       email,
       avatar,
       role,
       plan,
-      credits: role === "admin" ? 9999 : 50,
+      credits,
+      subscriptions,
       createdAt: Date.now(),
     };
 
