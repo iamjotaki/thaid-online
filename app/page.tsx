@@ -49,6 +49,8 @@ export default function HomePage() {
   const [saasMenuOpen, setSaasMenuOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [cookieConsentOpen, setCookieConsentOpen] = useState(false);
+  const [cookiePolicyModalOpen, setCookiePolicyModalOpen] = useState(false);
   const [user, setUser] = useState<{ name: string; email: string; avatar: string } | null>(null);
 
   const saasMenuRef = useRef<HTMLDivElement | null>(null);
@@ -86,6 +88,16 @@ export default function HomePage() {
       })
       .catch(() => {});
 
+    // Check Cookie Consent status
+    const consentMatch = document.cookie.match(/(^|;\s*)thaid_cookie_consent=([^;]*)/);
+    const localConsent = typeof window !== "undefined" ? localStorage.getItem("thaid_cookie_consent") : null;
+    let cookieTimer: NodeJS.Timeout | null = null;
+    if (!consentMatch && !localConsent) {
+      cookieTimer = setTimeout(() => {
+        setCookieConsentOpen(true);
+      }, 700);
+    }
+
     const handleClickOutside = (e: MouseEvent) => {
       if (saasMenuRef.current && !saasMenuRef.current.contains(e.target as Node)) {
         setSaasMenuOpen(false);
@@ -95,8 +107,19 @@ export default function HomePage() {
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    return () => {
+      if (cookieTimer) clearTimeout(cookieTimer);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
+
+  const handleAcceptCookies = (type: "all" | "essential") => {
+    setCookieConsentOpen(false);
+    const domain = window.location.hostname.includes("thaid.online") ? ".thaid.online" : "";
+    const domainStr = domain ? `; domain=${domain}` : "";
+    document.cookie = `thaid_cookie_consent=${type}; path=/; max-age=31536000; SameSite=Lax${domainStr}`;
+    localStorage.setItem("thaid_cookie_consent", type);
+  };
 
   const handleLogin = async (name: string, email: string, avatar: string) => {
     const u = { name, email, avatar };
@@ -1139,6 +1162,158 @@ export default function HomePage() {
                 เข้าสู่ระบบด้วยอีเมล
               </button>
             </form>
+          </div>
+        </div>
+      )}
+
+    
+      {/* ======================================================== */}
+      {/* 6. THAID COOKIE CONSENT BANNER (PDPA COMPLIANT)          */}
+      {/* ======================================================== */}
+      {cookieConsentOpen && (
+        <aside
+          role="region"
+          aria-label="การแจ้งเตือนการใช้คุกกี้"
+          className="fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:bottom-6 md:max-w-xl z-50 bg-white/95 backdrop-blur-xl border border-black/[0.08] shadow-[0_20px_50px_rgba(0,0,0,0.18)] rounded-3xl p-5 transition-all duration-500 animate-in fade-in slide-in-from-bottom-6"
+        >
+          <div className="flex items-start gap-3.5">
+            <div className="w-10 h-10 rounded-2xl bg-amber-50 border border-amber-200/60 flex items-center justify-center flex-shrink-0 text-amber-600 shadow-2xs">
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5" />
+                <path d="M8.5 8.5v.01" />
+                <path d="M16 15.5v.01" />
+                <path d="M12 12v.01" />
+                <path d="M11 17v.01" />
+                <path d="M7 13v.01" />
+              </svg>
+            </div>
+            <div className="flex-1 min-w-0 space-y-1.5">
+              <div className="flex items-center justify-between">
+                <h4 className="text-xs font-bold text-[#171717] tracking-tight">การใช้งานคุกกี้บนเว็บไซต์ (Cookie Notice)</h4>
+                <button
+                  type="button"
+                  onClick={() => handleAcceptCookies("essential")}
+                  className="text-stone-400 hover:text-stone-700 p-1 rounded-md text-xs cursor-pointer"
+                  title="ปิดการแจ้งเตือน"
+                >
+                  ✕
+                </button>
+              </div>
+              <p className="text-[11px] leading-relaxed text-stone-500">
+                ThaiD Online ใช้คุกกี้เพื่อพัฒนาประสบการณ์การใช้งาน ความปลอดภัย และเชื่อมต่อระบบบัญชี Single Sign-On (SSO) ข้ามทุกบริการในเครือข่าย คุณสามารถศึกษารายละเอียดได้ที่{" "}
+                <button
+                  type="button"
+                  onClick={() => setCookiePolicyModalOpen(true)}
+                  className="text-[#0569ff] hover:underline font-medium inline-block cursor-pointer"
+                >
+                  นโยบายคุกกี้ (PDPA)
+                </button>
+              </p>
+              <div className="flex flex-wrap items-center gap-2 pt-1.5">
+                <button
+                  type="button"
+                  onClick={() => handleAcceptCookies("all")}
+                  className="px-4 py-2 rounded-full bg-[#171717] hover:bg-black text-white text-xs font-semibold shadow-2xs transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                >
+                  ยอมรับทั้งหมด
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleAcceptCookies("essential")}
+                  className="px-3.5 py-2 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-medium transition-all cursor-pointer"
+                >
+                  เฉพาะที่จำเป็น
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setCookiePolicyModalOpen(true)}
+                  className="px-2.5 py-2 text-stone-500 hover:text-[#171717] text-xs font-medium transition-colors cursor-pointer ml-auto"
+                >
+                  ตั้งค่ารายละเอียด
+                </button>
+              </div>
+            </div>
+          </div>
+        </aside>
+      )}
+
+      {/* ======================================================== */}
+      {/* 7. THAID COOKIE POLICY MODAL (PDPA DETAILS)              */}
+      {/* ======================================================== */}
+      {cookiePolicyModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-black/[0.08] space-y-4 relative animate-in fade-in zoom-in-95 duration-150 max-h-[90vh] overflow-y-auto text-left">
+            <button
+              type="button"
+              onClick={() => setCookiePolicyModalOpen(false)}
+              className="absolute top-4 right-4 text-stone-400 hover:text-[#171717] p-1 cursor-pointer"
+            >
+              ✕
+            </button>
+            <div className="flex items-center gap-2.5 border-b border-black/[0.06] pb-3">
+              <div className="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold text-sm">
+                🍪
+              </div>
+              <div>
+                <h3 className="text-sm font-bold text-[#171717]">นโยบายการใช้งานคุกกี้ (Cookie & Privacy Policy)</h3>
+                <p className="text-[10px] text-stone-400">ตามมาตรฐานพระราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล (PDPA)</p>
+              </div>
+            </div>
+
+            <div className="space-y-3 text-xs text-stone-600">
+              <div className="p-3 rounded-2xl bg-stone-50 border border-black/[0.04] space-y-1">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-[#171717]">1. คุกกี้ที่จำเป็นอย่างยิ่ง (Strictly Necessary Cookies)</span>
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold">จำเป็นเสมอ</span>
+                </div>
+                <p className="text-[11px] text-stone-500 leading-relaxed">
+                  คุกกี้ที่จำเป็นต่อความปลอดภัยและการทำงานหลักของระบบ เช่น <code className="text-[#0569ff]">thaid_session</code> (HMAC-SHA256 Token) สำหรับระบบ Single Sign-On (SSO) ให้คุณสามารถล็อกอินครั้งเดียวแล้วใช้งานได้ทุกแอปในเครือข่ายอย่างปลอดภัย
+                </p>
+              </div>
+
+              <div className="p-3 rounded-2xl bg-stone-50 border border-black/[0.04] space-y-1">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-[#171717]">2. คุกกี้เพื่อการทำงานของระบบ (Functional Cookies)</span>
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 font-semibold">เปิดใช้งาน</span>
+                </div>
+                <p className="text-[11px] text-stone-500 leading-relaxed">
+                  ช่วยจดจำข้อมูลโปรไฟล์และการตั้งค่า เช่น <code className="text-[#0569ff]">thaid_user</code> สำหรับแสดงชื่อและอวาตาร์บนแถบนำทาง และ <code className="text-[#0569ff]">thaid_cookie_consent</code> เพื่อไม่ต้องแสดงกล่องแจ้งเตือนซ้ำ
+                </p>
+              </div>
+
+              <div className="p-3 rounded-2xl bg-stone-50 border border-black/[0.04] space-y-1">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-[#171717]">3. คุกกี้สถิติและการพัฒนา (Analytics Cookies)</span>
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-stone-200 text-stone-700 font-semibold">ไม่ระบุตัวตน</span>
+                </div>
+                <p className="text-[11px] text-stone-500 leading-relaxed">
+                  รวบรวมข้อมูลเชิงสถิติแบบไม่ระบุตัวตน เช่น หน้าที่ได้รับความนิยม เพื่อนำมาพัฒนาเครื่องมือและฟีเจอร์ AI ใหม่ๆ ให้ตอบโจทย์ผู้ใช้
+                </p>
+              </div>
+            </div>
+
+            <div className="pt-2 flex items-center justify-end gap-2 border-t border-black/[0.06]">
+              <button
+                type="button"
+                onClick={() => {
+                  handleAcceptCookies("essential");
+                  setCookiePolicyModalOpen(false);
+                }}
+                className="px-4 py-2 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-semibold cursor-pointer"
+              >
+                ยอมรับเฉพาะที่จำเป็น
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  handleAcceptCookies("all");
+                  setCookiePolicyModalOpen(false);
+                }}
+                className="px-5 py-2 rounded-full bg-[#171717] hover:bg-black text-white text-xs font-semibold cursor-pointer shadow-xs"
+              >
+                ยอมรับทั้งหมด
+              </button>
+            </div>
           </div>
         </div>
       )}
