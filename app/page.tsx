@@ -60,7 +60,9 @@ export default function HomePage() {
     const match = document.cookie.match(/(^|;\s*)thaid_user=([^;]*)/);
     if (match && match[2]) {
       try {
-        currentUser = JSON.parse(decodeURIComponent(match[2]));
+        let raw = decodeURIComponent(match[2]);
+        if (raw.startsWith("%")) raw = decodeURIComponent(raw);
+        currentUser = JSON.parse(raw);
         setUser(currentUser);
         localStorage.setItem("thaid_user", JSON.stringify(currentUser));
       } catch (e) {}

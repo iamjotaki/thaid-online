@@ -71,7 +71,7 @@ export async function POST(req: NextRequest) {
     // 2. Client-readable user info cookie for instant UI hydration across all *.thaid.online
     res.cookies.set({
       name: "thaid_user",
-      value: encodeURIComponent(JSON.stringify(user)),
+      value: JSON.stringify(user),
       httpOnly: false,
       secure: process.env.NODE_ENV === "production" || !host?.includes("localhost"),
       sameSite: "lax",
