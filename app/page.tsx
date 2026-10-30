@@ -1239,74 +1239,9 @@ export default function HomePage() {
                 <span>ดำเนินการต่อด้วย Google Account</span>
               </a>
             </div>
-
-            <div className="relative py-1">
-              <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-black/[0.08]"></div></div>
-              <div className="relative flex justify-center text-[10px] uppercase text-stone-400"><span className="bg-white px-2">หรือเลือกวิธีอื่น</span></div>
-            </div>
-
-            {/* Quick Demo Logins */}
-            <div className="space-y-2 pt-2">
-              <button
-                type="button"
-                onClick={() => handleLogin("Admin Boss", "boss@thaid.online", "https://api.dicebear.com/7.x/bottts/svg?seed=AdminBoss")}
-                className="w-full flex items-center justify-between p-2.5 rounded-2xl border border-black/[0.08] hover:border-black/[0.2] bg-stone-50 hover:bg-stone-100 transition-all text-left cursor-pointer"
-              >
-                <div className="flex items-center gap-2.5">
-                  <img src="https://api.dicebear.com/7.x/bottts/svg?seed=AdminBoss" className="w-8 h-8 rounded-full bg-white shadow-2xs" alt="Admin" />
-                  <div>
-                    <div className="text-xs font-bold text-[#171717]">Admin Boss (Superadmin)</div>
-                    <div className="text-[10px] text-stone-400">boss@thaid.online · VIP Enterprise</div>
-                  </div>
-                </div>
-                <span className="text-[11px] font-semibold text-[#0569ff]">เข้าทันที →</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => handleLogin("รดา นิยายรัก", "rada@thaid.online", "https://api.dicebear.com/7.x/avataaars/svg?seed=RadaAuthor")}
-                className="w-full flex items-center justify-between p-2.5 rounded-2xl border border-black/[0.08] hover:border-black/[0.2] bg-stone-50 hover:bg-stone-100 transition-all text-left cursor-pointer"
-              >
-                <div className="flex items-center gap-2.5">
-                  <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=RadaAuthor" className="w-8 h-8 rounded-full bg-white shadow-2xs" alt="Author" />
-                  <div>
-                    <div className="text-xs font-bold text-[#171717]">รดา นิยายรัก (Creator)</div>
-                    <div className="text-[10px] text-stone-400">rada@thaid.online · Pro Creator</div>
-                  </div>
-                </div>
-                <span className="text-[11px] font-semibold text-[#0569ff]">เข้าทันที →</span>
-              </button>
-            </div>
-
-            <div className="relative py-1">
-              <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-black/[0.08]"></div></div>
-              <div className="relative flex justify-center text-[10px] uppercase text-stone-400"><span className="bg-white px-2">หรือเข้าด้วยอีเมล</span></div>
-            </div>
-
-            {/* Email input */}
-            <form onSubmit={(e) => {
-              e.preventDefault();
-              const form = e.currentTarget;
-              const input = (form.elements.namedItem('email') as HTMLInputElement).value.trim();
-              if (input) {
-                const name = input.split('@')[0];
-                handleLogin(name, input, `https://api.dicebear.com/7.x/avataaars/svg?seed=${name}`);
-              }
-            }} className="space-y-2">
-              <input
-                name="email"
-                type="email"
-                placeholder="your.email@example.com"
-                required
-                className="w-full px-3 py-2 text-xs rounded-xl border border-black/[0.1] focus:outline-none focus:border-[#0569ff]"
-              />
-              <button
-                type="submit"
-                className="w-full py-2.5 rounded-full bg-[#171717] hover:bg-black text-white text-xs font-semibold shadow-xs transition-all cursor-pointer"
-              >
-                เข้าสู่ระบบด้วยอีเมล
-              </button>
-            </form>
+            <p className="text-[11px] text-stone-400 text-center pt-2">
+              เข้าสู่ระบบอย่างปลอดภัยด้วยบัญชี Google
+            </p>
           </div>
         </div>
       )}
