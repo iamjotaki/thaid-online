@@ -845,6 +845,7 @@ export default function HomePage() {
                             { slug: 'clip', name: 'Clip AI Shorts', url: 'https://clip.thaid.online' },
                             { slug: 'chat', name: 'Smart Chat AI', url: 'https://chat.thaid.online' },
                             { slug: 'mockup', name: 'Mockup Studio', url: 'https://mockup.thaid.online' },
+                            { slug: 'agent', name: 'Agent Console', url: 'https://agent.thaid.online' },
                           ].map((app) => (
                             <a
                               key={app.slug}
@@ -867,6 +868,7 @@ export default function HomePage() {
                             { slug: 'clip', name: 'Clip AI Shorts', url: 'https://clip.thaid.online' },
                             { slug: 'chat', name: 'Smart Chat AI', url: 'https://chat.thaid.online' },
                             { slug: 'mockup', name: 'Mockup Studio', url: 'https://mockup.thaid.online' },
+                            { slug: 'agent', name: 'Agent Console', url: 'https://agent.thaid.online' },
                           ].filter((app) => user.subscriptions?.includes(app.slug)).map((app) => (
                             <a
                               key={app.slug}
