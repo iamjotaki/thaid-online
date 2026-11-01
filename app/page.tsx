@@ -269,6 +269,42 @@ export default function HomePage() {
         </svg>
       )
     },
+    {
+      name: "Vault Storage",
+      sub: "ศูนย์เก็บข้อมูลและ API Keys เข้ารหัสความปลอดภัยสูง",
+      url: "https://vault.thaid.online",
+      tag: "vault.thaid.online",
+      badge: "Encrypted",
+      icon: (
+        <svg className="w-4 h-4 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      )
+    },
+    {
+      name: "Agent Console",
+      sub: "เอเจนต์ผู้ช่วยเขียนโค้ดและควบคุมโฮสต์อัตโนมัติ",
+      url: "https://agent.thaid.online",
+      tag: "agent.thaid.online",
+      badge: "AI Agent",
+      icon: (
+        <svg className="w-4 h-4 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+        </svg>
+      )
+    },
+    {
+      name: "Remove BG AI",
+      sub: "ลบพื้นหลังภาพเนียนกริบ ไดคัตอัตโนมัติด้วย AI",
+      url: "https://remove.thaid.online",
+      tag: "remove.thaid.online",
+      badge: "Free AI",
+      icon: (
+        <svg className="w-4 h-4 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+        </svg>
+      )
+    },
   ];
   
   const trackRef = useRef<HTMLElement | null>(null);
@@ -737,7 +773,7 @@ export default function HomePage() {
               <div className="absolute right-0 top-full mt-2 w-72 sm:w-80 bg-white/95 backdrop-blur-2xl border border-black/[0.08] rounded-2xl shadow-2xl p-2 z-50 animate-in fade-in zoom-in-95 duration-150">
                 <div className="px-3 py-1.5 text-[10px] font-bold text-stone-400 uppercase tracking-wider border-b border-black/[0.05] mb-1 flex items-center justify-between">
                   <span>ThaiD SaaS Ecosystem</span>
-                  <span className="text-emerald-600 font-semibold">6 เครื่องมือ</span>
+                  <span className="text-emerald-600 font-semibold">9 เครื่องมือ</span>
                 </div>
                 <div className="grid grid-cols-1 gap-1 max-h-[380px] overflow-y-auto">
                   {saasServices.map((svc) => (
@@ -846,6 +882,7 @@ export default function HomePage() {
                             { slug: 'chat', name: 'Smart Chat AI', url: 'https://chat.thaid.online' },
                             { slug: 'mockup', name: 'Mockup Studio', url: 'https://mockup.thaid.online' },
                             { slug: 'agent', name: 'Agent Console', url: 'https://agent.thaid.online' },
+                            { slug: 'remove', name: 'Remove BG AI', url: 'https://remove.thaid.online' },
                           ].map((app) => (
                             <a
                               key={app.slug}
@@ -869,6 +906,7 @@ export default function HomePage() {
                             { slug: 'chat', name: 'Smart Chat AI', url: 'https://chat.thaid.online' },
                             { slug: 'mockup', name: 'Mockup Studio', url: 'https://mockup.thaid.online' },
                             { slug: 'agent', name: 'Agent Console', url: 'https://agent.thaid.online' },
+                            { slug: 'remove', name: 'Remove BG AI', url: 'https://remove.thaid.online' },
                           ].filter((app) => user.subscriptions?.includes(app.slug)).map((app) => (
                             <a
                               key={app.slug}
