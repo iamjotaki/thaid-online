@@ -305,6 +305,18 @@ export default function HomePage() {
         </svg>
       )
     },
+    {
+      name: "QR Code Studio",
+      sub: "สร้างคิวอาร์โค้ด HD ฟรี คมชัด ปรับแต่งสีได้",
+      url: "https://qr.thaid.online",
+      tag: "qr.thaid.online",
+      badge: "HD Free",
+      icon: (
+        <svg className="w-4 h-4 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+        </svg>
+      )
+    },
   ];
   
   const trackRef = useRef<HTMLElement | null>(null);
